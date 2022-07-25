@@ -566,6 +566,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainGeo
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ee926ef09c6b7e94eb7904430e859c7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee926ef09c6b7e94eb7904430e859c7a, type: 3}
 --- !u!4 &1360634182 stripped
@@ -600,7 +605,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-13622
+  m_Name: pb_Mesh49718
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -810,7 +815,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &1727593606
 MeshCollider:
   m_ObjectHideFlags: 0
