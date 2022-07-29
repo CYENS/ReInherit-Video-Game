@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Cyens.ReInherit.Scene
 {
@@ -7,11 +8,15 @@ namespace Cyens.ReInherit.Scene
         [SerializeField] private float smoothing = 0.15f;
         [SerializeField] private Vector3 target;
 
-        [SerializeField, Range(0, 360)] private float orbitAngle = 0;
+        [SerializeField] private float minDistance = 10;
+        [SerializeField] private float maxDistance = 40;
+        [SerializeField] private float distance = 20;
 
-        [SerializeField, Range(10, 40)] private float distance = 20;
+        [SerializeField] private float minAngle = 10;
+        [SerializeField] private float maxAngle = 60;
+        [SerializeField] private float angle = 30;
 
-        [SerializeField, Range(15, 60)] private float angle = 30;
+        [SerializeField] private float orbitAngle = 0;
 
         private Vector3 m_currentTarget;
         private Vector3 m_lastTarget;
@@ -30,21 +35,29 @@ namespace Cyens.ReInherit.Scene
             set => target = value;
         }
 
+        public float Angle
+        {
+            get => angle;
+            set => angle = Mathf.Clamp(value, minAngle, maxAngle);
+        }
+
         public float Distance
         {
             get => distance;
-            set => distance = Mathf.Max(10, value);
+            set => distance = Mathf.Clamp(value, minDistance, maxDistance);
         }
 
         public float OrbitAngle
         {
             get => orbitAngle;
-            set {
-                orbitAngle = value % 360;
-                if (orbitAngle < 0) {
-                    orbitAngle += 360;
-                }
-            }
+            set => orbitAngle = SanitizeAngle(value);
+        }
+
+        private void OnValidate()
+        {
+            Angle = Angle;
+            OrbitAngle = OrbitAngle;
+            Distance = Distance;
         }
 
         private void Awake()
@@ -57,9 +70,9 @@ namespace Cyens.ReInherit.Scene
         public void SnapToTarget()
         {
             m_lastTarget = m_currentTarget = target;
-            m_lastAngleTarget = m_currentAngle = angle;
-            m_lastDistanceTarget = m_currentDistance = distance;
-            m_lastOrbitTarget = m_currentOrbit = orbitAngle;
+            m_lastAngleTarget = m_currentAngle = Angle = angle;
+            m_lastDistanceTarget = m_currentDistance = Distance = distance;
+            m_lastOrbitTarget = m_currentOrbit = OrbitAngle = orbitAngle;
 
             UpdateTransform();
         }
@@ -74,9 +87,19 @@ namespace Cyens.ReInherit.Scene
             var distanceXZ = Mathf.Cos(radians) * m_currentDistance;
             var newPosition = m_currentTarget - forward * distanceXZ;
             newPosition.y += height;
-            
+
             transform.position = newPosition;
             transform.LookAt(m_currentTarget);
+        }
+
+        private float SanitizeAngle(float degreesAngle)
+        {
+            degreesAngle %= 360;
+            if (degreesAngle < 0) {
+                degreesAngle += 360;
+            }
+
+            return degreesAngle;
         }
 
         private void Update()
@@ -96,6 +119,7 @@ namespace Cyens.ReInherit.Scene
             m_currentDistance = MotionMath.SmoothMove(m_currentDistance, m_lastDistanceTarget, distance, smoothing);
             m_currentTarget = MotionMath.SmoothMove(m_currentTarget, m_lastTarget, target, smoothing);
             m_currentOrbit = MotionMath.SmoothMove(m_currentOrbit, m_lastOrbitTarget, wrapOrbitAngle, smoothing);
+            m_currentOrbit = SanitizeAngle(m_currentOrbit);
 
             m_lastTarget = target;
             m_lastDistanceTarget = distance;
