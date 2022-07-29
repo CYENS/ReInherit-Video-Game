@@ -54,31 +54,55 @@ namespace Cyens.ReInherit.Scene
             m_currentTarget = target;
         }
 
-        private void Update()
+        public void SnapToTarget()
         {
-            // TODO: Orbit smoothing doesn't work for wrappin around the 0 and 360 angle limits
-            
-            m_currentAngle = MotionMath.SmoothMove(m_currentAngle, m_lastAngleTarget, angle, smoothing);
-            m_currentDistance = MotionMath.SmoothMove(m_currentDistance, m_lastDistanceTarget, distance, smoothing);
-            m_currentTarget = MotionMath.SmoothMove(m_currentTarget, m_lastTarget, target, smoothing);
-            m_currentOrbit = MotionMath.SmoothMove(m_currentOrbit, m_lastOrbitTarget, orbitAngle, smoothing);
+            m_lastTarget = m_currentTarget = target;
+            m_lastAngleTarget = m_currentAngle = angle;
+            m_lastDistanceTarget = m_currentDistance = distance;
+            m_lastOrbitTarget = m_currentOrbit = orbitAngle;
 
-            m_lastTarget = target;
-            m_lastDistanceTarget = distance;
-            m_lastAngleTarget = angle;
-            m_lastOrbitTarget = orbitAngle;
+            UpdateTransform();
+        }
 
+        private void UpdateTransform()
+        {
             var orbit = Quaternion.AngleAxis(m_currentOrbit, Vector3.up);
             var forward = orbit * Vector3.forward;
 
             var radians = Mathf.Deg2Rad * m_currentAngle;
             var height = Mathf.Sin(radians) * m_currentDistance;
             var distanceXZ = Mathf.Cos(radians) * m_currentDistance;
-            var desiredPosition = m_currentTarget - forward * distanceXZ;
-            desiredPosition.y += height;
-            transform.position = desiredPosition;
-
+            var newPosition = m_currentTarget - forward * distanceXZ;
+            newPosition.y += height;
+            
+            transform.position = newPosition;
             transform.LookAt(m_currentTarget);
+        }
+
+        private void Update()
+        {
+            // Change orbit angle to wrap around the shortest distance.
+            // E.g. For current angle of 0 and orbit angle of 359 we use a
+            //      wrapOrbitAngle of -1, which is equivalent to 359 but also
+            //      much closer to 0. 
+            var wrapOrbitAngle = orbitAngle;
+            var orbitDiff = orbitAngle - m_currentOrbit;
+            if (Mathf.Abs(orbitDiff) > 180) {
+                wrapOrbitAngle = orbitAngle - Mathf.Sign(orbitDiff) * 360;
+            }
+
+            // Smoothly change all properties
+            m_currentAngle = MotionMath.SmoothMove(m_currentAngle, m_lastAngleTarget, angle, smoothing);
+            m_currentDistance = MotionMath.SmoothMove(m_currentDistance, m_lastDistanceTarget, distance, smoothing);
+            m_currentTarget = MotionMath.SmoothMove(m_currentTarget, m_lastTarget, target, smoothing);
+            m_currentOrbit = MotionMath.SmoothMove(m_currentOrbit, m_lastOrbitTarget, wrapOrbitAngle, smoothing);
+
+            m_lastTarget = target;
+            m_lastDistanceTarget = distance;
+            m_lastAngleTarget = angle;
+            m_lastOrbitTarget = wrapOrbitAngle;
+
+            UpdateTransform();
         }
     }
 }

@@ -15,10 +15,27 @@ namespace Cyens.ReInherit.Scene
 
         private void Update()
         {
-            var x = Input.GetAxis("Horizontal");
-            var y = Input.GetAxis("Vertical");
+            var x = Input.GetAxisRaw("Horizontal");
+            var z = Input.GetAxisRaw("Vertical");
 
-            m_camera.Target += new Vector3(x, 0, y) * (speed * Time.deltaTime);
+            if (x == 0 && z == 0) {
+                return;
+            }
+
+            var distance = speed * Time.deltaTime;
+            var camTransform = m_camera.transform;
+
+            // Convert forward and right to be parallel to the ground
+            var forward = camTransform.forward;
+            forward.y = 0;
+            forward.Normalize();
+
+            var right = camTransform.right;
+            right.y = 0;
+            right.Normalize();
+
+            var direction = (x * right + z * forward).normalized;
+            m_camera.Target += direction * distance;
         }
     }
 }
