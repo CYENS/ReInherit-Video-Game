@@ -10,6 +10,7 @@ public class Interactor : MonoBehaviour
     [SerializeField] private float m_interactionPointRadius = 0.5f;
     [SerializeField] private LayerMask m_interactableMask;
     [SerializeField] private InteractionPromptUI m_interactionPromptUI;
+    [SerializeField] private bool m_showUI = true;
 
     private readonly Collider[] m_colliders = new Collider[3];
     [SerializeField] private int m_numFound;
@@ -27,7 +28,7 @@ public class Interactor : MonoBehaviour
 
             if (m_interactable != null)
             {
-                if (m_interactionPromptUI.GetIsDisplayed() == false)
+                if (m_interactionPromptUI.GetIsDisplayed() == false && m_showUI == true)
                     m_interactionPromptUI.SetUp(m_interactable.InteractionPrompt);
 
                 //if "e" key pressed this frame, interact with object
