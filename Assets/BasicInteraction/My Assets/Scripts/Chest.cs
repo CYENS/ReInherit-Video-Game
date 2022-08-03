@@ -10,7 +10,13 @@ public class Chest : MonoBehaviour, IInteractable
 
     public bool Interact(Interactor interactor)
     {
-        Debug.Log("Opening chest!");
+        Debug.Log("Opening chest by Player!");
+        return true;
+    }
+    
+    public bool Interact(InteractorAI interactor)
+    {
+        Debug.Log("Opening chest by AI!");
         return true;
     }
 }

@@ -17,12 +17,18 @@ public class Door : MonoBehaviour, IInteractable
 
         if (inventory.GetHasKey())
         {
-            Debug.Log("Opening door!");
+            Debug.Log("Opening door by Player!");
             return true;
         }
 
         Debug.Log("No key found! Press Q to Get Key.");
         return false;
 
+    }
+    
+    public bool Interact(InteractorAI interactor)
+    {
+        Debug.Log("Opening door by AI!");
+        return true;
     }
 }
