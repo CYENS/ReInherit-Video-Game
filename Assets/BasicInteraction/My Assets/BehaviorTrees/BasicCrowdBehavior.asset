@@ -40,7 +40,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 41b0b61f07a935441b1eb2b38b1c648a
-  position: {x: -184, y: 161}
+  position: {x: -185.33334, y: 161.33334}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -48,6 +48,8 @@ MonoBehaviour:
   drawGizmos: 0
   min: {x: -24, y: -24}
   max: {x: 24, y: 24}
+  m_poiWeight: 1
+  m_randomPoiWeight: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,7 +89,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 879a19ce2428c464c940aa5f8d1ae2a4
-  position: {x: 1.0000305, y: 161}
+  position: {x: 1.3333521, y: 161.33333}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -96,7 +98,7 @@ MonoBehaviour:
   m_speed: 4
   m_stoppingDistance: 0.1
   m_updateRotation: 1
-  m_acceleration: 25
+  m_acceleration: 10
   m_tolerance: 1
 --- !u!114 &1241690655811510408
 MonoBehaviour:
