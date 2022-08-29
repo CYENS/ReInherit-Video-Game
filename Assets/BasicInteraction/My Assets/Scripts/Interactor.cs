@@ -14,10 +14,14 @@ public class Interactor : MonoBehaviour
 
     private readonly Collider[] m_colliders = new Collider[3];
     [SerializeField] private int m_numFound;
-
-    public void OnInteract( )
+    [SerializeField] private string m_dectableTag = "Garbage";
+    [SerializeField] private bool m_isAiAgent = false;
+    
+    public void OnInteract()
     {
-        Debug.Log("Interact");
+        //if "e" key pressed this frame, interact with object
+        if(!m_isAiAgent)
+            m_interactable.Interact(this);
     }
 
     private IInteractable m_interactable;
@@ -33,19 +37,20 @@ public class Interactor : MonoBehaviour
 
             if (m_interactable != null)
             {
-                if (m_interactionPromptUI.GetIsDisplayed() == false && m_showUI == true)
+                if (m_interactionPromptUI != null && m_interactionPromptUI.GetIsDisplayed() == false && m_showUI == true)
                     m_interactionPromptUI.SetUp(m_interactable.InteractionPrompt);
 
-                //if "e" key pressed this frame, interact with object
-                if (Keyboard.current.eKey.wasPressedThisFrame)
-                    m_interactable.Interact(this);
+                if (m_isAiAgent) {
+                    if (m_colliders[0].CompareTag(m_dectableTag))
+                        m_interactable.Interact(this);
+                }
             }
         }
         else
         {
             if (m_interactable != null)
                 m_interactable = null;
-            if (m_interactionPromptUI.GetIsDisplayed())
+            if (m_interactionPromptUI != null && m_interactionPromptUI.GetIsDisplayed())
                 m_interactionPromptUI.Close();
         }
     }

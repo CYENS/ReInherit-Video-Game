@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 228345078}
   - component: {fileID: 228345077}
   - component: {fileID: 228345081}
-  - component: {fileID: 228345080}
+  - component: {fileID: 228345082}
   - component: {fileID: 228345075}
   - component: {fileID: 228345073}
   m_Layer: 8
@@ -614,25 +614,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 228345071}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &228345080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228345071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 742b3866912b48f4d94e773abd8a67dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_interactionPoint: {fileID: 538993251}
-  m_interactionPointRadius: 1.5
-  m_interactableMask:
-    serializedVersion: 2
-    m_Bits: 64
-  m_numFound: 0
-  m_dectableTag: Garbage
 --- !u!114 &228345081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +627,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tree: {fileID: 11400000, guid: ba4c86de2d937cf4fac2315b2947f76a, type: 2}
+--- !u!114 &228345082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228345071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae3156357fd2e64ba40e5ae2f54747a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_interactionPoint: {fileID: 538993251}
+  m_interactionPointRadius: 1.5
+  m_interactableMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_interactionPromptUI: {fileID: 0}
+  m_showUI: 0
+  m_numFound: 0
+  m_dectableTag: Garbage
+  m_isAiAgent: 1
 --- !u!1 &285442047
 GameObject:
   m_ObjectHideFlags: 0
@@ -8538,6 +8541,22 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!54 &2098318756
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098318741}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &2099792917
 GameObject:
   m_ObjectHideFlags: 0

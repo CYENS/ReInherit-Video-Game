@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,17 +8,27 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private float m_speed = 3.0f;
     [SerializeField] private float m_turnSpeed = 0.5f;
+    private Vector3 m_moveDir = Vector3.zero;
+    private Rigidbody m_rigidbody;
+
+    private void Awake()
+    {
+        m_rigidbody = GetComponent<Rigidbody>();
+    }
+
+    public void OnMove(InputValue input)
+    {
+        Vector2 inputVec = input.Get<Vector2>();
+        m_moveDir = new Vector3(inputVec.x, 0, inputVec.y);
+    }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        if (Keyboard.current.wKey.isPressed)
-            transform.Translate(Vector3.forward * Time.deltaTime * m_speed);
-        if (Keyboard.current.sKey.isPressed)
-            transform.Translate(-1 * Vector3.forward * Time.deltaTime * m_speed);
-        if (Keyboard.current.aKey.isPressed)
-            transform.Rotate(0, -1 * m_turnSpeed, 0);
-        if (Keyboard.current.dKey.isPressed)
-            transform.Rotate(0, 1 * m_turnSpeed, 0);
+        m_rigidbody.velocity = m_moveDir * m_speed;
+        if (m_moveDir != Vector3.zero)
+        {
+            transform.LookAt(this.transform.position + m_moveDir.normalized);
+        }
     }
 }

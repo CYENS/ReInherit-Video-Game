@@ -34,7 +34,6 @@ namespace Cyens.ReInherit.Test.Example
                 .Select(go => go.transform)
                 .Where(agent => Vector3.Distance(agent.position, poiPos) < radius)
                 .ToArray().Length;
-            Debug.Log(agentsInRadius);
             return agentsInRadius;
         }
 

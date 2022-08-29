@@ -14,14 +14,7 @@ public class Garbage : MonoBehaviour, IInteractable
     
     public bool Interact(Interactor interactor)
     {
-        Debug.Log("Collect Garbage by Player!");
-        gameObject.SetActive(false);
-        return true;
-    }
-    
-    public bool Interact(InteractorAI interactor)
-    {
-        Debug.Log("Collect Garbage by AI!");
+        Debug.Log("Collect Garbage!");
         gameObject.SetActive(false);
         return true;
     }
