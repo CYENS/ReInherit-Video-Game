@@ -15,6 +15,11 @@ public class Interactor : MonoBehaviour
     private readonly Collider[] m_colliders = new Collider[3];
     [SerializeField] private int m_numFound;
 
+    public void OnInteract( )
+    {
+        Debug.Log("Interact");
+    }
+
     private IInteractable m_interactable;
     private void Update()
     {
