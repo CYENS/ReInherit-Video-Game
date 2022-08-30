@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4853299733752432536
+--- !u!114 &-4311704033646586927
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,41 +13,17 @@ MonoBehaviour:
   m_Name: RootNode
   m_EditorClassIdentifier: 
   state: 0
-  started: 0
-  guid: c32a39c8ba26df14c9d4ffe148d7be90
-  position: {x: -7, y: -330}
+  started: 1
+  guid: 9184432083bce1b44b63857e159373cd
+  position: {x: -2, y: -123}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
     variables: []
-  description: 
+  description: The A.I Behavior tree controlling Visitors
   drawGizmos: 0
-  child: {fileID: 4679298405468101557}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d285eb63c2cdd74180de7cfceaa96ad, type: 3}
-  m_Name: BasicJanitorBehavior
-  m_EditorClassIdentifier: 
-  rootNode: {fileID: -4853299733752432536}
-  treeState: 0
-  nodes:
-  - {fileID: -4853299733752432536}
-  - {fileID: 4679298405468101557}
-  - {fileID: 5594306507505565808}
-  - {fileID: 1120914520431074610}
-  - {fileID: 4737235181381865870}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    garbage: {fileID: 0}
-    variables: []
---- !u!114 &1120914520431074610
+  child: {fileID: -3533455100586102699}
+--- !u!114 &-3533455100586102699
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,8 +37,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: c22cea0e5cf53dd4cb753d3f5b0ca942
-  position: {x: -7.000046, y: -133.26248}
+  guid: 1c7f864a19dfe9448b9e5341bee25f89
+  position: {x: 1, y: 26}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -70,9 +46,9 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   children:
-  - {fileID: 5594306507505565808}
-  - {fileID: 4737235181381865870}
---- !u!114 &4679298405468101557
+  - {fileID: -790722969184994986}
+  - {fileID: 903664754004054866}
+--- !u!114 &-790722969184994986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -81,23 +57,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb5496e8cd973748a10b3e3ef436ebd, type: 3}
-  m_Name: Repeat
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: d0342bffc3406274ebbae6204602958e
-  position: {x: -7.000047, y: -233.25998}
+  guid: fe880e2de8c647a4e88c556045ebe34f
+  position: {x: -92, y: 159.36002}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
     variables: []
   description: 
   drawGizmos: 0
-  child: {fileID: 1120914520431074610}
-  restartOnSuccess: 1
-  restartOnFailure: 0
---- !u!114 &4737235181381865870
+  duration: 1
+--- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,25 +80,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2df009d6bf52bf44a8ad4cd3c7280b05, type: 3}
-  m_Name: MoveToGarbage
+  m_Script: {fileID: 11500000, guid: 2d285eb63c2cdd74180de7cfceaa96ad, type: 3}
+  m_Name: VisitorAI
   m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 4d9049b61080f7f418eb42772317b6f8
-  position: {x: 101, y: 11}
+  rootNode: {fileID: -4311704033646586927}
+  treeState: 0
+  nodes:
+  - {fileID: -4311704033646586927}
+  - {fileID: -3533455100586102699}
+  - {fileID: -790722969184994986}
+  - {fileID: 903664754004054866}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
-    variables: []
-  description: 
-  drawGizmos: 0
-  speed: 3
-  stoppingDistance: 0.1
-  updateRotation: 1
-  acceleration: 25
-  tolerance: 1
---- !u!114 &5594306507505565808
+    variables:
+    - name: disgust
+      value: 0
+    - name: boredom
+      value: 0.3
+--- !u!114 &903664754004054866
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,16 +107,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65484f26f0dacba4dad1c67188ec466b, type: 3}
-  m_Name: CheckForGarbage
+  m_Script: {fileID: 11500000, guid: b0a055ff4bd9e6642b3f0dff32a86e1d, type: 3}
+  m_Name: RandomPosition
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: cd76ad14c953028418bc6fcfa57c3356
-  position: {x: -82.0001, y: 10.840008}
+  guid: 8c421e071e6f0d94cb21e45f75221076
+  position: {x: 118, y: 159}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
     variables: []
   description: 
   drawGizmos: 0
+  min: {x: -10, y: -10}
+  max: {x: 10, y: 10}
