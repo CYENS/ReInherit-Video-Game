@@ -17,10 +17,12 @@ namespace Cyens.ReInherit.Test.Example
         public float m_poiWeight = 0f;
         public bool m_randomPoiWeight = false;
         private Transform m_PoiParent;
+        private Transform m_randomPointsParent;
 
         protected override void OnStart()
         {
             m_PoiParent = GameObject.Find("POIs").transform;
+            m_randomPointsParent = GameObject.Find("RandomNavmeshPoints").transform;
             if (m_randomPoiWeight) m_poiWeight = UnityEngine.Random.Range(0f, 1.0f);
         }
 
@@ -63,34 +65,43 @@ namespace Cyens.ReInherit.Test.Example
         }
 
         // Generate a random point around a POI position
-        private Vector2 GenerateRandomPointAroundPOI(Vector3 center)
+        private Vector3 GenerateRandomPointAroundPoint(Vector3 center)
         {
             float angle = UnityEngine.Random.Range(0f, 1f) * 360f;
             bool isOnNavMesh = false;
             float startingDis = 1f;
-            Vector2 testPos;
+            Vector3 testPos;
             do {
                 NavMeshHit hit;
                 
                 float x = startingDis * Mathf.Cos(angle * Mathf.Deg2Rad);
                 float z = startingDis * Mathf.Sin(angle * Mathf.Deg2Rad);
                 testPos.x = center.x;
-                testPos.y = center.z;
+                testPos.y = center.y;
+                testPos.z = center.z;
                 testPos.x += x;
-                testPos.y += z;
+                testPos.z += z;
                 isOnNavMesh = NavMesh.SamplePosition(testPos, out hit, 30f, NavMesh.AllAreas);
                 startingDis += 1;
             } while (isOnNavMesh == false);
 
             return testPos;
         }
+
+        private Vector3 GetRandomPointOnNavmesh()
+        {
+            int rdIndex = UnityEngine.Random.Range(0, m_randomPointsParent.childCount);
+            Vector3 rdPoint = m_randomPointsParent.GetChild(rdIndex).position;
+
+            return GenerateRandomPointAroundPoint(rdPoint);
+        }
         
         // Get the next position of the agent. Is either a completely random position, or
         // a POI position
-        private Vector2 GetNextPoint()
+        private Vector3 GetNextPoint()
         {
             if (m_poiWeight == 0)
-                return new Vector2(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
+                return GetRandomPointOnNavmesh();
 
             float rd = UnityEngine.Random.Range(0f, 1f);
             if (rd <= m_poiWeight) {
@@ -105,18 +116,19 @@ namespace Cyens.ReInherit.Test.Example
                 }
 
                 int poiIndex = CalculateBestPoint(distance, density);
-                Vector2 retPoint = GenerateRandomPointAroundPOI(m_PoiParent.GetChild(poiIndex).transform.position);
+                Vector2 retPoint = GenerateRandomPointAroundPoint(m_PoiParent.GetChild(poiIndex).transform.position);
                 return retPoint;
             }
-            
-            return new Vector2(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
+
+            return GetRandomPointOnNavmesh();
         }
         
         protected override State OnUpdate()
         {
-            Vector2 nextPoint = GetNextPoint();
+            Vector3 nextPoint = GetNextPoint();
             blackboard.moveToPosition.x = nextPoint.x;
-            blackboard.moveToPosition.z = nextPoint.y;
+            blackboard.moveToPosition.y = nextPoint.y;
+            blackboard.moveToPosition.z = nextPoint.z;
             return State.Success;
         }
     }
