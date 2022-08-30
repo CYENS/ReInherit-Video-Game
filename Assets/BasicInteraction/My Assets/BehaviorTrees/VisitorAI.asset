@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8523194390230461178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2932073b8a6c3b34391576c45d359457, type: 3}
+  m_Name: Parallel
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 013e2cf6920f45c42971dbf7d509ffd7
+  position: {x: -86, y: 40}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: 49885888952284585}
+  - {fileID: -3533455100586102699}
+--- !u!114 &-5850047386662471350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 687fd8af4ff37b14aa5b502a0b138787
+  position: {x: -541.37415, y: 323.70004}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: Small delay for performance reasons
+  drawGizmos: 0
+  duration: 1
 --- !u!114 &-4311704033646586927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,14 +63,14 @@ MonoBehaviour:
   state: 0
   started: 1
   guid: 9184432083bce1b44b63857e159373cd
-  position: {x: -2, y: -123}
+  position: {x: -86, y: -273.88}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
     variables: []
   description: The A.I Behavior tree controlling Visitors
   drawGizmos: 0
-  child: {fileID: -3533455100586102699}
+  child: {fileID: 3641524321636014975}
 --- !u!114 &-3533455100586102699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,7 +86,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 1c7f864a19dfe9448b9e5341bee25f89
-  position: {x: 1, y: 26}
+  position: {x: 64, y: 179}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -47,7 +95,34 @@ MonoBehaviour:
   drawGizmos: 0
   children:
   - {fileID: -790722969184994986}
-  - {fileID: 903664754004054866}
+--- !u!114 &-2945067997715741478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d30a5cf3d8d3a64782e8508de3ff5ea, type: 3}
+  m_Name: AnyGarbageVisible
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 4496f16ee0a724242923f40e16fd28d3
+  position: {x: -369, y: 326}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
+  viewDistance: 8
+  viewAngle: 45
+  solidLayers:
+    serializedVersion: 2
+    m_Bits: 1217
+  verbose: 1
 --- !u!114 &-790722969184994986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,7 +138,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: fe880e2de8c647a4e88c556045ebe34f
-  position: {x: -92, y: 159.36002}
+  position: {x: 73, y: 358.24}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -89,7 +164,12 @@ MonoBehaviour:
   - {fileID: -4311704033646586927}
   - {fileID: -3533455100586102699}
   - {fileID: -790722969184994986}
-  - {fileID: 903664754004054866}
+  - {fileID: -8523194390230461178}
+  - {fileID: 49885888952284585}
+  - {fileID: -5850047386662471350}
+  - {fileID: 2395321557391159974}
+  - {fileID: 3641524321636014975}
+  - {fileID: -2945067997715741478}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -98,7 +178,7 @@ MonoBehaviour:
       value: 0
     - name: boredom
       value: 0.3
---- !u!114 &903664754004054866
+--- !u!114 &49885888952284585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,18 +187,71 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0a055ff4bd9e6642b3f0dff32a86e1d, type: 3}
-  m_Name: RandomPosition
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 8c421e071e6f0d94cb21e45f75221076
-  position: {x: 118, y: 159}
+  guid: 0daf0ee55024e094bb972c0202590b6d
+  position: {x: -368.99756, y: 194.67749}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
     variables: []
-  description: 
+  description: Garbage Check Routine
   drawGizmos: 0
-  min: {x: -10, y: -10}
-  max: {x: 10, y: 10}
+  children:
+  - {fileID: -5850047386662471350}
+  - {fileID: -2945067997715741478}
+  - {fileID: 2395321557391159974}
+--- !u!114 &2395321557391159974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3342c1cadb301184d8ebb82757dd780c, type: 3}
+  m_Name: VariableOperation
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: de48ad16ec66f9b4aa005fa000840887
+  position: {x: -199.44995, y: 326}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: Increase disgust.
+  drawGizmos: 0
+  mode: 1
+  key: disgust
+  value: 0.05
+  verbose: 1
+--- !u!114 &3641524321636014975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb5496e8cd973748a10b3e3ef436ebd, type: 3}
+  m_Name: Repeat
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 6f24058c50e537141b9047b4f876a1f5
+  position: {x: -86, y: -133}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: Main AI Loop
+  drawGizmos: 0
+  child: {fileID: -8523194390230461178}
+  restartOnSuccess: 1
+  restartOnFailure: 0

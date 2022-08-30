@@ -12,6 +12,36 @@ namespace TheKiwiCoder {
         public Vector3 moveToPosition;
         public GameObject garbage;
         public List<Variable> variables;
+
+        public int FindVariable(string key)
+        {
+            for( int i=0; i<variables.Count; i++ )
+            {
+                Variable variable = variables[i];
+                if( variable.name.Equals(key) ) 
+                    return i;
+            }
+            return -1;
+        }
+
+        public bool HasVariable(string key) => FindVariable(key) >= 0;
+
+        public float GetValue(string key)
+        {
+            int index = FindVariable(key);
+            if( index < 0 ) return float.NaN;
+            return variables[index].value;
+        }
+
+        public void SetValue(string key, float newValue)
+        {
+            int index = FindVariable(key);
+            if( index < 0 ) return;
+            Variable variable = variables[index];
+            variable.value = newValue;
+            variables[index] = variable;
+        }
+
     }
 
     // Variables that can be used by the agent at runtime
