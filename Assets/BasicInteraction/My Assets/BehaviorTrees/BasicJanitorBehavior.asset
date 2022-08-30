@@ -1,5 +1,27 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5508279849599827233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6443b04ae8d60ab4eafbf52cb0ec35c8, type: 3}
+  m_Name: JanitorMovingAround
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: a12c3834c0de2054792802cde7abb25e
+  position: {x: -167.42859, y: 10.857147}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
 --- !u!114 &-4853299733752432536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40,9 +62,9 @@ MonoBehaviour:
   nodes:
   - {fileID: -4853299733752432536}
   - {fileID: 4679298405468101557}
-  - {fileID: 5594306507505565808}
   - {fileID: 1120914520431074610}
   - {fileID: 4737235181381865870}
+  - {fileID: -5508279849599827233}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -62,7 +84,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: c22cea0e5cf53dd4cb753d3f5b0ca942
-  position: {x: -7.000046, y: -133.26248}
+  position: {x: -6.857147, y: -134.71426}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -70,7 +92,7 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   children:
-  - {fileID: 5594306507505565808}
+  - {fileID: -5508279849599827233}
   - {fileID: 4737235181381865870}
 --- !u!114 &4679298405468101557
 MonoBehaviour:
@@ -112,7 +134,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 4d9049b61080f7f418eb42772317b6f8
-  position: {x: 101, y: 11}
+  position: {x: 143.42859, y: 10.857147}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -124,25 +146,3 @@ MonoBehaviour:
   updateRotation: 1
   acceleration: 25
   tolerance: 1
---- !u!114 &5594306507505565808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65484f26f0dacba4dad1c67188ec466b, type: 3}
-  m_Name: CheckForGarbage
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: cd76ad14c953028418bc6fcfa57c3356
-  position: {x: -82.0001, y: 10.840008}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    garbage: {fileID: 0}
-    variables: []
-  description: 
-  drawGizmos: 0
