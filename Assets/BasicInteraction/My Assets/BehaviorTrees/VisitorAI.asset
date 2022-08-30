@@ -13,15 +13,64 @@ MonoBehaviour:
   m_Name: RootNode
   m_EditorClassIdentifier: 
   state: 0
-  started: 0
+  started: 1
   guid: 9184432083bce1b44b63857e159373cd
   position: {x: -2, y: -123}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    variables: []
   description: The A.I Behavior tree controlling Visitors
   drawGizmos: 0
-  child: {fileID: 0}
+  child: {fileID: -3533455100586102699}
+--- !u!114 &-3533455100586102699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 1c7f864a19dfe9448b9e5341bee25f89
+  position: {x: 1, y: 26}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: -790722969184994986}
+  - {fileID: 903664754004054866}
+--- !u!114 &-790722969184994986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: fe880e2de8c647a4e88c556045ebe34f
+  position: {x: -92, y: 159.36002}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
+  duration: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,6 +87,38 @@ MonoBehaviour:
   treeState: 0
   nodes:
   - {fileID: -4311704033646586927}
+  - {fileID: -3533455100586102699}
+  - {fileID: -790722969184994986}
+  - {fileID: 903664754004054866}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    variables:
+    - name: disgust
+      value: 0
+    - name: boredom
+      value: 0.3
+--- !u!114 &903664754004054866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a055ff4bd9e6642b3f0dff32a86e1d, type: 3}
+  m_Name: RandomPosition
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 8c421e071e6f0d94cb21e45f75221076
+  position: {x: 118, y: 159}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
+  min: {x: -10, y: -10}
+  max: {x: 10, y: 10}

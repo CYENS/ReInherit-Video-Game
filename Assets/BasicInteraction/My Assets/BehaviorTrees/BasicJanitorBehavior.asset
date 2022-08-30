@@ -19,6 +19,7 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    variables: []
   description: 
   drawGizmos: 0
   child: {fileID: 4679298405468101557}
@@ -45,6 +46,7 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    variables: []
 --- !u!114 &1120914520431074610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,6 +66,7 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    variables: []
   description: 
   drawGizmos: 0
   children:
@@ -88,6 +91,7 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    variables: []
   description: 
   drawGizmos: 0
   child: {fileID: 1120914520431074610}
@@ -112,6 +116,7 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    variables: []
   description: 
   drawGizmos: 0
   speed: 3
@@ -138,5 +143,6 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    variables: []
   description: 
   drawGizmos: 0

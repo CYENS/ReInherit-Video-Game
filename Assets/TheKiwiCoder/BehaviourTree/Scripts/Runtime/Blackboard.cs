@@ -11,5 +11,14 @@ namespace TheKiwiCoder {
     public class Blackboard {
         public Vector3 moveToPosition;
         public GameObject garbage;
+        public List<Variable> variables;
+    }
+
+    // Variables that can be used by the agent at runtime
+    [System.Serializable]
+    public struct Variable
+    {
+        public string name;
+        public float value;
     }
 }
