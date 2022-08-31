@@ -1,5 +1,29 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9087810848269608742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997620d419338434ab8a12eecd6280ff, type: 3}
+  m_Name: ShouldLeaveMuseum
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 32cd6f753ef40f445b0ae72e7ec7af83
+  position: {x: -1161.499, y: 165.0001}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: Should the visitor leave the premises? If so continue to the next
+    action node.
+  drawGizmos: 0
+  verbose: 1
 --- !u!114 &-8523194390230461178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,7 +87,7 @@ MonoBehaviour:
   state: 0
   started: 1
   guid: 9184432083bce1b44b63857e159373cd
-  position: {x: -86, y: -273.88}
+  position: {x: -465.99988, y: -450.81992}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -122,7 +146,7 @@ MonoBehaviour:
   solidLayers:
     serializedVersion: 2
     m_Bits: 1217
-  verbose: 1
+  verbose: 0
 --- !u!114 &-790722969184994986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +194,11 @@ MonoBehaviour:
   - {fileID: 2395321557391159974}
   - {fileID: 3641524321636014975}
   - {fileID: -2945067997715741478}
+  - {fileID: 2085338850384050865}
+  - {fileID: 8508993349776959414}
+  - {fileID: -9087810848269608742}
+  - {fileID: 6593555352912289265}
+  - {fileID: 5074384168350200122}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -177,7 +206,9 @@ MonoBehaviour:
     - name: disgust
       value: 0
     - name: boredom
-      value: 0.3
+      value: 0
+    - name: tiredness
+      value: 0
 --- !u!114 &49885888952284585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +235,32 @@ MonoBehaviour:
   - {fileID: -5850047386662471350}
   - {fileID: -2945067997715741478}
   - {fileID: 2395321557391159974}
+--- !u!114 &2085338850384050865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 2c4680745a8416448afe8514de8d08fe
+  position: {x: -974.0001, y: 16.999971}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: Leaving the Museum
+  drawGizmos: 0
+  children:
+  - {fileID: -9087810848269608742}
+  - {fileID: 5074384168350200122}
+  - {fileID: 6593555352912289265}
 --- !u!114 &2395321557391159974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,13 +302,84 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 6f24058c50e537141b9047b4f876a1f5
-  position: {x: -86, y: -133}
+  position: {x: -465.99988, y: -302.79327}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
     variables: []
   description: Main AI Loop
   drawGizmos: 0
-  child: {fileID: -8523194390230461178}
+  child: {fileID: 8508993349776959414}
   restartOnSuccess: 1
   restartOnFailure: 0
+--- !u!114 &5074384168350200122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7b854a4c14cd642bcf51e6308aa24e, type: 3}
+  m_Name: LeaveReview
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 4087b58fbe95f444d878197221ba0bcd
+  position: {x: -974, y: 189}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
+--- !u!114 &6593555352912289265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c32724697ed4d44bb91819146540574, type: 3}
+  m_Name: GoToExit
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 2fc0f4e81fdf6c542b8e35fd2ac66297
+  position: {x: -792, y: 180}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
+  destroyOnExit: 1
+  verbose: 1
+--- !u!114 &8508993349776959414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 460be9e34c566ea45b9e282b1adcb028, type: 3}
+  m_Name: Selector
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: bdf18ff1d1b89ff4a8cb189f506e49c9
+  position: {x: -465.99988, y: -171.23062}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    variables: []
+  description: Prioritize action states
+  drawGizmos: 0
+  children:
+  - {fileID: 2085338850384050865}
+  - {fileID: -8523194390230461178}

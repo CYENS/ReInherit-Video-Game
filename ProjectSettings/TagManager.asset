@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - CrowdCharacter
   - Garbage
+  - Exit
   layers:
   - Default
   - TransparentFX

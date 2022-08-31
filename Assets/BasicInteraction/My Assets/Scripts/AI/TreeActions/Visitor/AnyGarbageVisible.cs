@@ -25,8 +25,7 @@ namespace Cyens.ReInherit
         {
             garbages = FindObjectsOfType<Garbage>();
             index = 0;
-            if( verbose ) 
-                Debug.Log("Trying to check garbage visibility. "+garbages.Length+" garbage piles detected.");
+            // if( verbose ) Debug.Log("Trying to check garbage visibility. "+garbages.Length+" garbage piles detected.");
         }
 
         protected override void OnStop()
@@ -56,7 +55,7 @@ namespace Cyens.ReInherit
             RaycastHit hit;
             if( Physics.Raycast(ray,out hit, viewDistance, solidLayers))
             {
-                if(verbose) Debug.Log("... Raycast hit: "+hit.collider.gameObject);
+                //if(verbose) Debug.Log("... Raycast hit: "+hit.collider.gameObject);
                 if( hit.collider.gameObject == target ) return true;
                 return false;
             }
@@ -86,10 +85,6 @@ namespace Cyens.ReInherit
             {
                 if( verbose ) Debug.Log("..Garbage pile "+index+" detected!");
                 return State.Success;
-            }
-            else 
-            {
-                if( verbose ) Debug.Log("..Garbage pile "+index+" is NOT visible");
             }
 
             // Check for the next pile next frame
