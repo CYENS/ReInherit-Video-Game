@@ -13,16 +13,12 @@ namespace Cyens.ReInherit
         private List<Vector3> m_JanitorPoints;
         private List<bool> m_pointVisited;
         private bool m_hasDestination;
-        private Vector3 m_nextPos;
+        [SerializeField] private Vector3 m_nextPos;
 
         protected override void OnStart()
         {
-            m_garbagePointsParent = GameObject.Find("JanitorPoints").transform;
             m_garbageManager = GameObject.Find("GarbageParent").GetComponent<GarbageManager>();
-            m_JanitorPoints = new List<Vector3>(m_garbagePointsParent.childCount);
-            foreach (Transform p in m_garbagePointsParent) {
-                m_JanitorPoints.Add(p.position);
-            }
+            m_JanitorPoints = context.gameObject.GetComponent<Janitor>().GetMovingPoints();
         }
 
         protected override void OnStop() {
@@ -42,23 +38,25 @@ namespace Cyens.ReInherit
         {
             bool destinationFound = false;
             int counter = 0;
-            while(destinationFound == false) {
+            while (destinationFound == false) {
                 int rdIndex = UnityEngine.Random.Range(0, m_JanitorPoints.Count);
                 Vector3 point = m_JanitorPoints[rdIndex];
 
-                if (IsPointInFront(point) == true) {
-                    m_nextPos = point;
-                    destinationFound = true;
-                }
+                if (Vector3.Distance(context.agent.transform.position, point) > 5f) {
+                    if (IsPointInFront(point) == true) {
+                        m_nextPos = point;
+                        destinationFound = true;
+                    }
 
-                //if janitor stack and none of the points is in front, select a random point
-                counter += 1;
-                if (counter >= m_JanitorPoints.Count - 1) {
-                    m_nextPos = point;
-                    destinationFound = true;
+                    //if janitor stack and none of the points is in front, select a random point
+                    counter += 1;
+                    if (counter >= m_JanitorPoints.Count - 1) {
+                        m_nextPos = point;
+                        destinationFound = true;
+                    }
                 }
             }
-            
+
             blackboard.moveToPosition.x = m_nextPos.x;
             blackboard.moveToPosition.y = m_nextPos.y;
             blackboard.moveToPosition.z = m_nextPos.z;
@@ -74,13 +72,21 @@ namespace Cyens.ReInherit
             int index = -1;
             for(int i=0; i<m_garbageManager.GetGarbage.Count; i++) {
                 Vector3 point = m_garbageManager.GetGarbage[i].transform.position;
+                float garbageDis = Vector3.Distance(context.agent.transform.position, point);
+ 
+                if (garbageDis <= 5f) {
+                    Debug.Log("Garbage Found!");
+                    index = i;
+                    break;
+                }
                 
                 //Single ray to garbage origin(will expand this later for beter discovery)
                 RaycastHit hit;
                 if (Physics.Linecast(context.transform.position, point, out hit)) {
-                    if (hit.transform.tag == "Garbage") {
+                    if (hit.transform.tag == "Garbage" && hit.distance <= 10f) {
                         Debug.Log("Garbage Found!");
                         index = i;
+                        break;
                     }
                 }
             }
@@ -96,7 +102,8 @@ namespace Cyens.ReInherit
         }
         
         protected override State OnUpdate() {
-            if(m_nextPos == null || (m_nextPos != blackboard.moveToPosition))
+            
+            if(m_nextPos == null || context.agent.remainingDistance < 2.0f)
                 SetNewDestination();
             CheckForVisibleGarbage();
 

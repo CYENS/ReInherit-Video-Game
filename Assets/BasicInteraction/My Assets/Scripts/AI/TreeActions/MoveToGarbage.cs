@@ -23,19 +23,16 @@ public class MoveToGarbage : ActionNode
     }
 
     protected override State OnUpdate() {
-        //If garbage collected by player, terminate action node to look for next destination
-        if(blackboard.garbage != null && !blackboard.garbage.activeSelf)
+        //If garbage collected by player or other janitor, terminate action node to look for next destination
+        if (blackboard.garbage == null)
             return State.Success;
         
-        if(blackboard.garbage == null)
+        if(!blackboard.garbage.activeSelf)
             return State.Success;
-        
+
         if (context.agent.remainingDistance < tolerance) {
             return State.Success;
         }
-
-        if (Vector3.Distance(context.agent.transform.position, blackboard.garbage.transform.position) <= 3f)
-            return State.Success;
 
         return State.Running;
     }

@@ -32,14 +32,23 @@ namespace Cyens.ReInherit
             m_Garbage = new List<Garbage>();
             foreach (Transform child in transform)
             {
-                if(child.gameObject.activeInHierarchy) m_Garbage.Add(child.GetComponent<Garbage>());
+                if(child.gameObject.activeInHierarchy)
+                    m_Garbage.Add(child.GetComponent<Garbage>());
             }
             SortListWithDistance();
+        }
+
+        private void ReactivateGarbage()
+        {
+            foreach (Transform child in transform)
+                child.gameObject.SetActive(true);
         }
 
         private void Update()
         {
             GetGarbageObjects();
+            if(m_Garbage.Count == 0)
+                ReactivateGarbage();
             if (m_Garbage.Count != m_lastGarbageCount) {
                 m_floor.RebakeNavmesh();
                 Debug.Log("Rebaking NavMesh.");
