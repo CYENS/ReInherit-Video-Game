@@ -32,11 +32,13 @@ namespace Cyens.ReInherit
             AssignPointsToJanitors();
         }
 
+        // Run K-means algorithm using the janitor points in the scene
         private void ClusterPoints()
         {
-            result = KMeans.Cluster(m_janitorMovePoints, m_clustersCount, iterations, 0);
+            result = KMeans.Cluster(m_janitorMovePoints, m_clustersCount, iterations, UnityEngine.Random.Range(0,100));
         }
 
+        // Select the most centered point in cluster as starting point for the Janitor     
         private Vector3 CalculateJanitorStartingPosition(List<Vector3> points)
         {
             float totalX = 0f;
@@ -67,6 +69,7 @@ namespace Cyens.ReInherit
             return points[index];
         }
 
+        // Assign the selected points for every cluster to Janitors
         private void AssignPointsToJanitors()
         {
             for (int i = 0; i < result.clusters.Length; i++) {
@@ -81,6 +84,7 @@ namespace Cyens.ReInherit
             }
         }
 
+        // Draw Gizmos of the clustering
         void OnDrawGizmos()
         {
             if (result == null)
