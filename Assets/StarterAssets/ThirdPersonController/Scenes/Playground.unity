@@ -1177,6 +1177,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: New-CartoonThirdPerson
       objectReference: {fileID: 0}
+    - target: {fileID: 2656445046910959755, guid: c42e81ff5c597b5458d4822ee25b3852,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3429005263112837681, guid: c42e81ff5c597b5458d4822ee25b3852,
         type: 3}
       propertyPath: m_RootOrder
@@ -1540,3 +1545,72 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7ab977a21c92388468ee65ad1c0e5a78, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09aade0ecefd01e4b8f7661acf64f5c2, type: 3}
+--- !u!1001 &8977618238946055055
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2465645800215598732, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989382339395095606, guid: e809f313e51ddf84e9eb63c18b0f9298,
+        type: 3}
+      propertyPath: m_Name
+      value: Police-CartoonThirdPerson
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e809f313e51ddf84e9eb63c18b0f9298, type: 3}
