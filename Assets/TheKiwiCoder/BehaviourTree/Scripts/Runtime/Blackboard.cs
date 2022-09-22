@@ -10,7 +10,10 @@ namespace TheKiwiCoder {
     [System.Serializable]
     public class Blackboard {
         public Vector3 moveToPosition;
+        
         public GameObject garbage;
+        
+        public GameObject exhibit;
         public List<Variable> variables;
 
         public int FindVariable(string key)

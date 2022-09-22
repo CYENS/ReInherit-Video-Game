@@ -19,6 +19,7 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: Should the visitor leave the premises? If so continue to the next
     action node.
@@ -39,16 +40,42 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 013e2cf6920f45c42971dbf7d509ffd7
-  position: {x: -86, y: 40}
+  position: {x: -103.58925, y: 60.99994}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: 
   drawGizmos: 0
   children:
-  - {fileID: 49885888952284585}
-  - {fileID: -3533455100586102699}
+  - {fileID: -7219820465663866240}
+  - {fileID: 2382679143934029630}
+--- !u!114 &-7219820465663866240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bbcff87445f36e4582938670d757ed5, type: 3}
+  m_Name: Succeed
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 996acbe43a2fa0f47a507cca97f3757c
+  position: {x: -496.9999, y: 243.99998}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    variables: []
+  description: This is required since Parallel will abort everything if even one
+    branch is Failure.
+  drawGizmos: 0
+  child: {fileID: 49885888952284585}
 --- !u!114 &-5850047386662471350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,14 +91,42 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 687fd8af4ff37b14aa5b502a0b138787
-  position: {x: -541.37415, y: 323.70004}
+  position: {x: -669.46106, y: 548.99994}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: Small delay for performance reasons
   drawGizmos: 0
   duration: 1
+--- !u!114 &-4665489175412068497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3342c1cadb301184d8ebb82757dd780c, type: 3}
+  m_Name: VariableOperation
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 470fec5312374ea4b907934cb452e2a5
+  position: {x: 404.45026, y: 557}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    variables: []
+  description: Increase boredom
+  drawGizmos: 0
+  mode: 1
+  key: boredom
+  value: 0.1
+  verbose: 0
 --- !u!114 &-4311704033646586927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,34 +146,11 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: The A.I Behavior tree controlling Visitors
   drawGizmos: 0
   child: {fileID: 3641524321636014975}
---- !u!114 &-3533455100586102699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
-  m_Name: Sequencer
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 1c7f864a19dfe9448b9e5341bee25f89
-  position: {x: 64, y: 179}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    garbage: {fileID: 0}
-    variables: []
-  description: 
-  drawGizmos: 0
-  children:
-  - {fileID: -790722969184994986}
 --- !u!114 &-2945067997715741478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,10 +166,11 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 4496f16ee0a724242923f40e16fd28d3
-  position: {x: -369, y: 326}
+  position: {x: -497.4611, y: 550.99994}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: 
   drawGizmos: 0
@@ -147,7 +180,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1217
   verbose: 0
---- !u!114 &-790722969184994986
+--- !u!114 &-2196395814058805626
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,20 +189,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
-  m_Name: Wait
+  m_Script: {fileID: 11500000, guid: 179bbb61da7557b41b365126ec25be49, type: 3}
+  m_Name: FindClosestUndiscoveredExhibit
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: fe880e2de8c647a4e88c556045ebe34f
-  position: {x: 73, y: 358.24}
+  guid: 915896cdfa1d8984681ead88787bcbd3
+  position: {x: -43.549744, y: 557}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: 
   drawGizmos: 0
-  duration: 1
+  viewDistance: 16
+  viewAngle: 90
+  solidLayers:
+    serializedVersion: 2
+    m_Bits: 1152
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,8 +224,6 @@ MonoBehaviour:
   treeState: 0
   nodes:
   - {fileID: -4311704033646586927}
-  - {fileID: -3533455100586102699}
-  - {fileID: -790722969184994986}
   - {fileID: -8523194390230461178}
   - {fileID: 49885888952284585}
   - {fileID: -5850047386662471350}
@@ -199,9 +235,18 @@ MonoBehaviour:
   - {fileID: -9087810848269608742}
   - {fileID: 6593555352912289265}
   - {fileID: 5074384168350200122}
+  - {fileID: -2196395814058805626}
+  - {fileID: 4591448972377996192}
+  - {fileID: 5208119011032169909}
+  - {fileID: 8165131169526072798}
+  - {fileID: -4665489175412068497}
+  - {fileID: 3404662156900015585}
+  - {fileID: -7219820465663866240}
+  - {fileID: 2382679143934029630}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables:
     - name: disgust
       value: 0
@@ -224,10 +269,11 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 0daf0ee55024e094bb972c0202590b6d
-  position: {x: -368.99756, y: 194.67749}
+  position: {x: -497.4611, y: 419.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: Garbage Check Routine
   drawGizmos: 0
@@ -254,6 +300,7 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: Leaving the Museum
   drawGizmos: 0
@@ -261,6 +308,32 @@ MonoBehaviour:
   - {fileID: -9087810848269608742}
   - {fileID: 5074384168350200122}
   - {fileID: 6593555352912289265}
+--- !u!114 &2382679143934029630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 460be9e34c566ea45b9e282b1adcb028, type: 3}
+  m_Name: Selector
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 2cedb6545bd6e3a4f8fe960fa5cd1203
+  position: {x: 253.99992, y: 220.905}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: 4591448972377996192}
+  - {fileID: 8165131169526072798}
 --- !u!114 &2395321557391159974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,10 +349,11 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: de48ad16ec66f9b4aa005fa000840887
-  position: {x: -199.44995, y: 326}
+  position: {x: -327.46112, y: 550.99994}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: Increase disgust.
   drawGizmos: 0
@@ -287,6 +361,34 @@ MonoBehaviour:
   key: disgust
   value: 0.05
   verbose: 1
+--- !u!114 &3404662156900015585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a48ce1314a00c49b599927d8d46d34, type: 3}
+  m_Name: TurnAround
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: be488661acabdc24a886db75ecb7d7ee
+  position: {x: 584.45026, y: 557}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
+  minRotation: 30
+  maxRotation: 180
+  clockWise: 1
+  antiClockWise: 1
+  rotationSpeed: 5
 --- !u!114 &3641524321636014975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,16 +404,43 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 6f24058c50e537141b9047b4f876a1f5
-  position: {x: -465.99988, y: -302.79327}
+  position: {x: -466.00003, y: -303.0001}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: Main AI Loop
   drawGizmos: 0
   child: {fileID: 8508993349776959414}
   restartOnSuccess: 1
-  restartOnFailure: 0
+  restartOnFailure: 1
+--- !u!114 &4591448972377996192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 3dd06977c165fc146b8716b93805f40b
+  position: {x: 114.45023, y: 389}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    variables: []
+  description: 'Action Loop: Find Exhibit, Go to it, Repeat'
+  drawGizmos: 0
+  children:
+  - {fileID: -2196395814058805626}
+  - {fileID: 5208119011032169909}
 --- !u!114 &5074384168350200122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +460,30 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    variables: []
+  description: 
+  drawGizmos: 0
+--- !u!114 &5208119011032169909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4f6914ead44a3428b181adc8a16bb3, type: 3}
+  m_Name: GotoExhibit
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: fd0d338ec47d601419dc80f33dac1ce7
+  position: {x: 224.45027, y: 557}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: 
   drawGizmos: 0
@@ -353,11 +506,38 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: 
   drawGizmos: 0
   destroyOnExit: 1
   verbose: 1
+--- !u!114 &8165131169526072798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ef83ee46a89a5a046a7b1c8020898d59
+  position: {x: 404.45026, y: 389}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    variables: []
+  description: '"Boredom" Loop. Look for exhibits by turning around.'
+  drawGizmos: 0
+  children:
+  - {fileID: -4665489175412068497}
+  - {fileID: 3404662156900015585}
 --- !u!114 &8508993349776959414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +557,7 @@ MonoBehaviour:
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
+    exhibit: {fileID: 0}
     variables: []
   description: Prioritize action states
   drawGizmos: 0

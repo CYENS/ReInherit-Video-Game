@@ -9,13 +9,8 @@ namespace Cyens.ReInherit
     /// An action node that succeeds if any garbage pile is visible from the point of view
     /// of this actor.
     /// </summary>
-    public class AnyGarbageVisible : ActionNode
+    public class AnyGarbageVisible : VisibilityNode
     {
-
-        [SerializeField] private float viewDistance = 8.0f;
-        [SerializeField] private float viewAngle = 45.0f;
-        [SerializeField] private LayerMask solidLayers;
-
         [SerializeField] private bool verbose = false;
 
         private Garbage[] garbages;
@@ -31,38 +26,6 @@ namespace Cyens.ReInherit
         protected override void OnStop()
         {
             garbages = null;
-        }
-
-
-        protected bool isVisible( GameObject target )
-        {
-            Transform transform = context.transform;
-            Vector3 myPos = transform.position + Vector3.up*0.25f;
-
-            Vector3 targetPos = target.transform.position + Vector3.up * 0.25f;
-
-            // Distance check
-            if( Vector3.Distance(myPos, targetPos) > viewDistance ) return false;
-
-
-            // View angle check
-            Vector3 toTarget = targetPos - myPos;
-            Vector3 forward = transform.forward;
-            if( Vector3.Angle(forward,toTarget) > viewAngle ) return false;
-        
-            // Raycast check
-            Ray ray = new Ray(myPos, toTarget.normalized );
-            RaycastHit hit;
-            if( Physics.Raycast(ray,out hit, viewDistance, solidLayers))
-            {
-                //if(verbose) Debug.Log("... Raycast hit: "+hit.collider.gameObject);
-                if( hit.collider.gameObject == target ) return true;
-                return false;
-            }
-
-            // By default assume that the object is visible, since nothing was in the way
-            // to obstruct it.
-            return true;
         }
 
         protected override State OnUpdate()
