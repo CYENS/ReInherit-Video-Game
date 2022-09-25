@@ -26,10 +26,11 @@ namespace Cyens.ReInherit
                 m_janitorMovePoints[i] = p.position;
                 i += 1;
             }
-
             m_clustersCount = m_janitorParent.childCount - 1;
-            ClusterPoints();
-            AssignPointsToJanitors();
+            if (m_clustersCount > 0) {
+                ClusterPoints();
+                AssignPointsToJanitors();
+            }
         }
 
         // Run K-means algorithm using the janitor points in the scene
@@ -65,7 +66,6 @@ namespace Cyens.ReInherit
                     index = i;
                 }
             }
-            print(points[index]);
             return points[index];
         }
 

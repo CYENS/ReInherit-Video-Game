@@ -42,7 +42,7 @@ namespace Cyens.ReInherit
                 int rdIndex = UnityEngine.Random.Range(0, m_JanitorPoints.Count);
                 Vector3 point = m_JanitorPoints[rdIndex];
 
-                if (Vector3.Distance(context.agent.transform.position, point) > 5f) {
+                if (Vector3.Distance(context.transform.position, point) > 5f) {
                     if (IsPointInFront(point) == true) {
                         m_nextPos = point;
                         destinationFound = true;
@@ -72,7 +72,7 @@ namespace Cyens.ReInherit
             int index = -1;
             for(int i=0; i<m_garbageManager.GetGarbage.Count; i++) {
                 Vector3 point = m_garbageManager.GetGarbage[i].transform.position;
-                float garbageDis = Vector3.Distance(context.agent.transform.position, point);
+                float garbageDis = Vector3.Distance(context.transform.position, point);
  
                 if (garbageDis <= 5f) {
                     Debug.Log("Garbage Found!");
@@ -103,7 +103,9 @@ namespace Cyens.ReInherit
         
         protected override State OnUpdate() {
             
-            if(m_nextPos == null || context.agent.remainingDistance < 2.0f)
+            if(m_nextPos == null || (context.agent != null && context.agent.remainingDistance < 2.0f))
+                SetNewDestination();
+            if(m_nextPos == null || (context.agentAstar != null && context.agentAstar.remainingDistance < 2.0f))
                 SetNewDestination();
             CheckForVisibleGarbage();
 

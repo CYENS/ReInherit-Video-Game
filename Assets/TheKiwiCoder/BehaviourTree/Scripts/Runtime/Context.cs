@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Pathfinding;
 
 namespace TheKiwiCoder {
 
@@ -15,6 +16,7 @@ namespace TheKiwiCoder {
         public Animator animator;
         public Rigidbody physics;
         public NavMeshAgent agent;
+        public IAstarAI agentAstar;
         public SphereCollider sphereCollider;
         public BoxCollider boxCollider;
         public CapsuleCollider capsuleCollider;
@@ -28,7 +30,10 @@ namespace TheKiwiCoder {
             context.transform = gameObject.transform;
             context.animator = gameObject.GetComponent<Animator>();
             context.physics = gameObject.GetComponent<Rigidbody>();
-            context.agent = gameObject.GetComponent<NavMeshAgent>();
+            if (gameObject.TryGetComponent(out NavMeshAgent navAgent))
+                context.agent = navAgent;
+            if (gameObject.TryGetComponent(out IAstarAI navAgentAstar))
+                context.agentAstar = navAgentAstar;
             context.sphereCollider = gameObject.GetComponent<SphereCollider>();
             context.boxCollider = gameObject.GetComponent<BoxCollider>();
             context.capsuleCollider = gameObject.GetComponent<CapsuleCollider>();

@@ -6,6 +6,7 @@ using UnityEngine;
 using TheKiwiCoder;
 using Random = UnityEngine.Random;
 using UnityEngine.AI;
+using Pathfinding;
 
 namespace Cyens.ReInherit.Test.Example
 {
@@ -42,8 +43,8 @@ namespace Cyens.ReInherit.Test.Example
         // Calculate best POI based on distance and density
         private int CalculateBestPoint(List<float> distance, List<float> density)
         {
-            float distanceWeight = 0.3f;
-            float densityWeight = 0.7f;
+            float distanceWeight = 0.2f;
+            float densityWeight = 0.8f;
             int index = 0;
             float bestVal = Single.PositiveInfinity;
             float tempVal = 0;
@@ -71,19 +72,25 @@ namespace Cyens.ReInherit.Test.Example
             bool isOnNavMesh = false;
             float startingDis = 1f;
             Vector3 testPos;
-            do {
-                NavMeshHit hit;
-                
-                float x = startingDis * Mathf.Cos(angle * Mathf.Deg2Rad);
-                float z = startingDis * Mathf.Sin(angle * Mathf.Deg2Rad);
-                testPos.x = center.x;
-                testPos.y = center.y;
-                testPos.z = center.z;
-                testPos.x += x;
-                testPos.z += z;
-                isOnNavMesh = NavMesh.SamplePosition(testPos, out hit, 30f, NavMesh.AllAreas);
-                startingDis += 1;
-            } while (isOnNavMesh == false);
+            if (context.agent != null) {
+                do {
+                    float x = startingDis * Mathf.Cos(angle * Mathf.Deg2Rad);
+                    float z = startingDis * Mathf.Sin(angle * Mathf.Deg2Rad);
+                    testPos.x = center.x;
+                    testPos.y = center.y;
+                    testPos.z = center.z;
+                    testPos.x += x;
+                    testPos.z += z;
+
+                    NavMeshHit hit;
+                    isOnNavMesh = NavMesh.SamplePosition(testPos, out hit, 30f, UnityEngine.AI.NavMesh.AllAreas);
+                    startingDis += 1;
+                } while (isOnNavMesh == false);
+            }
+            else {
+                var graphToScan = AstarPath.active.data.recastGraph;
+                testPos = (Vector3)graphToScan.GetNearest(center).node.position;
+            }
 
             return testPos;
         }
@@ -116,7 +123,7 @@ namespace Cyens.ReInherit.Test.Example
                 }
 
                 int poiIndex = CalculateBestPoint(distance, density);
-                Vector2 retPoint = GenerateRandomPointAroundPoint(m_PoiParent.GetChild(poiIndex).transform.position);
+                Vector3 retPoint = GenerateRandomPointAroundPoint(m_PoiParent.GetChild(poiIndex).transform.position);
                 return retPoint;
             }
 

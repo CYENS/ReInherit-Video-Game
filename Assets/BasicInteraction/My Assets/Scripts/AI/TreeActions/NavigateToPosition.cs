@@ -17,29 +17,47 @@ namespace  Cyens.ReInherit.Test.Example
         {
             return m_speed * UnityEngine.Random.Range(0.5f, 1.5f);
         }
-        
-        protected override void OnStart() {
-            context.agent.stoppingDistance = m_stoppingDistance;
-            context.agent.speed = SetRandomSpeed();
-            context.agent.destination = blackboard.moveToPosition;
-            context.agent.updateRotation = m_updateRotation;
-            context.agent.acceleration = m_acceleration;
+
+        protected override void OnStart()
+        {
+            if (context.agent != null) {
+                context.agent.stoppingDistance = m_stoppingDistance;
+                context.agent.speed = SetRandomSpeed();
+                context.agent.destination = blackboard.moveToPosition;
+                context.agent.updateRotation = m_updateRotation;
+                context.agent.acceleration = m_acceleration;
+            }
+            else {
+                context.agentAstar.maxSpeed = SetRandomSpeed();
+                context.agentAstar.destination = blackboard.moveToPosition;
+            }
         }
 
         protected override void OnStop() {
         }
 
         protected override State OnUpdate() {
-            if (context.agent.pathPending) {
-                return State.Running;
-            }
+            if (context.agent != null) {
+                if (context.agent.pathPending) {
+                    return State.Running;
+                }
 
-            if (context.agent.remainingDistance < m_tolerance) {
-                return State.Success;
-            }
+                if (context.agent.remainingDistance < m_tolerance) {
+                    return State.Success;
+                }
 
-            if (context.agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathInvalid) {
-                return State.Failure;
+                if (context.agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathInvalid) {
+                    return State.Failure;
+                }
+            }
+            else {
+                if (context.agentAstar.pathPending) {
+                    return State.Running;
+                }
+
+                if (context.agentAstar.remainingDistance < m_tolerance) {
+                    return State.Success;
+                }
             }
 
             return State.Running;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.AI;
 
 namespace Cyens.ReInherit
 {
@@ -10,7 +11,7 @@ namespace Cyens.ReInherit
     {
         [SerializeField] private List<Garbage> m_Garbage;
         private int m_lastGarbageCount;
-        private FloorNavMesh m_floor;
+        private GameObject m_floor;
         
         public List<Garbage> GetGarbage => m_Garbage;
         
@@ -19,7 +20,7 @@ namespace Cyens.ReInherit
         {
             m_Garbage = new List<Garbage>();
             m_lastGarbageCount = 0;
-            m_floor = GameObject.Find("Floor").GetComponent<FloorNavMesh>();
+            m_floor = GameObject.Find("Floor");
         }
 
         private void SortListWithDistance()
@@ -50,7 +51,8 @@ namespace Cyens.ReInherit
             if(m_Garbage.Count == 0)
                 ReactivateGarbage();
             if (m_Garbage.Count != m_lastGarbageCount) {
-                m_floor.RebakeNavmesh();
+                if(m_floor.TryGetComponent(out FloorNavMesh surface))
+                    surface.RebakeNavmesh();
                 Debug.Log("Rebaking NavMesh.");
             }
             m_lastGarbageCount = m_Garbage.Count;
