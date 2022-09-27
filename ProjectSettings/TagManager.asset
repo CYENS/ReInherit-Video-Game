@@ -10,6 +10,10 @@ TagManager:
   - CrowdCharacter
   - Garbage
   - Exit
+  - InteractArea
+  - AngryArea
+  - ClapArea
+  - CleanArea
   layers:
   - Default
   - TransparentFX

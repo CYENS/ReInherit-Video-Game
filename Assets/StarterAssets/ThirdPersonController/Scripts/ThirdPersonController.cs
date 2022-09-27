@@ -97,6 +97,11 @@ namespace StarterAssets
         private int _animIDJump;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
+        private int _animIDPlayInteraction;
+        private int _animIDPlayAngry;
+        private int _animIDPlayClap;
+        private int _animIDPlayClean;
+        private int _animIDRandomAnim;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         private PlayerInput _playerInput;
@@ -173,6 +178,11 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            _animIDPlayInteraction = Animator.StringToHash("playInteraction");
+            _animIDPlayAngry = Animator.StringToHash("playAngry");
+            _animIDPlayClap = Animator.StringToHash("playClap");
+            _animIDPlayClean = Animator.StringToHash("playClean");
+            _animIDRandomAnim = Animator.StringToHash("RandomAnim");
         }
 
         private void GroundedCheck()
@@ -221,9 +231,16 @@ namespace StarterAssets
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+            if (_input.move != Vector2.zero)
+            {
+                _animator.SetBool(_animIDPlayInteraction, false);
+                _animator.SetBool(_animIDPlayAngry, false);
+                _animator.SetBool(_animIDPlayClap, false);
+                _animator.SetBool(_animIDPlayClean, false);
+            } 
 
-            // a reference to the players current horizontal velocity
-            float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+                // a reference to the players current horizontal velocity
+                float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
             float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
@@ -264,7 +281,6 @@ namespace StarterAssets
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
 
-
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
             // move the player
@@ -291,7 +307,8 @@ namespace StarterAssets
                 {
                     _animator.SetBool(_animIDJump, false);
                     _animator.SetBool(_animIDFreeFall, false);
-                }
+
+                                    }
 
                 // stop our velocity dropping infinitely when grounded
                 if (_verticalVelocity < 0.0f)
@@ -302,12 +319,18 @@ namespace StarterAssets
                 // Jump
                 if (_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
+
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
                     // update animator if using character
                     if (_hasAnimator)
                     {
+                        _animator.SetBool(_animIDPlayInteraction, false);
+                        _animator.SetBool(_animIDPlayAngry, false);
+                        _animator.SetBool(_animIDPlayClap, false);
+                        _animator.SetBool(_animIDPlayClean, false);
+
                         _animator.SetBool(_animIDJump, true);
                     }
                 }
@@ -388,5 +411,35 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("InteractArea"))
+            {
+                _animator.SetFloat(_animIDRandomAnim, Random.Range(0, 8));
+                _animator.SetBool(_animIDPlayInteraction, true);
+            }
+            else if (other.CompareTag("AngryArea"))
+            {
+                _animator.SetFloat(_animIDRandomAnim, Random.Range(0, 5));
+                _animator.SetBool(_animIDPlayAngry, true);
+            }
+            else if (other.CompareTag("ClapArea"))
+            {
+                _animator.SetBool(_animIDPlayClap, true);
+            }
+            else if (other.CompareTag("CleanArea"))
+            {
+                _animator.SetBool(_animIDPlayClean, true);
+            }
+        }
+
+        //private void OnTriggerExit(Collider other)
+        //{
+            //if (other.CompareTag("InteractArea"))
+            //{
+                //_animator.SetBool(_animIDPlayInteraction, false);
+            //}
+        //}
     }
 }
