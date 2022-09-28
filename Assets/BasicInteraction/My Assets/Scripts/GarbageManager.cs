@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.AI;
+using Pathfinding;
 
 namespace Cyens.ReInherit
 {
@@ -53,6 +54,10 @@ namespace Cyens.ReInherit
             if (m_Garbage.Count != m_lastGarbageCount) {
                 if(m_floor.TryGetComponent(out FloorNavMesh surface))
                     surface.RebakeNavmesh();
+                else {
+                    var graphToScan = AstarPath.active.data.recastGraph;
+                    AstarPath.active.Scan(graphToScan);
+                }
                 Debug.Log("Rebaking NavMesh.");
             }
             m_lastGarbageCount = m_Garbage.Count;
