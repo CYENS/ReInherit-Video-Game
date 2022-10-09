@@ -42,7 +42,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 41b0b61f07a935441b1eb2b38b1c648a
-  position: {x: -185.33334, y: 161.33334}
+  position: {x: -185.3333, y: 161.3333}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}

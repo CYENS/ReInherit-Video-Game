@@ -14,6 +14,8 @@ TagManager:
   - AngryArea
   - ClapArea
   - CleanArea
+  - TicketCollider
+  - EntranceCollider
   layers:
   - Default
   - TransparentFX
@@ -26,8 +28,8 @@ TagManager:
   - Agents
   - Player
   - Ground
-  - 
-  - 
+  - Entrance
+  - EntranceAgent
   - 
   - 
   - 
