@@ -14,6 +14,9 @@ namespace TheKiwiCoder {
         public GameObject garbage;
         
         public GameObject exhibit;
+        public int entranceRowId;
+        public bool waitingForTicket;
+        
         public List<Variable> variables;
 
         public int FindVariable(string key)

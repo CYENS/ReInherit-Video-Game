@@ -1,0 +1,193 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8499611682381254707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 748f4bd06def6aa438ff3ad1e092b52c, type: 3}
+  m_Name: NavigateToPosition
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 2fecab2f97b353142b17c49b17010950
+  position: {x: 212.00002, y: 120.57138}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    entranceRowId: 0
+    waitingForTicket: 0
+    variables: []
+  description: Navigate inside museum
+  drawGizmos: 0
+  m_speed: 5
+  m_stoppingDistance: 0.1
+  m_updateRotation: 1
+  m_acceleration: 40
+  m_tolerance: 1
+--- !u!114 &-8244176717073811442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf809afc0dda0b445a76a263a8240460, type: 3}
+  m_Name: GetEntrancePoint
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 96ee0343842ab8f49ae0b799f8c49a6a
+  position: {x: -239.00006, y: 121.00002}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    entranceRowId: 0
+    waitingForTicket: 0
+    variables: []
+  description: Get a point to buy ticket
+  drawGizmos: 0
+--- !u!114 &-6274513279585208799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703f389dc13def74ba3e5362ff3195f2, type: 3}
+  m_Name: WaitForTicket
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 2f8271c20dcebd14dbf9057dad183a27
+  position: {x: 61.86998, y: 121.00002}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    entranceRowId: 0
+    waitingForTicket: 0
+    variables: []
+  description: Wait some time to get a ticket
+  drawGizmos: 0
+  m_duration: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d285eb63c2cdd74180de7cfceaa96ad, type: 3}
+  m_Name: VisitorEntrance
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 7056404194726936970}
+  treeState: 0
+  nodes:
+  - {fileID: 7056404194726936970}
+  - {fileID: 7325041253571570822}
+  - {fileID: -8244176717073811442}
+  - {fileID: 4500295125673685233}
+  - {fileID: -6274513279585208799}
+  - {fileID: -8499611682381254707}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    entranceRowId: 0
+    waitingForTicket: 0
+    variables: []
+--- !u!114 &4500295125673685233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44b85d865aac9b4db78c78acc465ef3, type: 3}
+  m_Name: NavigateToEntrance
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ddba95a79793a8d4e814591098d75260
+  position: {x: -89.00003, y: 121.00002}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    entranceRowId: 0
+    waitingForTicket: 0
+    variables: []
+  description: Navigate to the ticket point
+  drawGizmos: 0
+  m_tolerance: 0.25
+--- !u!114 &7056404194726936970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 163c147d123e4a945b688eddc64e3ea5, type: 3}
+  m_Name: RootNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 643de67ef8d278b4ab0284ed852f2bd2
+  position: {x: -1.7142944, y: -295}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    entranceRowId: 0
+    waitingForTicket: 0
+    variables: []
+  description: 
+  drawGizmos: 0
+  child: {fileID: 7325041253571570822}
+--- !u!114 &7325041253571570822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: c8284f44d86588c4fa465086a742c0f3
+  position: {x: -2.2857666, y: -103.57141}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    entranceRowId: 0
+    waitingForTicket: 0
+    variables: []
+  description: Sequence nodes to enter the museum
+  drawGizmos: 0
+  children:
+  - {fileID: -8244176717073811442}
+  - {fileID: 4500295125673685233}
+  - {fileID: -6274513279585208799}
+  - {fileID: -8499611682381254707}
