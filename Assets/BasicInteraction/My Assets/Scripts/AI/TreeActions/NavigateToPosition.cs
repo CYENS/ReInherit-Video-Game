@@ -11,7 +11,7 @@ namespace  Cyens.ReInherit.Test.Example
         [SerializeField] private float m_stoppingDistance = 0.1f;
         [SerializeField] private bool m_updateRotation = true;
         [SerializeField] private float m_acceleration = 40.0f;
-        [SerializeField] private float m_tolerance = 1.0f;
+        [SerializeField] private float m_tolerance = 1.5f;
 
         private float SetRandomSpeed()
         {
@@ -56,7 +56,8 @@ namespace  Cyens.ReInherit.Test.Example
                     return State.Running;
                 }
                 if (context.agentAstar.remainingDistance < m_tolerance) {
-                    Destroy(context.gameObject);    
+                    if(blackboard.destroyEnabled)
+                        Destroy(context.gameObject);
                     return State.Success;
                 }
             }

@@ -28,10 +28,20 @@ namespace Cyens.ReInherit
 
         protected override void OnStop() { }
 
+        private Vector3 GetRandomPointInHall()
+        {
+            BoxCollider box = GameObject.Find("Hall").GetComponent<BoxCollider>();
+            return new Vector3(
+                Random.Range(box.bounds.min.x, box.bounds.max.x),
+                0,
+                Random.Range(box.bounds.min.z, box.bounds.max.z)
+            );
+        }
+        
         protected override State OnUpdate()
         {
             if (Time.time - m_startTime > m_duration) {
-                Vector3 destination = m_entranceController.GetRandomGoalPoint();
+                Vector3 destination = GetRandomPointInHall();
                 blackboard.moveToPosition.x = destination.x;
                 blackboard.moveToPosition.y = destination.y;
                 blackboard.moveToPosition.z = destination.z;

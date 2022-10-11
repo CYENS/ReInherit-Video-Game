@@ -16,6 +16,8 @@ namespace TheKiwiCoder {
         public GameObject exhibit;
         public int entranceRowId;
         public bool waitingForTicket;
+        public bool inTicketRow;
+        public bool destroyEnabled = false;
         
         public List<Variable> variables;
 

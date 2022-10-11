@@ -16,6 +16,9 @@ TagManager:
   - CleanArea
   - TicketCollider
   - EntranceCollider
+  - Checkpoint
+  - Room
+  - Entrance
   layers:
   - Default
   - TransparentFX
@@ -30,7 +33,7 @@ TagManager:
   - Ground
   - Entrance
   - EntranceAgent
-  - 
+  - Checkpoint
   - 
   - 
   - 

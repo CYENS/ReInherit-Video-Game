@@ -59,13 +59,13 @@ GameObject:
   - component: {fileID: 8554350584087889874}
   - component: {fileID: 2847567935573720667}
   - component: {fileID: 2663711533715617817}
-  - component: {fileID: 282396755199667944}
+  - component: {fileID: 2920161177741866379}
   - component: {fileID: 676731386181120153}
   - component: {fileID: 2471075682588058386}
   - component: {fileID: 7919657724405996470}
   - component: {fileID: 1718274620846729294}
   m_Layer: 8
-  m_Name: EntranceAgent
+  m_Name: EntranceAgentRich
   m_TagString: CrowdCharacter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!114 &282396755199667944
+--- !u!114 &2920161177741866379
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2207729309557398495}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Script: {fileID: 11500000, guid: ce11ea984e202491d9271f53021d8b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
@@ -220,20 +220,20 @@ MonoBehaviour:
   enableRotation: 1
   autoRepath:
     mode: 2
-    interval: 0.5
+    interval: 2
     sensitivity: 10
     maximumInterval: 1
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
-  maxAcceleration: 4
-  rotationSpeed: 360
-  slowdownDistance: 0.5
-  pickNextWaypointDist: 2
+  acceleration: 3
+  rotationSpeed: 540
+  slowdownTime: 0.5
   endReachedDistance: 0.1
-  alwaysDrawGizmos: 0
+  wallForce: 5
+  wallDist: 3
+  funnelSimplification: 0
   slowWhenNotFacingTarget: 0
-  whenCloseToDestination: 0
-  constrainInsideGraph: 0
+  animCompatibility: {fileID: 0}
 --- !u!114 &676731386181120153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  smoothType: 0
+  smoothType: 3
   subdivisions: 4
   iterations: 2
   strength: 0.25
