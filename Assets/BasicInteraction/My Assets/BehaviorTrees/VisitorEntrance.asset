@@ -24,6 +24,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: 
   drawGizmos: 0
@@ -56,6 +59,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: Navigate inside museum
   drawGizmos: 0
@@ -88,6 +94,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: Get a point to buy ticket
   drawGizmos: 0
@@ -115,6 +124,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: Wait some time to get a ticket
   drawGizmos: 0
@@ -143,6 +155,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: 
   drawGizmos: 0
@@ -173,6 +188,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: Sequence nodes to explore museum
   drawGizmos: 0
@@ -213,6 +231,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
 --- !u!114 &4500295125673685233
 MonoBehaviour:
@@ -238,6 +259,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: Navigate to the ticket point
   drawGizmos: 0
@@ -266,6 +290,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: 
   drawGizmos: 0
@@ -296,6 +323,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: 
   drawGizmos: 0
@@ -324,6 +354,9 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: Sequence nodes to enter the museum
   drawGizmos: 0
@@ -356,6 +389,11 @@ MonoBehaviour:
     waitingForTicket: 0
     inTicketRow: 0
     destroyEnabled: 0
+    visitedRooms: 
+    exhibitIndex: 0
+    exhibitsVisited: 0
     variables: []
   description: 
   drawGizmos: 0
+  m_currentRoom: {fileID: 0}
+  m_exhibitsList: []

@@ -9,18 +9,28 @@ namespace Cyens.ReInherit
     {
         private GameObject m_sign = null;
         private List<Collider> m_checkpoints;
+        private Transform m_exhibitsParent;
+        private List<Vector3> m_exhibits;
         private Vector3 m_checkpoint;
         [SerializeField] private bool m_rotateLeft = false;
         [SerializeField] private bool m_rotateRight = false;
         [SerializeField] private bool m_rotate180 = false;
+        
+        public List<Vector3> GetExhibits()
+        {
+            return m_exhibits;
+        }
         
         // Start is called before the first frame update
         void Start()
         {
             if(transform.Find("Sign") != null)
                 m_sign = transform.Find("Sign").gameObject;
+            if (transform.Find("Exhibits") != null)
+                m_exhibitsParent = transform.Find("Exhibits");
             GetCheckpoints();
             AssignCheckpoint();
+            AssignExhibits();
         }
 
         private void Update()
@@ -71,6 +81,36 @@ namespace Cyens.ReInherit
                     return;
                 }
             }
+        }
+
+        private void AssignExhibits()
+        {
+            if (m_exhibitsParent == null) {
+                m_exhibits = null;
+                return;
+            }
+            
+            m_exhibits = new List<Vector3>();
+            m_exhibits.Add(m_exhibitsParent.GetChild(0).position);
+
+            int nextIndex = 0;
+            while(m_exhibits.Count < m_exhibitsParent.childCount){
+                float dis = Single.PositiveInfinity;
+                int index = 0;
+                for (int i = 0; i < m_exhibitsParent.childCount; i++) {
+                    if (nextIndex != i && !m_exhibits.Contains(m_exhibitsParent.GetChild(i).position)) {
+                        float disTemp = Vector3.Distance(m_exhibitsParent.GetChild(nextIndex).position,
+                            m_exhibitsParent.GetChild(i).position);
+                        if (disTemp < dis) {
+                            dis = disTemp;
+                            index = i;
+                        }
+                    }
+                }
+                m_exhibits.Add(m_exhibitsParent.GetChild(index).position);
+                nextIndex = index;
+            }
+
         }
     }
 }

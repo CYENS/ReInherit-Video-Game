@@ -32,7 +32,9 @@ namespace Cyens.ReInherit
 	    }
 	    
 	    private List<EntranceRow> m_entranceRows;
+	    private List<EntranceRow> m_exitRows;
 	    public Transform m_EntranceRowsParent;
+	    public Transform m_ExitRowsParent;
 
 	    public int GetFreeSpotRowId(Vector3 agentPos)
 	    {
@@ -74,6 +76,11 @@ namespace Cyens.ReInherit
 		    m_entranceRows[id].m_density -= 1;
 	    }
 
+	    public Vector3 GetExitRowPoint()
+	    {
+		    return m_exitRows[UnityEngine.Random.Range(0,m_exitRows.Count)].m_point;
+	    }
+	    
 	    //Return random point inside a box collider
     	public Vector3 GetRandomGoalPoint()
     	{
@@ -114,6 +121,7 @@ namespace Cyens.ReInherit
     	void Start()
         {
 	        InitializeEntranceRows();
+	        InitializeExitRows();
 	        StartCoroutine(InstantiateAgents());
     	}
 
@@ -125,6 +133,18 @@ namespace Cyens.ReInherit
 		        Transform point = child.Find("Point");
 		        EntranceRow entranceRow = new EntranceRow(count, point.position);
 		        m_entranceRows.Add(entranceRow);
+		        count += 1;
+	        }
+        }
+        
+        private void InitializeExitRows()
+        {
+	        m_exitRows = new List<EntranceRow>();
+	        int count = 0;
+	        foreach (Transform child in m_ExitRowsParent) {
+		        Transform point = child.Find("Point");
+		        EntranceRow entranceRow = new EntranceRow(count, point.position);
+		        m_exitRows.Add(entranceRow);
 		        count += 1;
 	        }
         }

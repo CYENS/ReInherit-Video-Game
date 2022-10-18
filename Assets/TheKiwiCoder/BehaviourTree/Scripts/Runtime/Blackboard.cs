@@ -10,14 +10,15 @@ namespace TheKiwiCoder {
     [System.Serializable]
     public class Blackboard {
         public Vector3 moveToPosition;
-        
         public GameObject garbage;
-        
         public GameObject exhibit;
         public int entranceRowId;
         public bool waitingForTicket;
         public bool inTicketRow;
         public bool destroyEnabled = false;
+        public List<int> visitedRooms;
+        public int exhibitIndex;
+        public int exhibitsVisited = 0;
         
         public List<Variable> variables;
 
