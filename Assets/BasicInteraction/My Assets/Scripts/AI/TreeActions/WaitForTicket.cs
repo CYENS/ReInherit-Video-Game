@@ -14,7 +14,7 @@ namespace Cyens.ReInherit
 
         private float GenerateRandomDuration()
         {
-            return UnityEngine.Random.Range(5f, 15f);
+            return UnityEngine.Random.Range(5f, 10f);
         }
 
         protected override void OnStart()

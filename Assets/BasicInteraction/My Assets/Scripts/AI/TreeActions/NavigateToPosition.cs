@@ -11,7 +11,7 @@ namespace  Cyens.ReInherit.Test.Example
         [SerializeField] private float m_stoppingDistance = 0.1f;
         [SerializeField] private bool m_updateRotation = true;
         [SerializeField] private float m_acceleration = 40.0f;
-        [SerializeField] private float m_tolerance = 1.5f;
+        [SerializeField] private float m_tolerance = 2f;
 
         private float SetRandomSpeed()
         {

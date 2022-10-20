@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1175206550680075181}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2583944403858263302}
@@ -80,7 +80,7 @@ Transform:
   m_GameObject: {fileID: 2207729309557398495}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 8.38, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 441420283890926957}
@@ -205,10 +205,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.75
+  radius: 0.5
   height: 0.9
   canMove: 1
-  maxSpeed: 2
+  maxSpeed: 1.45
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -221,15 +221,15 @@ MonoBehaviour:
   autoRepath:
     mode: 2
     interval: 0.5
-    sensitivity: 10
+    sensitivity: 14
     maximumInterval: 1
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
-  maxAcceleration: 2
-  rotationSpeed: 360
+  maxAcceleration: -2.5
+  rotationSpeed: 540
   slowdownDistance: 0.5
   pickNextWaypointDist: 2
-  endReachedDistance: 0.1
+  endReachedDistance: 0.5
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0

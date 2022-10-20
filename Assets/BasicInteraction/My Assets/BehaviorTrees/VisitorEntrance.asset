@@ -69,7 +69,7 @@ MonoBehaviour:
   m_stoppingDistance: 0.1
   m_updateRotation: 1
   m_acceleration: 40
-  m_tolerance: 1
+  m_tolerance: 2
 --- !u!114 &-8244176717073811442
 MonoBehaviour:
   m_ObjectHideFlags: 0
