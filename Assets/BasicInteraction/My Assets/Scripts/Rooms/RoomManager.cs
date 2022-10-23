@@ -10,13 +10,13 @@ namespace Cyens.ReInherit
         private GameObject m_sign = null;
         private List<Collider> m_checkpoints;
         private Transform m_exhibitsParent;
-        private List<Vector3> m_exhibits;
+        private List<RoomExhibit> m_exhibits;
         private Vector3 m_checkpoint;
         [SerializeField] private bool m_rotateLeft = false;
         [SerializeField] private bool m_rotateRight = false;
         [SerializeField] private bool m_rotate180 = false;
         
-        public List<Vector3> GetExhibits()
+        public List<RoomExhibit> GetExhibits()
         {
             return m_exhibits;
         }
@@ -58,6 +58,7 @@ namespace Cyens.ReInherit
             return m_checkpoint;
         }
 
+        //Get room checkpoints/doord
         private void GetCheckpoints()
         {
             Transform parent = transform.Find("CheckPointColliders");
@@ -69,6 +70,7 @@ namespace Cyens.ReInherit
             }
         }
 
+        //Find exit checkpoint/door. The checkpoint that the sign points to 
         private void AssignCheckpoint()
         {
             if(m_checkpoints == null || m_checkpoints.Count == 0 || m_sign == null)
@@ -83,6 +85,7 @@ namespace Cyens.ReInherit
             }
         }
 
+        //Sort exhibits in a circular order in list
         private void AssignExhibits()
         {
             if (m_exhibitsParent == null) {
@@ -90,15 +93,15 @@ namespace Cyens.ReInherit
                 return;
             }
             
-            m_exhibits = new List<Vector3>();
-            m_exhibits.Add(m_exhibitsParent.GetChild(0).position);
+            m_exhibits = new List<RoomExhibit>();
+            m_exhibits.Add(m_exhibitsParent.GetChild(0).GetComponent<RoomExhibit>());
 
             int nextIndex = 0;
             while(m_exhibits.Count < m_exhibitsParent.childCount){
                 float dis = Single.PositiveInfinity;
                 int index = 0;
                 for (int i = 0; i < m_exhibitsParent.childCount; i++) {
-                    if (nextIndex != i && !m_exhibits.Contains(m_exhibitsParent.GetChild(i).position)) {
+                    if (nextIndex != i && !m_exhibits.Contains(m_exhibitsParent.GetChild(i).GetComponent<RoomExhibit>())) {
                         float disTemp = Vector3.Distance(m_exhibitsParent.GetChild(nextIndex).position,
                             m_exhibitsParent.GetChild(i).position);
                         if (disTemp < dis) {
@@ -107,7 +110,7 @@ namespace Cyens.ReInherit
                         }
                     }
                 }
-                m_exhibits.Add(m_exhibitsParent.GetChild(index).position);
+                m_exhibits.Add(m_exhibitsParent.GetChild(index).GetComponent<RoomExhibit>());
                 nextIndex = index;
             }
 

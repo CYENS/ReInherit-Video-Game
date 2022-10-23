@@ -1,40 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9101951930904771665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 748f4bd06def6aa438ff3ad1e092b52c, type: 3}
-  m_Name: NavigateToPosition
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 03ecbbb3bb7edd24fa5a79ffdb2665b9
-  position: {x: 374.94232, y: 120.57141}
-  blackboard:
-    moveToPosition: {x: 0, y: 0, z: 0}
-    garbage: {fileID: 0}
-    exhibit: {fileID: 0}
-    entranceRowId: 0
-    waitingForTicket: 0
-    inTicketRow: 0
-    destroyEnabled: 0
-    visitedRooms: 
-    exhibitIndex: 0
-    exhibitsVisited: 0
-    variables: []
-  description: 
-  drawGizmos: 0
-  m_speed: 5
-  m_stoppingDistance: 0.1
-  m_updateRotation: 1
-  m_acceleration: 40
-  m_tolerance: 1
 --- !u!114 &-8499611682381254707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,10 +23,17 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
   description: Navigate inside museum
   drawGizmos: 0
@@ -93,10 +65,17 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
   description: Get a point to buy ticket
   drawGizmos: 0
@@ -123,10 +102,17 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
   description: Wait some time to get a ticket
   drawGizmos: 0
@@ -146,7 +132,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: d77e13b6b8b9a424aa40a1ae29ec3afa
-  position: {x: 280, y: -134.25714}
+  position: {x: 388, y: -138}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -154,10 +140,17 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
   description: 
   drawGizmos: 0
@@ -179,7 +172,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 03187c400bbbd6241adff8f503fabbd1
-  position: {x: 279.71432, y: -24.564297}
+  position: {x: 388.00012, y: -15.50595}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -187,16 +180,25 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
   description: Sequence nodes to explore museum
   drawGizmos: 0
   children:
   - {fileID: 8500243018425164982}
-  - {fileID: -9101951930904771665}
+  - {fileID: 1433118983618406183}
+  - {fileID: 2766547256363266015}
+  - {fileID: 7436548662878258181}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +224,9 @@ MonoBehaviour:
   - {fileID: 4660996775788038717}
   - {fileID: 8500243018425164982}
   - {fileID: -6120380361703070014}
-  - {fileID: -9101951930904771665}
+  - {fileID: 2766547256363266015}
+  - {fileID: 1433118983618406183}
+  - {fileID: 7436548662878258181}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -230,11 +234,98 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
+--- !u!114 &1433118983618406183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa99b68bcbe9ae9459edfdfafbb16e33, type: 3}
+  m_Name: CheckForExhibit
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 10531d3e83c31b84782fb6718640f076
+  position: {x: 388, y: 152.99997}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    entranceRowId: 0
+    waitingForTicket: 0
+    inTicketRow: 0
+    moveToExit: 0
+    rooms: []
+    visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
+    exhibitIndex: 0
+    exhibitPosIndex: 0
+    exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
+    variables: []
+  description: 
+  drawGizmos: 0
+  m_exhibitsList: []
+--- !u!114 &2766547256363266015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 748f4bd06def6aa438ff3ad1e092b52c, type: 3}
+  m_Name: NavigateToPosition
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ac0e6fe239dc2d448ad95a92c50ac4f3
+  position: {x: 560.745, y: 153.00002}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    entranceRowId: 0
+    waitingForTicket: 0
+    inTicketRow: 0
+    moveToExit: 0
+    rooms: []
+    visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
+    exhibitIndex: 0
+    exhibitPosIndex: 0
+    exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
+    variables: []
+  description: 
+  drawGizmos: 0
+  m_speed: 5
+  m_stoppingDistance: 0.1
+  m_updateRotation: 1
+  m_acceleration: 40
+  m_tolerance: 2
 --- !u!114 &4500295125673685233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,10 +349,17 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
   description: Navigate to the ticket point
   drawGizmos: 0
@@ -289,10 +387,17 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
   description: 
   drawGizmos: 0
@@ -322,10 +427,17 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
   description: 
   drawGizmos: 0
@@ -353,10 +465,17 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
   description: Sequence nodes to enter the museum
   drawGizmos: 0
@@ -365,6 +484,45 @@ MonoBehaviour:
   - {fileID: 4500295125673685233}
   - {fileID: -6274513279585208799}
   - {fileID: -8499611682381254707}
+--- !u!114 &7436548662878258181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9926488220024f94c8dade48fcff8de0, type: 3}
+  m_Name: WaitTime
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: a9453a2f531847a4bb8541d3758bcd34
+  position: {x: 738.00006, y: 152.99998}
+  blackboard:
+    moveToPosition: {x: 0, y: 0, z: 0}
+    garbage: {fileID: 0}
+    exhibit: {fileID: 0}
+    entranceRowId: 0
+    waitingForTicket: 0
+    inTicketRow: 0
+    moveToExit: 0
+    rooms: []
+    visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
+    exhibitIndex: 0
+    exhibitPosIndex: 0
+    exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
+    variables: []
+  description: 
+  drawGizmos: 0
+  m_lowRange: 1
+  m_highRange: 4
 --- !u!114 &8500243018425164982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,7 +538,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 601590d3f3efa1543a2c259c7326dc1b
-  position: {x: 202.95714, y: 120.57141}
+  position: {x: 211.50592, y: 152.99997}
   blackboard:
     moveToPosition: {x: 0, y: 0, z: 0}
     garbage: {fileID: 0}
@@ -388,12 +546,17 @@ MonoBehaviour:
     entranceRowId: 0
     waitingForTicket: 0
     inTicketRow: 0
-    destroyEnabled: 0
+    moveToExit: 0
+    rooms: []
     visitedRooms: 
+    currentRoom: {fileID: 0}
+    nextRoom: {fileID: 0}
+    exhibitInitial: 1
     exhibitIndex: 0
+    exhibitPosIndex: 0
     exhibitsVisited: 0
+    firstExhibit: 1
+    waitSeeExhibit: 0
     variables: []
   description: 
   drawGizmos: 0
-  m_currentRoom: {fileID: 0}
-  m_exhibitsList: []

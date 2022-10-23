@@ -205,10 +205,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.5
+  radius: 0.75
   height: 0.9
   canMove: 1
-  maxSpeed: 1.45
+  maxSpeed: 2
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -225,11 +225,11 @@ MonoBehaviour:
     maximumInterval: 1
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
-  maxAcceleration: -2.5
+  maxAcceleration: 2
   rotationSpeed: 540
   slowdownDistance: 0.5
   pickNextWaypointDist: 2
-  endReachedDistance: 0.5
+  endReachedDistance: 0.25
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   centerBackingField: 1
   locked: 0
   lockWhenNotMoving: 0
-  agentTimeHorizon: 3
+  agentTimeHorizon: 4
   obstacleTimeHorizon: 3
   maxNeighbours: 50
   layer: 257

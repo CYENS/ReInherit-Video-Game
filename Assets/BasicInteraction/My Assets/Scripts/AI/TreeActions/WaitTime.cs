@@ -7,24 +7,28 @@ namespace Cyens.ReInherit
 {
     public class WaitTime : ActionNode
     {
-        [SerializeField] private float m_duration = 1.0f;
-        [SerializeField] private bool m_randomDuration = false;
+        private float m_duration = 1.0f;
+        [SerializeField] private float m_lowRange;
+        [SerializeField] private float m_highRange;
         private float m_startTime;
 
         private float GenerateRandomDuration()
         {
-            return UnityEngine.Random.Range(0f, 5f);
+            return UnityEngine.Random.Range(m_lowRange, m_highRange);
         }
         
         protected override void OnStart() {
             m_startTime = Time.time;
-            if (m_randomDuration) m_duration = GenerateRandomDuration();
+            m_duration = GenerateRandomDuration();
         }
 
         protected override void OnStop() {
         }
 
-        protected override State OnUpdate() {
+        protected override State OnUpdate()
+        {
+            if (blackboard.waitSeeExhibit == false)
+                return State.Success;
             if (Time.time - m_startTime > m_duration) {
                 return State.Success;
             }

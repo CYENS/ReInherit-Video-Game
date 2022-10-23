@@ -56,7 +56,7 @@ namespace  Cyens.ReInherit.Test.Example
                     return State.Running;
                 }
                 if (context.agentAstar.remainingDistance < m_tolerance) {
-                    if(blackboard.destroyEnabled)
+                    if(blackboard.moveToExit)
                         Destroy(context.gameObject);
                     return State.Success;
                 }

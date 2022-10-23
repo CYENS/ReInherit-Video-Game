@@ -10,96 +10,49 @@ using TheKiwiCoder;
 public class FindNextCheckpoint : ActionNode
 {
     private EntranceController m_entranceController;
-    private List<GameObject> m_rooms;
-    public GameObject m_currentRoom;
-    public List<Vector3> m_exhibitsList;
     private bool m_ready = false;
     
     protected override void OnStart()
     {
-        m_entranceController = GameObject.Find("Entrance").GetComponent<EntranceController>();
-        m_rooms = GameObject.FindGameObjectsWithTag("Room").ToList();
+        //If first time node running, initalize lists
+        if(blackboard.rooms == null || blackboard.rooms.Count == 0)
+            blackboard.rooms = GameObject.FindGameObjectsWithTag("Room").ToList();
         if (blackboard.visitedRooms == null)
             blackboard.visitedRooms = new List<int>();
-        
-        Vector3 destination = Vector3.zero;
-        bool leaveRoom = true;
-        GameObject room = null;
-        if (blackboard.exhibitsVisited == 0)
-            room = FindNextRoom();
-        else 
-            room = FindCurrentRoom();
-        
-        if (room.transform.Find("Exhibits") != null) {
-            leaveRoom = false;
-            RecastGraph graph = AstarPath.active.data.recastGraph;
-            if(GameObject.ReferenceEquals(room, m_currentRoom) == false && !IsRoomVisited(room)){
-                blackboard.exhibitsVisited = 0;
-                blackboard.exhibitIndex = GetNearestExhibit(room);
-                blackboard.exhibitsVisited += 1;
-                destination = (Vector3)graph.GetNearest(m_exhibitsList[blackboard.exhibitIndex]).node.position;
-            }
-            else {
-                blackboard.exhibitIndex += 1;
-                blackboard.exhibitsVisited += 1;
-                if (blackboard.exhibitsVisited >= m_exhibitsList.Count) {
-                    leaveRoom = true;
-                    blackboard.exhibitsVisited = 0;
-                }else
-                    destination = (Vector3)graph.GetNearest(m_exhibitsList[blackboard.exhibitIndex % m_exhibitsList.Count]).node.position;    
-            }
-            m_currentRoom = room;
-        }
-        
-        if(leaveRoom) {
-            m_currentRoom = FindCurrentRoom();
-            if (m_currentRoom.transform.Find("ExitSign") != null && IsRoomVisited(m_currentRoom) 
-                                                                 && blackboard.visitedRooms.Count > 2) {
-                destination = m_entranceController.GetExitRowPoint();
-                blackboard.destroyEnabled = true;
-            }
-            else {
-                destination = m_currentRoom.GetComponent<RoomManager>().Checkpoint();
-            }
-        }
-        if(!blackboard.visitedRooms.Contains(m_currentRoom.GetInstanceID()))
-            blackboard.visitedRooms.Add(m_currentRoom.GetInstanceID());
 
+        Vector3 destination = Vector3.zero;
+        blackboard.currentRoom = FindCurrentRoom();
+        blackboard.nextRoom = FindNextRoom();
+        //if the current room has an exit sign and is not first time visited, navigate to exit
+        if (blackboard.currentRoom.transform.Find("ExitSign") != null 
+            && IsRoomVisited(blackboard.currentRoom) && blackboard.visitedRooms.Count > 2) {
+            m_entranceController = GameObject.Find("Entrance").GetComponent<EntranceController>();
+            destination = m_entranceController.GetExitRowPoint();
+            blackboard.moveToExit = true;
+        }
+        else {
+            destination = blackboard.currentRoom.GetComponent<RoomManager>().Checkpoint();
+        }
+        
+        //Add current room to visited rooms list
+        if(!blackboard.visitedRooms.Contains(blackboard.currentRoom.GetInstanceID()))
+            blackboard.visitedRooms.Add(blackboard.currentRoom.GetInstanceID());
+
+        //Set next point the exit door of the room.
+        //If agent has to see exhibits in current room, will manage that
+        //the next node in tree sequence
         blackboard.moveToPosition.x = destination.x;
         blackboard.moveToPosition.y = destination.y;
         blackboard.moveToPosition.z = destination.z;
         m_ready = true;
     }
 
-    private int GetNearestExhibit(GameObject room)
-    {
-        m_exhibitsList = new List<Vector3>(room.GetComponent<RoomManager>().GetExhibits());
-        int index = 0;
-        float dis = Single.PositiveInfinity;
-        for (int i = 0; i < m_exhibitsList.Count; i++) {
-            float disTemp = Vector3.Distance(context.transform.position, m_exhibitsList[i]);
-            if (disTemp < dis) {
-                dis = disTemp;
-                index = i;
-            }
-        }
-
-        return index;
-    }
-
-    private bool IsRoomVisited(GameObject room)
-    {
-        if (blackboard.visitedRooms.Contains(room.GetInstanceID()))
-            return true;
-        return false;
-    }
-
-    //Get next nearest room
+    //Find current room the agent is in
     private GameObject FindCurrentRoom()
     {
         float distance = Single.PositiveInfinity;
-        GameObject nearestRoom = m_rooms[0];
-        foreach (var room in m_rooms) {
+        GameObject nearestRoom = blackboard.rooms[0];
+        foreach (var room in blackboard.rooms) {
             float tempDis = Vector3.Distance(room.transform.position, context.transform.position);
             if (tempDis < distance) {
                 distance = tempDis;
@@ -109,13 +62,15 @@ public class FindNextCheckpoint : ActionNode
         return nearestRoom;
     }
 
+    //Get next nearest room that agent will enter
     private GameObject FindNextRoom()
     {
         float distance = Single.PositiveInfinity;
-        GameObject nearestRoom = m_rooms[0];
-        foreach (var room in m_rooms) {
-            float tempDis = Vector3.Distance(room.transform.position, context.transform.position);
-            if (tempDis < distance && GameObject.ReferenceEquals( m_currentRoom, room) == false) {
+        GameObject nearestRoom = blackboard.rooms[0];
+        Vector3 checkpoint = blackboard.currentRoom.GetComponent<RoomManager>().Checkpoint();
+        foreach (var room in blackboard.rooms) {
+            float tempDis = Vector3.Distance(room.transform.position, checkpoint);
+            if (tempDis < distance && GameObject.ReferenceEquals(blackboard.currentRoom, room) == false) {
                 distance = tempDis;
                 nearestRoom = room;
             }
@@ -123,6 +78,14 @@ public class FindNextCheckpoint : ActionNode
         return nearestRoom;
     }
 
+    //Check if room is already visited
+    private bool IsRoomVisited(GameObject room)
+    {
+        if (blackboard.visitedRooms.Contains(room.GetInstanceID()))
+            return true;
+        return false;
+    }
+    
     protected override void OnStop() {
     }
     
