@@ -114,6 +114,9 @@ namespace Cyens.ReInherit
                 }
             }
 
+            if (id >= spawnPoints.Count)
+	            id = id % spawnPoints.Count;
+            
         	return spawnPoints[id];
     	}
     
@@ -152,7 +155,7 @@ namespace Cyens.ReInherit
         //Spawn agents with a random interval
     	private IEnumerator InstantiateAgents()
     	{
-        	WaitForSeconds wait = new WaitForSeconds(UnityEngine.Random.Range(1f, 10f));
+        	WaitForSeconds wait = new WaitForSeconds(UnityEngine.Random.Range(4f, 12.5f));
         	for (int i = 1; i < m_numOfAgents; i++)
         	{
             	//--------Select Spawn Area-------------
