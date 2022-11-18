@@ -13,11 +13,13 @@ namespace Cyens.ReInherit
         private LayerMask m_layerMask;
 
 
-        private bool isSelected => this == m_manager.currentlySelected;
+        private bool m_selected;
+        
+        
+        public bool isSelected => m_selected;
 
 
-        [SerializeField] private GameObject white;
-        [SerializeField] private GameObject green;
+        private HighlightController[] m_highlightControllers;
 
         
         private bool IsLayerValid( int layer )
@@ -30,6 +32,27 @@ namespace Cyens.ReInherit
             LayerMask newMask = 1 << layer;
             return (m_layerMask & newMask) != 0;
         }
+
+
+        private void OnDisable() => DeSelect();
+        
+        private void OnDestroy() => DeSelect();
+        
+
+        public void Select()
+        {
+            m_selected = true;
+            foreach (var highlightController in m_highlightControllers)
+                highlightController.Select();
+        }
+
+        public void DeSelect()
+        {
+            m_selected = false;
+            foreach (var highlightController in m_highlightControllers)
+                highlightController.DeSelect();
+        }
+        
         
         private void PickValidLayer()
         {
@@ -55,12 +78,9 @@ namespace Cyens.ReInherit
             // Automatically pick a layer that will be visible to the 
             // selection system
             PickValidLayer();
-        }
 
-        private void Update()
-        {
-            white.SetActive( isSelected == false );
-            green.SetActive( isSelected == true );
+            m_highlightControllers = GetComponentsInChildren<HighlightController>(true);
         }
+        
     }
 }

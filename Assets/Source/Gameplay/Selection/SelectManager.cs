@@ -47,6 +47,25 @@ namespace Cyens.ReInherit
             singleton = this;
         }
 
+
+        /// <summary>
+        /// Casts a ray to see if there's a selectable object in the way
+        /// </summary>
+        /// <param name="ray"></param>
+        /// <returns></returns>
+        protected Selectable CastRay(Ray ray)
+        {
+            Selectable selectable = null;
+            RaycastHit hitInfo;
+            Debug.DrawRay(ray.origin,ray.direction*1000, Color.red, 1.0f);
+            if (Physics.Raycast(ray, out hitInfo, 1000, layerMask)) {
+
+                GameObject hitTarget = hitInfo.transform.gameObject;
+                selectable = hitTarget.GetComponent<Selectable>();
+            }
+            return selectable;
+        }
+        
         /// <summary>
         /// Perform check to see if an object or character is selected
         /// </summary>
@@ -55,33 +74,28 @@ namespace Cyens.ReInherit
         {
             // Debug.Log("Clicked Left Mouse Button");
 
-            // Create ray
+            // Create and cast ray
             Vector3 screenPoint = new Vector3(m_pointerPos.x, m_pointerPos.y, m_camera.nearClipPlane);
             Vector3 worldPoint = m_camera.ScreenToWorldPoint(screenPoint);
             Vector3 rayForward = worldPoint - m_camera.transform.position;
-
             Ray ray = new Ray(worldPoint, rayForward);
+            Selectable selectable = CastRay(ray);
             
-            // Cast ray
-            bool hit = false;
-            RaycastHit hitInfo;
-            Debug.DrawRay(ray.origin,ray.direction*1000, Color.red, 1.0f);
-            if (Physics.Raycast(ray,out hitInfo, 1000, layerMask)) {
+            // Case: when the ray hits a selectable object
+            if (selectable != null) {
                 
-                GameObject hitTarget = hitInfo.transform.gameObject;
-                Selectable selectable = hitTarget.GetComponent<Selectable>();
-                if (selectable != null) {
-                    
-                    currentlySelected = selectable;
-                    hit = true;
-                    Debug.Log("Selected "+hitTarget);
-                }
-            }
+                if( currentlySelected != null )
+                    currentlySelected.DeSelect();
 
-            if (hit == false && (currentlySelected != null)) {
-                Debug.Log("Deselected everything");
+                currentlySelected = selectable;
+                currentlySelected.Select();
+            }
+            // Case: when the ray misses. If there's an already selected object, deselect it
+            else if( currentlySelected != null ) {
+                currentlySelected.DeSelect();
                 currentlySelected = null;
             }
+
         }
 
         /// <summary>
