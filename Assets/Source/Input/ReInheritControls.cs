@@ -264,6 +264,15 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Target"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef9694bc-a330-4669-b346-0b83ac6e9a65"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -286,6 +295,17 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f53f2c25-6bdc-492d-b288-34550f9daf61"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Target"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -352,6 +372,7 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
         m_GamePlay = asset.FindActionMap("GamePlay", throwIfNotFound: true);
         m_GamePlay_Select = m_GamePlay.FindAction("Select", throwIfNotFound: true);
         m_GamePlay_Point = m_GamePlay.FindAction("Point", throwIfNotFound: true);
+        m_GamePlay_Target = m_GamePlay.FindAction("Target", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -470,12 +491,14 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
     private IGamePlayActions m_GamePlayActionsCallbackInterface;
     private readonly InputAction m_GamePlay_Select;
     private readonly InputAction m_GamePlay_Point;
+    private readonly InputAction m_GamePlay_Target;
     public struct GamePlayActions
     {
         private @ReInheritControls m_Wrapper;
         public GamePlayActions(@ReInheritControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Select => m_Wrapper.m_GamePlay_Select;
         public InputAction @Point => m_Wrapper.m_GamePlay_Point;
+        public InputAction @Target => m_Wrapper.m_GamePlay_Target;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -491,6 +514,9 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
                 @Point.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPoint;
                 @Point.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPoint;
                 @Point.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPoint;
+                @Target.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnTarget;
+                @Target.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnTarget;
+                @Target.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnTarget;
             }
             m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
             if (instance != null)
@@ -501,6 +527,9 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
+                @Target.started += instance.OnTarget;
+                @Target.performed += instance.OnTarget;
+                @Target.canceled += instance.OnTarget;
             }
         }
     }
@@ -552,5 +581,6 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
     {
         void OnSelect(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
+        void OnTarget(InputAction.CallbackContext context);
     }
 }

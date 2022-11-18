@@ -15,6 +15,8 @@ namespace Cyens.ReInherit
 
         [SerializeField] private Sprite spriteDefault;
         [SerializeField] private Sprite spriteLeftMouse;
+        [SerializeField] private Sprite spriteRightMouse;
+
 
         protected new void Awake()
         {
@@ -28,7 +30,12 @@ namespace Cyens.ReInherit
             m_image.sprite = spriteLeftMouse;
             m_timer = 0.5f;
         }
-
+        protected override void OnTarget(InputAction.CallbackContext context)
+        {
+            m_image.sprite = spriteRightMouse;
+            m_timer = 0.5f;
+        }
+        
         private void Update()
         {
             m_timer = Mathf.Max(m_timer - Time.deltaTime, 0.0f);

@@ -24,6 +24,7 @@ namespace Cyens.ReInherit
             m_controls.Enable();
             m_controls.GamePlay.Select.performed += OnSelect;
             m_controls.GamePlay.Point.performed += OnMove;
+            m_controls.GamePlay.Target.performed += OnTarget;
         }
 
         private void OnDisable()
@@ -31,6 +32,7 @@ namespace Cyens.ReInherit
             m_controls.Disable();
             m_controls.GamePlay.Select.performed -= OnSelect;
             m_controls.GamePlay.Point.performed -= OnMove;
+            m_controls.GamePlay.Target.performed -= OnTarget;
         }
 
 
@@ -43,6 +45,15 @@ namespace Cyens.ReInherit
             
         }
 
+        /// <summary>
+        /// Placeholder for target action (right mouse-click)
+        /// </summary>
+        /// <param name="context"></param>
+        protected virtual void OnTarget(InputAction.CallbackContext context)
+        {
+            
+        }
+        
 
         /// <summary>
         /// Update pointer position.
