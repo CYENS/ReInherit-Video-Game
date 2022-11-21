@@ -6,46 +6,32 @@ using UnityEngine;
 namespace Cyens.ReInherit
 {
     /// <summary>
-    /// A script that changes the material of the current object, if it is selected.
-    /// If unselected is switches back to the original material.
+    /// A script that outlines the current object, if it is selected.
+    /// If unselected is switches back with the outliner removed.
     /// </summary>
     public class HighlightController : MonoBehaviour
     {
         private bool m_selected = false;
-
-        private Renderer m_renderer;
-
-        
-        [SerializeField]
-        [Tooltip("The material to swap to if selected")]
-        private Material highlightMaterial;
-
-        private Material m_originalMaterial;
-        
-        
-        protected void Awake()
-        {
-            m_renderer = GetComponent<Renderer>();
-            m_originalMaterial = m_renderer.sharedMaterial;
-        }
+        private Outline outlineScript;
 
         public void Select()
         {
             if (m_selected) return;
             m_selected = true;
-            m_renderer.sharedMaterial = highlightMaterial;
+            outlineScript.enabled = true;
         }
 
         public void DeSelect()
         {
             if (!m_selected) return;
             m_selected = false;
-            m_renderer.sharedMaterial = m_originalMaterial;
+            outlineScript.enabled = false;
         }
-        
-        private void Update()
+
+        private void Start()
         {
-            
+            outlineScript = GetComponent<Outline>();
         }
+
     }
 }
