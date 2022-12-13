@@ -66,6 +66,11 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+#Ignore item inventory system plugin
+/[Aa]ssets/Devion*
+/[Aa]ssets/Devion*/*
+
+
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
