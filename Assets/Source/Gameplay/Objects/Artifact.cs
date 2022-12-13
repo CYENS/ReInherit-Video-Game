@@ -4,8 +4,14 @@ using UnityEngine;
 
 namespace Cyens.ReInherit
 {
-    public class EmployeeUnit : BaseUnit
+    /// <summary>
+    /// Represents a single artifact.
+    /// </summary>
+    public class Artifact : MonoBehaviour
     {
+        [SerializeField]
+        private ArtifactData data;
+        
         // Start is called before the first frame update
         void Start()
         {

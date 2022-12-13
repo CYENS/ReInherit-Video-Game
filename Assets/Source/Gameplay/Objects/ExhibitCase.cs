@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Cyens.ReInherit
 {
-    public class EmployeeUnit : BaseUnit
+    public class ExhibitCase : MonoBehaviour
     {
         // Start is called before the first frame update
         void Start()

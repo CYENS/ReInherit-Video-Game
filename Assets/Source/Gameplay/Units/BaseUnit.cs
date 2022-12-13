@@ -8,7 +8,7 @@ namespace Cyens.ReInherit
 {
     public class BaseUnit : MonoBehaviour
     {
-        private AIPath m_aiPath;
+        protected AIPath m_aiPath;
 
         public GameObject target;
         
@@ -20,12 +20,13 @@ namespace Cyens.ReInherit
             //m_aiPath.destination = target.transform.position;
         }
 
-        public void SetTarget(GameObject newTarget)
+        public virtual void SetTarget(GameObject newTarget)
         {
+            // Is the target a waypoint?
             WayPoint wayPoint = newTarget.GetComponent<WayPoint>();
             if (wayPoint != null) {
 
-                if (target != null) {
+                if (target != null && (target.GetComponent<WayPoint>() != null ) )  {
                     Destroy(target);
                 }
                 

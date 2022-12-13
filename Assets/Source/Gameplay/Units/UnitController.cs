@@ -25,6 +25,12 @@ namespace Cyens.ReInherit
         [Tooltip("Which layers block rays")]
         private LayerMask layerMask;
 
+
+        [SerializeField] 
+        [Tooltip("Layers for which we create a waypoint when interacting with them")]
+        private LayerMask navigateMask;
+        
+        
         protected struct HitInfo
         {
             public Vector3 point;
@@ -82,11 +88,20 @@ namespace Cyens.ReInherit
             Ray ray = new Ray(worldPoint, rayForward);
 
             HitInfo hitInfo = CastRay(ray);
-            
-            
-            // By default set way point
-            GameObject wp = Instantiate(wayPointPrefab, hitInfo.point, Quaternion.identity);
-            m_unit.SetTarget(wp);
+
+            if (hitInfo.target != null) {
+
+                GameObject target = hitInfo.target;
+                bool createWayPoint = (target.layer & navigateMask) != 0;
+                
+                if (createWayPoint) {
+                    GameObject wp = Instantiate(wayPointPrefab, hitInfo.point, Quaternion.identity);
+                    m_unit.SetTarget(wp);
+                }
+                else {
+                    m_unit.SetTarget(target);
+                }
+            }
         }
         
         /// <summary>
