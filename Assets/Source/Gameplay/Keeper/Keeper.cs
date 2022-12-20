@@ -24,7 +24,7 @@ namespace Cyens.ReInherit
         // Start is called before the first frame update
         void Start()
         {
-            m_keeperManager = transform.parent.GetComponent<KeeperManager>();
+            m_keeperManager = KeeperManager.Instance; 
             m_aiPath = GetComponent<AIPath>();
             FindRenderers();
             EnableDisableRenderers(false);
