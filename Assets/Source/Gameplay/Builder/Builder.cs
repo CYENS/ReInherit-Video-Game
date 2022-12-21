@@ -7,24 +7,24 @@ using Pathfinding;
 
 namespace Cyens.ReInherit
 {
-    public class Keeper : MonoBehaviour
+    public class Builder : MonoBehaviour
     {
-        [SerializeField]
-        private enum State {Idle, Ready, CarryExhibit, PlacingExhibit, Returning }
+        public enum State {Idle, Ready, MovingToRoom, MovingToRoomPoint, Building, Returning }
+        private enum BuilderType {Carpenter, Concreter, Plumber, Electrician, Welder}
 
-        private KeeperManager m_keeperManager;
+        private BuilderManager m_builderManager;
         private List<Renderer> m_renderers;
         private AIPath m_aiPath;
-        [SerializeField] private GameObject m_carryBox;
         [SerializeField] private State m_state = State.Ready;
-        [SerializeField] private float m_placingTimer = 0f;
+        [SerializeField] private BuilderType m_builderType;
+        [SerializeField] private float m_buildingTimer = 0f;
         [SerializeField] private float m_idleTimer = 0;
-
+        private Vector3 m_roomEndPoint;
 
         // Start is called before the first frame update
         void Start()
         {
-            m_keeperManager = KeeperManager.Instance; 
+            m_builderManager = BuilderManager.Instance; 
             m_aiPath = GetComponent<AIPath>();
             FindRenderers();
             EnableDisableRenderers(false);
@@ -38,9 +38,7 @@ namespace Cyens.ReInherit
             m_renderers = new List<Renderer>();
             foreach (Transform child in transform) {
                 if (child.TryGetComponent(out Renderer r)) {
-                    //Do not add box carry Renderer also
-                    if(!GameObject.ReferenceEquals(m_carryBox, child.gameObject))
-                        m_renderers.Add(r);
+                    m_renderers.Add(r);
                 }
             }
         }
@@ -60,41 +58,42 @@ namespace Cyens.ReInherit
         }
 
         /// <summary>
-        /// Execute keeper logic
+        /// Execute builder logic
         /// </summary>
-        private void ExecuteKeeperLogic()
+        private void ExecuteBuilderLogic()
         {
             switch (m_state) {
-                //Keeper is ready to carry next exhibit; check for new task
+                //Builder is ready to be assign to a room; check for new task
                 case State.Ready: {
-                    if (m_keeperManager.IsNewTaskAvailable()) {
-                        Vector3 exhibitPoint = m_keeperManager.GetNextTask();
-                        SetMovePosition(exhibitPoint);
-                        m_state = State.CarryExhibit;
-                        EnableDisableRenderers(true);
-                        m_carryBox.SetActive(true);
+                    break;
+                }
+                //Builder moving towards room; check if arrived at place
+                case State.MovingToRoom: {
+                    EnableDisableRenderers(true);
+                    if (m_aiPath.remainingDistance < 4f && m_aiPath.pathPending == false) {
+                        SetMovePosition(m_roomEndPoint);
+                        m_state = State.MovingToRoomPoint;
                     }
                     break;
                 }
-                //Keeper is carrying an exhibit; check if arrived at place
-                case State.CarryExhibit: {
-                    if (m_aiPath.remainingDistance < 1f && m_aiPath.pathPending == false) {
-                        m_state = State.PlacingExhibit;
-                        m_placingTimer = 0f;
-                        m_carryBox.SetActive(false);
+                //Builder moving specific point in room; check if arrived at place
+                case State.MovingToRoomPoint: {
+                    if (m_aiPath.remainingDistance < 0.5f && m_aiPath.pathPending == false) {
+                        m_state = State.Building;
+                        m_buildingTimer = 0f;
                     }
                     break;
                 }
-                //keeper is placing the exhibit; check if done
-                case State.PlacingExhibit: {
-                    if (m_placingTimer >= m_keeperManager.GetPlacingDelay()) {
-                        Vector3 basePoint = m_keeperManager.GetBasePosition();
+                //Builder is currenlty building; check if done
+                case State.Building: {
+                    if (m_buildingTimer >= m_builderManager.GetBuildingDelay()) {
+                        Vector3 basePoint = m_builderManager.GetBasePosition();
                         SetMovePosition(basePoint);
                         m_state = State.Returning;
                     }
                     break;
                 }
-                //Keeper is returning to base; check if arrived
+                //Builder is returning to base; check if arrived
                 case State.Returning: {
                     if (m_aiPath.remainingDistance < 0.5f  && m_aiPath.pathPending == false) {
                         m_state = State.Idle;
@@ -103,9 +102,9 @@ namespace Cyens.ReInherit
                     }
                     break;
                 }
-                //Keeper is idling; check if timer passed for becoming ready
+                //Builder is idling; check if timer passed for becoming ready
                 case State.Idle: {
-                    if (m_idleTimer >= m_keeperManager.GetIdleDelay()) {
+                    if (m_idleTimer >= m_builderManager.GetIdleDelay()) {
                         m_state = State.Ready;
                     }
                     break;
@@ -116,16 +115,16 @@ namespace Cyens.ReInherit
         // Update is called once per frame
         void Update()
         {
-            ExecuteKeeperLogic();
+            ExecuteBuilderLogic();
         }
 
         private void FixedUpdate()
         {
             //Timers
-            if (m_state == State.PlacingExhibit)
-                m_placingTimer += Time.fixedDeltaTime;
+            if (m_state == State.Building)
+                m_buildingTimer += Time.fixedDeltaTime;
             else
-                m_placingTimer = 0f;
+                m_buildingTimer = 0f;
             
             if (m_state == State.Idle)
                 m_idleTimer += Time.fixedDeltaTime;
@@ -133,10 +132,33 @@ namespace Cyens.ReInherit
                 m_idleTimer = 0f;
         }
 
+        public void SetState(State state)
+        {
+            m_state = state;
+        }
+
+        public State GetState()
+        {
+            return m_state;
+        }
+
+        public void SetRoomEndPoint(Vector3 point)
+        {
+            m_roomEndPoint = point;
+        }
+
         private void SetMovePosition(Vector3 position)
         {
             m_aiPath.destination = position;
             m_aiPath.SearchPath();
+        }
+        
+        public IEnumerator SetMovePosition(Vector3 position, float seconds, State state)
+        {
+            yield return new WaitForSeconds(seconds);
+            m_aiPath.destination = position;
+            m_aiPath.SearchPath();
+            m_state = state;
         }
     }
 }
