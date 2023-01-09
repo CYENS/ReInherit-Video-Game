@@ -19,6 +19,7 @@ namespace Cyens.ReInherit
         [SerializeField] private State m_state = State.Ready;
         [SerializeField] private float m_placingTimer = 0f;
         [SerializeField] private float m_idleTimer = 0;
+        [SerializeField] private GameObject m_showcasePrefab;
 
 
         // Start is called before the first frame update
@@ -79,6 +80,7 @@ namespace Cyens.ReInherit
                 //Keeper is carrying an exhibit; check if arrived at place
                 case State.CarryExhibit: {
                     if (m_aiPath.remainingDistance < 1f && m_aiPath.pathPending == false) {
+                        Instantiate(m_showcasePrefab, m_aiPath.destination + new Vector3(0,0,2f), Quaternion.identity);
                         m_state = State.PlacingExhibit;
                         m_placingTimer = 0f;
                         m_carryBox.SetActive(false);
