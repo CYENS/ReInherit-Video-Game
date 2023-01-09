@@ -20,6 +20,14 @@ namespace Cyens.ReInherit
         private Status status;
 
 
+        public Status GetStatus() => status;
+
+        public ArtifactData GetData() => data;
+        public Mesh GetMesh() => data.mesh;
+        public string GetLabel() => data.label;
+
+        
+
         public void SetStatus( Status newStatus )
         {
             status = newStatus;

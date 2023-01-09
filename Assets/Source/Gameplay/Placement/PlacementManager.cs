@@ -183,6 +183,7 @@ namespace Cyens.ReInherit
             if( active == false )
             {
                 ghostMaterial.color = invisible;
+                ghostShadow.gameObject.SetActive(false);
                 validPlacement = false;
                 return;
             }
@@ -213,6 +214,7 @@ namespace Cyens.ReInherit
 
 
             // Change color
+            ghostShadow.gameObject.SetActive(true);
             ghostMaterial.color = validPlacement ? green : red;
         }
     }

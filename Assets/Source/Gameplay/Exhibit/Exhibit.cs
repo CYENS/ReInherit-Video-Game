@@ -7,18 +7,15 @@ namespace Cyens.ReInherit
     public class Exhibit : MonoBehaviour
     {
         public Transform placementPoint;
-        public Artifact artifact;
+
+        public ExhibitSlot[] slots;
 
         private void Awake()
         {
+            slots = GetComponentsInChildren<ExhibitSlot>();
             
         }
 
-        public void AddArtifact(Artifact artifact)
-        {
-            this.artifact = artifact;
-            artifact.transform.position = placementPoint.position;
 
-        }
     }
 }

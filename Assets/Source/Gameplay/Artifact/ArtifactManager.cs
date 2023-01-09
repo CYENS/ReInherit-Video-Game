@@ -5,8 +5,10 @@ using Cyens.ReInherit.Patterns;
 
 namespace Cyens.ReInherit
 {
+    [DefaultExecutionOrder(-1000)]
     public class ArtifactManager : Singleton<ArtifactManager>
     {
         
+
     }
 }

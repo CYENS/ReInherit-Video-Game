@@ -38,7 +38,8 @@ namespace Cyens.ReInherit
 
             exhibit.gameObject.SetActive(true);
             exhibit.transform.position = point;
-            exhibit.AddArtifact(artifact);
+            //exhibit.AddArtifact(artifact);
+
             artifact.SetStatus(Artifact.Status.Exhibit);
             return true;
         }
