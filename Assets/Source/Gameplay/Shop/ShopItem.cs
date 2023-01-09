@@ -19,6 +19,13 @@ namespace Cyens.ReInherit
         [Header("References")]
         public TMP_Text priceTag;
 
+        [Header("Placement Settings")]
+
+        public Mesh ghostMesh;
+        public Vector3 ghostScale;
+        public GameObject spawnPrefab;
+        public Vector2 cellSize;
+
 
         // Start is called before the first frame update
         void Start()
@@ -35,6 +42,9 @@ namespace Cyens.ReInherit
 
         public void Purchase()
         {
+            if (PlacementManager.Instance.active == true) return;
+
+
             if (stock > 0)
             {
                 stock--;
@@ -55,8 +65,16 @@ namespace Cyens.ReInherit
             GameManager.SetFunds(funds);
 
             // TODO: Placement time!
+            stock--;
+            PlacementManager.Instance.Begin(gameObject, ghostMesh, ghostScale, spawnPrefab, cellSize);
 
             //if( stock <= 0 )
+            Refresh();
+        }
+
+        public void Cancel(string message)
+        {
+            stock++;
             Refresh();
         }
 
@@ -64,7 +82,7 @@ namespace Cyens.ReInherit
         // Update is called once per frame
         void Update()
         {
-        
+          
         }
     }
 }

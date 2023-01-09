@@ -257,6 +257,15 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""194e983f-15b9-417b-8586-508ec0c689d1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Point"",
                     ""type"": ""Value"",
                     ""id"": ""835d6d05-0f52-4d08-8890-544b8138f91d"",
@@ -306,6 +315,28 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Target"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8ebfe21-1ffb-4f2e-b134-dfcd4ebbcb7a"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c08ab448-cf51-4a33-982a-1ce839247a7a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -371,6 +402,7 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
         // GamePlay
         m_GamePlay = asset.FindActionMap("GamePlay", throwIfNotFound: true);
         m_GamePlay_Select = m_GamePlay.FindAction("Select", throwIfNotFound: true);
+        m_GamePlay_Cancel = m_GamePlay.FindAction("Cancel", throwIfNotFound: true);
         m_GamePlay_Point = m_GamePlay.FindAction("Point", throwIfNotFound: true);
         m_GamePlay_Target = m_GamePlay.FindAction("Target", throwIfNotFound: true);
     }
@@ -490,6 +522,7 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_GamePlay;
     private IGamePlayActions m_GamePlayActionsCallbackInterface;
     private readonly InputAction m_GamePlay_Select;
+    private readonly InputAction m_GamePlay_Cancel;
     private readonly InputAction m_GamePlay_Point;
     private readonly InputAction m_GamePlay_Target;
     public struct GamePlayActions
@@ -497,6 +530,7 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
         private @ReInheritControls m_Wrapper;
         public GamePlayActions(@ReInheritControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Select => m_Wrapper.m_GamePlay_Select;
+        public InputAction @Cancel => m_Wrapper.m_GamePlay_Cancel;
         public InputAction @Point => m_Wrapper.m_GamePlay_Point;
         public InputAction @Target => m_Wrapper.m_GamePlay_Target;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
@@ -511,6 +545,9 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
                 @Select.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnSelect;
+                @Cancel.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnCancel;
                 @Point.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPoint;
                 @Point.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPoint;
                 @Point.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnPoint;
@@ -524,6 +561,9 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
@@ -580,6 +620,7 @@ public partial class @ReInheritControls : IInputActionCollection2, IDisposable
     public interface IGamePlayActions
     {
         void OnSelect(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
         void OnTarget(InputAction.CallbackContext context);
     }

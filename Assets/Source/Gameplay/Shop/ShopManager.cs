@@ -10,6 +10,9 @@ namespace Cyens.ReInherit
 
         public ShopItem[] items;
 
+        [Header("References")]
+        public GameObject baseUI;
+
         private void Start()
         {
             items = GetComponentsInChildren<ShopItem>();
@@ -19,6 +22,10 @@ namespace Cyens.ReInherit
 
         }
 
-
+        private void Update()
+        {
+            baseUI.SetActive(true);
+            if (PlacementManager.Instance.active) baseUI.SetActive(false);
+        }
     }
 }

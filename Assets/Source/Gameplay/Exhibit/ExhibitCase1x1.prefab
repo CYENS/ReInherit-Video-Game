@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 8318490851572389}
   - component: {fileID: 7389656074441851936}
   m_Layer: 6
-  m_Name: ExhibitCase
+  m_Name: ExhibitCase1x1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
