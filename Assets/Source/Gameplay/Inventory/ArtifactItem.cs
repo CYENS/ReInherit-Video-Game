@@ -14,6 +14,9 @@ namespace Cyens.ReInherit
         [Header("References")]
         public Image icon;
 
+        private ArtifactInventory inventory;
+        private ArtifactManager manager;
+            
         public void SetArtifact(Artifact artifact)
         {
             this.artifact = artifact;
@@ -22,6 +25,9 @@ namespace Cyens.ReInherit
             icon.sprite = data.icon;
 
             Refresh();
+
+            inventory = GetComponentInParent<ArtifactInventory>(true);
+            manager = ArtifactManager.Instance;
         }
 
 
@@ -34,11 +40,11 @@ namespace Cyens.ReInherit
         // Ready to place artifact
         public void Place()
         {
-            if (PlacementManager.Instance.active) return;
+            if (manager.mode != ArtifactManager.Mode.None) return;
             if (artifact.GetStatus() != Artifact.Status.Storage) return;
 
 
-            //PlacementManager.Instance.Begin( gameObject, data.mesh, Vector3.one, artifact, )
+            manager.PlaceArtifact(artifact);
         }
 
     }

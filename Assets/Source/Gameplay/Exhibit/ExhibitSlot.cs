@@ -24,7 +24,7 @@ namespace Cyens.ReInherit
             if (this.artifact != null) return false;
 
             this.artifact = artifact;
-            filter.sharedMesh = artifact.GetMesh();
+            //filter.sharedMesh = artifact.GetMesh();
             
             return true;
         }

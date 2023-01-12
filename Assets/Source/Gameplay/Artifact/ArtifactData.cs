@@ -19,8 +19,22 @@ namespace Cyens.ReInherit
         
         public string description;
 
-        [Header("Visual appearance (3d)")]
-        public Mesh mesh;
-        public Material material;
+
+
+        [Header("Physical")]
+
+        [Tooltip("The object containing the mesh filter and renderer")]
+        public GameObject artifactPrefab;
+
+        [Tooltip("The base version of the exhibit")]
+        public GameObject exhibitPrefab01;
+
+        [Tooltip("The upgraded version of the exhibit")]
+        public GameObject exhibitPrefab02;
+        
+        [Tooltip("How much it costs to upgrade the exhibit case")]
+        public int upgradePricing;
+        
+
     }
 }

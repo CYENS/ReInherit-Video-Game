@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: Urn
   icon: {fileID: 21300000, guid: 6846f96fd6bbc6e44b16c1295c10b78c, type: 3}
-  type: 0
+  type: 3
   description: An urn
-  mesh: {fileID: 3291487069353001505, guid: 4a9cc14b2cd77fd42a852a298e1e14b6, type: 3}
-  material: {fileID: 2100000, guid: 55d4bbe4e4be2a748aa191f0c123b2bd, type: 2}
+  artifactPrefab: {fileID: 1901441737926568151, guid: 1982ef71f36a54d45857a79851853971,
+    type: 3}
+  exhibitPrefab01: {fileID: 1114330881176039450, guid: 2fc8b3b1924460c43821a85a65aca655,
+    type: 3}
+  exhibitPrefab02: {fileID: 308979768246996406, guid: f4828c50ade153a489fa4d6686dc9eb1,
+    type: 3}
+  upgradePricing: 100

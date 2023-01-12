@@ -14,7 +14,7 @@ namespace Cyens.ReInherit
         private ArtifactData data;
 
 
-        public enum Status { Storage = 0, Transit = 1, Exhibit = 2, Restoration = 3  }
+        public enum Status { Storage = 0, Design = 1, Transit = 2, Exhibit = 3, Restoration = 4  }
 
         [SerializeField]
         private Status status;
@@ -23,50 +23,112 @@ namespace Cyens.ReInherit
         public Status GetStatus() => status;
 
         public ArtifactData GetData() => data;
-        public Mesh GetMesh() => data.mesh;
+        
+        
+        //public Mesh GetMesh() => data.mesh;
+        
         public string GetLabel() => data.label;
 
-        
+
+        [Header("Game Data")]
+        public bool upgraded = false;
+
+
+        [Header("References")]
+
+        private Exhibit _exhibit01;
+        private Exhibit _exhibit02;
+
+
+        private Color validGhost;
+        private Color invalidGhost;
+
+
+        /// <summary>
+        /// "Factory" function, to fascilitate with the creation of this specific class.
+        /// Since the function is inside the Artifact class, we can set private data without having to
+        /// rely on setters.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="data"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public static Artifact Create( GameObject owner, ArtifactData data )
+        {
+            var artifact = owner.AddComponent<Artifact>();
+            artifact.data = data;
+            artifact.status = Status.Storage;
+
+            // Generate the exhibit cases/tables
+            artifact._exhibit01 = Exhibit.Create(owner, data.exhibitPrefab01, data);
+            artifact._exhibit01.gameObject.SetActive(false);
+
+            artifact._exhibit02 = Exhibit.Create(owner, data.exhibitPrefab02, data);
+            artifact._exhibit02.gameObject.SetActive(false);
+
+
+            return artifact;
+        }
+
+        private void Awake()
+        {
+            validGhost = new Color(0, 1, 0, 0.5f);
+            invalidGhost = new Color(1, 0, 0, 0.5f);
+
+        }
+
 
         public void SetStatus( Status newStatus )
         {
             status = newStatus;
-            switch(status)
+            Refresh();
+        }
+
+        public void Refresh(bool valid = true)
+        {
+
+            // Step One: Activate / Deactivate the exhibit objects
+            switch (status)
             {
                 case Status.Storage:
                 case Status.Restoration:
-                    gameObject.SetActive(false); 
-                break;
+                    _exhibit01.gameObject.SetActive(false);
+                    _exhibit02.gameObject.SetActive(false);
+                    break;
+
+                case Status.Design:
                 case Status.Transit:
                 case Status.Exhibit:
-                    gameObject.SetActive(true);
-                break;
+                    _exhibit01.gameObject.SetActive(!upgraded);
+                    _exhibit02.gameObject.SetActive(upgraded);
+                    break;
             }
 
-            // TODO: Switch between ghost and opaque material
+            // Step Two: Set transparency based on state
+            switch (status)
+            {
+                case Status.Design:
+                    _exhibit01.SetGhost(true, valid? validGhost : invalidGhost );
+                    _exhibit02.SetGhost(true, valid ? validGhost : invalidGhost);
+                    break;
+                case Status.Transit:
+                    _exhibit01.SetGhost(true, validGhost);
+                    _exhibit02.SetGhost(true, validGhost);
+                    break;
+
+                default:
+                    _exhibit01.SetGhost(false, validGhost);
+                    _exhibit02.SetGhost(false, validGhost);
+                    break;
+            }
 
         }
 
-        // Start is called before the first frame update
-        void Awake()
+
+        private void Update()
         {
-            // Use data to create the object
-            // Add the mesh
-            MeshFilter filter = gameObject.GetComponent<MeshFilter>();
-            if (filter == null) filter = gameObject.AddComponent<MeshFilter>();
-            filter.sharedMesh = data.mesh;
-
-            // Add the material
-            MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
-            if (renderer == null) renderer = gameObject.AddComponent<MeshRenderer>();
-            renderer.sharedMaterial = data.material;
-
-            // Just a little hack until we get proper 3d models
-            transform.rotation = Quaternion.Euler(-90, 0, 0);
-
-            // Disable it?
+            
         }
-
 
 
     }

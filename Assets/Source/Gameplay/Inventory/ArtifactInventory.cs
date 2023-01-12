@@ -10,21 +10,22 @@ namespace Cyens.ReInherit
         public GameObject itemPrefab;
 
         protected Artifact[] artifacts;
-
+        private ArtifactManager manager;
 
 
         [Header("References")]
         public Transform container;
-
+        public GameObject contents;
 
         // Start is called before the first frame update
         void Start()
         {
-            
+            manager = ArtifactManager.Instance;
         }
 
         private void OnEnable()
         {
+
 
             Debug.Log("Artifact Inventory Enabled");
             foreach(Transform child in container)
@@ -43,11 +44,16 @@ namespace Cyens.ReInherit
 
         }
 
+        private void OnDisable()
+        {
+            // TODO: Make sure artifact placements are properly cancelled!
+        }
+
 
         // Update is called once per frame
         void Update()
         {
-        
+            contents.SetActive(manager.mode == ArtifactManager.Mode.None );
         }
     }
 }
