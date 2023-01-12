@@ -10,16 +10,33 @@ namespace Cyens.ReInherit
     public class Keeper : MonoBehaviour
     {
         [SerializeField]
-        private enum State {Idle, Ready, CarryExhibit, PlacingExhibit, Returning }
+        private enum State {Idle, Ready, Carry, Place, Upgrade, Return }
+        public enum Goal { PlaceExhibit=0, UpgradeExhibit=1 }
+
+
+
 
         private KeeperManager m_keeperManager;
         private List<Renderer> m_renderers;
         private AIPath m_aiPath;
+        [SerializeField] private Task currentTask;
         [SerializeField] private GameObject m_carryBox;
         [SerializeField] private State m_state = State.Ready;
         [SerializeField] private float m_placingTimer = 0f;
         [SerializeField] private float m_idleTimer = 0;
         [SerializeField] private GameObject m_showcasePrefab;
+        
+
+
+        [System.Serializable]
+        public class Task
+        {
+            public Artifact target;
+            public Goal goal;
+
+            public Vector3 position => target.transform.position;
+        }
+
 
 
         // Start is called before the first frame update
@@ -61,6 +78,19 @@ namespace Cyens.ReInherit
         }
 
         /// <summary>
+        /// Helper function to make usage more convenient.
+        /// </summary>
+        private void EnableRenderers() => EnableDisableRenderers(true);
+
+        /// <summary>
+        /// Helper function to make usage more convenient.
+        /// </summary>
+        private void DisableRenderers() => EnableDisableRenderers(false);
+
+
+
+
+        /// <summary>
         /// Execute keeper logic
         /// </summary>
         private void ExecuteKeeperLogic()
@@ -69,41 +99,47 @@ namespace Cyens.ReInherit
                 //Keeper is ready to carry next exhibit; check for new task
                 case State.Ready: {
                     if (m_keeperManager.IsNewTaskAvailable()) {
-                        Vector3 exhibitPoint = m_keeperManager.GetNextTask();
-                        SetMovePosition(exhibitPoint);
-                        m_state = State.CarryExhibit;
-                        EnableDisableRenderers(true);
+
+                        currentTask = m_keeperManager.GetNextTask();
+                        SetMovePosition(currentTask.position);
+                        m_state = State.Carry;
+                        EnableRenderers();
                         m_carryBox.SetActive(true);
                     }
                     break;
                 }
-                //Keeper is carrying an exhibit; check if arrived at place
-                case State.CarryExhibit: {
+                //Keeper is carrying a crate; check if arrived at place
+                case State.Carry: {
                     if (m_aiPath.remainingDistance < 1f && m_aiPath.pathPending == false) {
-                        //Instantiate(m_showcasePrefab, m_aiPath.destination + new Vector3(0,0,2f), Quaternion.identity);
-                        m_state = State.PlacingExhibit;
+
+                        switch( currentTask.goal )
+                        {
+                            case Goal.PlaceExhibit: m_state = State.Place; break;
+                            case Goal.UpgradeExhibit: m_state = State.Upgrade; break;
+
+                        }
                         m_placingTimer = 0f;
                         m_carryBox.SetActive(false);
                     }
                     break;
                 }
-                //keeper is placing the exhibit; check if done
-                case State.PlacingExhibit: {
+                //keeper places the exhibit
+                case State.Place: {
+
+                    // TODO: Play animation for placing the crate
                     if (m_placingTimer >= m_keeperManager.GetPlacingDelay()) {
                         Vector3 basePoint = m_keeperManager.GetBasePosition();
                         SetMovePosition(basePoint);
-                        m_state = State.Returning;
-
-                        
+                        m_state = State.Return;
                     }
                     break;
                 }
                 //Keeper is returning to base; check if arrived
-                case State.Returning: {
+                case State.Return: {
                     if (m_aiPath.remainingDistance < 0.5f  && m_aiPath.pathPending == false) {
                         m_state = State.Idle;
                         m_idleTimer = 0f;
-                        EnableDisableRenderers(false);
+                        DisableRenderers();
                     }
                     break;
                 }
@@ -126,7 +162,7 @@ namespace Cyens.ReInherit
         private void FixedUpdate()
         {
             //Timers
-            if (m_state == State.PlacingExhibit)
+            if (m_state == State.Place)
                 m_placingTimer += Time.fixedDeltaTime;
             else
                 m_placingTimer = 0f;

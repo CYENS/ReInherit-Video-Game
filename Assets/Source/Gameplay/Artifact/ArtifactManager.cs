@@ -149,7 +149,7 @@ namespace Cyens.ReInherit
             mode = Mode.None;
             targetArtifact.SetStatus(Artifact.Status.Transit);
 
-            KeeperManager.Instance.AddNewTask(targetArtifact.transform.position);
+            KeeperManager.Instance.AddPlaceTask(targetArtifact);
         }
 
 

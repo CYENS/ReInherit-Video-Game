@@ -8,7 +8,10 @@ namespace Cyens.ReInherit.Gameplay.Management
 {
     public class KeeperManager : Singleton<KeeperManager>
     {
-        public Queue<Vector3> m_keeperPoints = new Queue<Vector3>();
+
+
+        public Queue<Keeper.Task> m_keeperTasks = new Queue<Keeper.Task>();
+
         [SerializeField] [Tooltip("Number of task left for the keeper.")]
         private int m_tasksLeft = 0;
         [SerializeField] private Transform m_basePosition;
@@ -28,25 +31,33 @@ namespace Cyens.ReInherit.Gameplay.Management
             return m_idleDelay;
         }
         
-        public void AddNewTask(Vector3 point)
+        public void AddNewTask(Artifact target, Keeper.Goal goal )
         {
-            m_keeperPoints.Enqueue(point);
+            var task = new Keeper.Task();
+            task.target = target;
+            task.goal = goal;
+
+            m_keeperTasks.Enqueue(task);
             m_tasksLeft += 1;
         }
 
+        public void AddPlaceTask(Artifact target) => AddNewTask(target, Keeper.Goal.PlaceExhibit);
+        public void AddUpgradeTask(Artifact target) => AddNewTask(target, Keeper.Goal.UpgradeExhibit);
+
+
         public bool IsNewTaskAvailable()
         {
-            if (m_keeperPoints.Count > 0)
+            if (m_keeperTasks.Count > 0)
                 return true;
             return false;
         }
         
-        public Vector3 GetNextTask()
+        public Keeper.Task GetNextTask()
         {
             m_tasksLeft -= 1;
-            if(m_keeperPoints.Count > 0)
-                return m_keeperPoints.Dequeue();
-            return Vector3.zero;
+            if(m_keeperTasks.Count > 0)
+                return m_keeperTasks.Dequeue();
+            return null;
         }
 
         public Vector3 GetBasePosition()
@@ -64,10 +75,11 @@ namespace Cyens.ReInherit.Gameplay.Management
             //--TESTING, add active points from hierarchy to the task queue
             foreach (Transform child in m_ExhibitTestPoints) {
                 if (child.gameObject.activeInHierarchy){
-                    if (m_keeperPoints.Contains(child.position) == false) {
-                        AddNewTask(child.position);
-                        Destroy(child.gameObject);
-                    }
+                    //if (m_keeperPoints.Contains(child.position) == false) {
+                    //    AddNewTask(child.position);
+                    //    Destroy(child.gameObject);
+                    //}
+
                 }
             }
         }
@@ -78,9 +90,9 @@ namespace Cyens.ReInherit.Gameplay.Management
         
         void OnDrawGizmos()
         {
-            foreach (var point in m_keeperPoints) {
+            foreach (var task in m_keeperTasks) {
                 Gizmos.color = new Color(1, 0, 0, 1f);
-                Gizmos.DrawCube(point, new Vector3(0.5f, 0.2f, 0.5f));
+                Gizmos.DrawCube(task.position, new Vector3(0.5f, 0.2f, 0.5f));
             }
         }
     }
