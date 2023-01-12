@@ -19,7 +19,11 @@ namespace Cyens.ReInherit
         private Animator animator;
         private GameObject artifact;
 
+        [Tooltip("Where people stand to look at the exhibit label")]
+        public Transform standPoint;
+
         private Ghostify[] ghosties;
+        private Collider[] colliders;
 
 
         /// <summary>
@@ -54,12 +58,21 @@ namespace Cyens.ReInherit
             if (ghosties == null)
                 ghosties = GetComponentsInChildren<Ghostify>(true);
 
+            if (colliders == null)
+                colliders = GetComponentsInChildren<Collider>(true);
+
+
             ghost = value;
             foreach(var ghostie in ghosties)
             {
                 ghostie.enabled = value;
                 if (value) ghostie.SetColor(color);
             }
+
+            // Ghosts should be passable!
+            //foreach(var collider in colliders )
+            //    collider.isTrigger = value;
+            
         }
 
 

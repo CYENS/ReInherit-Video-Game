@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 using Cyens.ReInherit.Patterns;
 using Cyens.ReInherit.Gameplay.Management;
 
+using Pathfinding;
+
 namespace Cyens.ReInherit
 {
     [DefaultExecutionOrder(-1000)]
@@ -148,6 +150,9 @@ namespace Cyens.ReInherit
 
             mode = Mode.None;
             targetArtifact.SetStatus(Artifact.Status.Transit);
+
+            // Rebake the navmesh
+            AstarPath.active.Scan();
 
             KeeperManager.Instance.AddPlaceTask(targetArtifact);
         }

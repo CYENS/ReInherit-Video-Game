@@ -44,6 +44,12 @@ namespace Cyens.ReInherit
         private Color invalidGhost;
 
 
+
+        public Vector3 GetStandPoint()
+        {
+            return upgraded ? _exhibit02.standPoint.position : _exhibit01.standPoint.position;
+        }
+
         /// <summary>
         /// "Factory" function, to fascilitate with the creation of this specific class.
         /// Since the function is inside the Artifact class, we can set private data without having to
@@ -124,6 +130,15 @@ namespace Cyens.ReInherit
 
         }
 
+
+        /// <summary>
+        /// Upgrades the exhibit
+        /// </summary>
+        public void Upgrade()
+        {
+            upgraded = true;
+            Refresh();
+        }
 
         private void Update()
         {

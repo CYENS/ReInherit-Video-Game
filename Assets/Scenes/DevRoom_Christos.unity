@@ -2989,7 +2989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAQIeygGL1V3QEAAMEDAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGVU01z2jAQ/Ssen9sOhkCgxzpMeijQsXPIpNPDIi22JrJEZQkIDP+9u/4oTqeXnmS93fdW+3Z9iUUJDoRHl4FUoY4/R6NP4+mHKBbWeBvcCk5L56yjwJhR1DpXZ2zyEgKOoF9hq/ErqqL0XVYPplpV2yaVFSs45drumTsZtfelLPAbmsKXzGxAZTIslDVdlQlhKJW37klp7EEu4rv789/ASw+EGpnETXkXkBCHGg9g/KODfZkHtwOBKytZM36wa+sz/BWUw5hzoSZbSC+1WiuJjnV2oGscBldYl+8q9IEndA6U+VfE4ZAhOvmsjz+gB6UpIWldql/p+xLFB9CBX5qM59GV+4Vi1QZ//ORrWzCHan8ziutaD54MbUVOPA5C37rzzGcjt7NOoPxig5F1iobk/ofRFezyk1HPuOspBDWkurRHNm0TvFYGbz5wYE2zSK0xKPjFQ8N7Wje0G80gOKx9TocoN0a/Pb8MaGh4D9dwqIibBu+VKW7cIij53ts4mS3ucSruptPJHOeL2cfZdpTcI85RLnAx3e7ipgtllFegv5O+9r0ztNuDeRuoGsUMBU02alaO90o6OD6qc2UHO6DMzuaC9sJsWo0/bdNGgCZv5bL5CXJsWmBqfLnG199QSwMEFAAACAgAABAh7E6CJBlvAAAAegAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKhmaV5qmmyiampsUWqhaWZrlmSgaF5aqpFaoplqqVpUppSLFB9SWVBql9ibipET0BiSUZaZl5KZl66XlBqcmJxiTvIcKXYWgBQSwECLQAUAAAICAAAECHsoBi9Vd0BAADBAwAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAECHsToIkGW8AAAB6AAAACQAkAAAAAAAAAAAAAAAqAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAOQCAAAAAA==
+    dataString: UEsDBBQAAAgIAAAQIezioVjwAAIAAOEDAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtU8Fy2jAQ/RXG54axcGxMjyVMeijQwRwy6fSwSIutiSxRWQICw79Xku3itD3Jervvrfbt+hrRCjRQg3oDjNsm+jyKx0n6aRRRJY2yegnnhdZKu8DEoyhEwS8Y8ogDTiDeYCfwK/KyMl1WD84Fr3ch1SvWcC6EOnhuErf3BSvxG8rSVJ4ZQC43WHIluyqJw5Bxo/SWC+xBX8R095e/gdcesA16km/KaIsO0SjwCNI8azhUhdV7oLhUzGtGT2qlzAZ/Wa4x8rnQOFuc3lwJwRnqoU4fW2JThQJ7EM2HyBa1Bi7/w9lqHL6JdvKbPv6EBrhwCaR1qXlz39dRdARh/UvJJB/dfL9QLtvgj5/+2hYsoD7cjfJ1lQHjDG1Fzn4cDn3vzos/g9xeaYrsi7KSNXOUTu7OyMYxSeLHaU8M8/TUBzJO4izPSJ7/I9K9oZMgk3GcpeQxTTsR0klM3CKlyXSWJEGhqdTJu7q2RnCJd598YOVmNVdSIvUdDX3vad1Q7zSJoLExhTtotZbi/eV1QEPp93QFx9px59YYLss7t7ScffQ+Itlsiil1bSQ55rPsIdvFZIqYI5vhLN3to9AFl9xwEN+dvjC91273B/sgoQ6KG6Ru8qOwkn7vmIbTM7/UarAjXO5VQd3eyHWr8adttzEgnNFsEX6SAkMLnhpdb9HtN1BLAwQUAAAICAAAECHsToIkGW8AAAB6AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0kqGZpXmqabKJqamxRaqFpZmuWZKBoXlqqkVqimWqpWlSmlIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrpeUGpyYnGJO8hwpdhaAFBLAQItABQAAAgIAAAQIezioVjwAAIAAOEDAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAQIexOgiQZbwAAAHoAAAAJACQAAAAAAAAAAAAAAE0CAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAABwMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -10276,6 +10276,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3927213525005316455, guid: ce2f7d743ed9e8d4394fb6148bcbeebf,
+        type: 3}
+      propertyPath: strength
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3927213525005316473, guid: ce2f7d743ed9e8d4394fb6148bcbeebf,
         type: 3}
       propertyPath: m_Name
@@ -10400,6 +10405,41 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1062146302091101394, guid: 59ba9f67ad520e64f80bc58b56dc7a65,
+        type: 3}
+      propertyPath: starterArtifacts.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062146302091101394, guid: 59ba9f67ad520e64f80bc58b56dc7a65,
+        type: 3}
+      propertyPath: starterArtifacts.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: e58d555bede04fc4dba678d5253d8a5d,
+        type: 2}
+    - target: {fileID: 1062146302091101394, guid: 59ba9f67ad520e64f80bc58b56dc7a65,
+        type: 3}
+      propertyPath: starterArtifacts.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: e58d555bede04fc4dba678d5253d8a5d,
+        type: 2}
+    - target: {fileID: 1062146302091101394, guid: 59ba9f67ad520e64f80bc58b56dc7a65,
+        type: 3}
+      propertyPath: starterArtifacts.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: e58d555bede04fc4dba678d5253d8a5d,
+        type: 2}
+    - target: {fileID: 1062146302091101394, guid: 59ba9f67ad520e64f80bc58b56dc7a65,
+        type: 3}
+      propertyPath: starterArtifacts.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: e58d555bede04fc4dba678d5253d8a5d,
+        type: 2}
+    - target: {fileID: 1062146302091101394, guid: 59ba9f67ad520e64f80bc58b56dc7a65,
+        type: 3}
+      propertyPath: starterArtifacts.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: e58d555bede04fc4dba678d5253d8a5d,
+        type: 2}
     - target: {fileID: 1454067676390140100, guid: 59ba9f67ad520e64f80bc58b56dc7a65,
         type: 3}
       propertyPath: m_SizeDelta.x

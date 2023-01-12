@@ -10,7 +10,7 @@ namespace Cyens.ReInherit
     public class Keeper : MonoBehaviour
     {
         [SerializeField]
-        private enum State {Idle, Ready, Carry, Place, Upgrade, Return }
+        private enum State {Idle, Ready, Carry, Work, Return }
         public enum Goal { PlaceExhibit=0, UpgradeExhibit=1 }
 
 
@@ -22,8 +22,7 @@ namespace Cyens.ReInherit
         [SerializeField] private Task currentTask;
         [SerializeField] private GameObject m_carryBox;
         [SerializeField] private State m_state = State.Ready;
-        [SerializeField] private float m_placingTimer = 0f;
-        [SerializeField] private float m_idleTimer = 0;
+        [SerializeField] private float m_timer = 0f;
         [SerializeField] private GameObject m_showcasePrefab;
         
 
@@ -88,7 +87,18 @@ namespace Cyens.ReInherit
         private void DisableRenderers() => EnableDisableRenderers(false);
 
 
+        private void LookAt(Vector3 target, float turnSpeed = 10.0f)
+        {
+            Vector3 myPos = transform.position;
+            Vector3 toTarget = target - myPos;
+            toTarget.y = 0;
 
+            transform.rotation = Quaternion.Lerp(
+                    transform.rotation,
+                    Quaternion.LookRotation(toTarget),
+                    Time.deltaTime * turnSpeed
+                );
+        }
 
         /// <summary>
         /// Execute keeper logic
@@ -97,81 +107,90 @@ namespace Cyens.ReInherit
         {
             switch (m_state) {
                 //Keeper is ready to carry next exhibit; check for new task
-                case State.Ready: {
-                    if (m_keeperManager.IsNewTaskAvailable()) {
+                case State.Ready:
+                    if (m_keeperManager.IsNewTaskAvailable() == false) return;
 
-                        currentTask = m_keeperManager.GetNextTask();
-                        SetMovePosition(currentTask.position);
-                        m_state = State.Carry;
-                        EnableRenderers();
-                        m_carryBox.SetActive(true);
-                    }
+                    currentTask = m_keeperManager.GetNextTask();
+                    SetMovePosition(currentTask.target.GetStandPoint());
+                    m_state = State.Carry;
+                    EnableRenderers();
+                    m_carryBox.SetActive(true);
                     break;
-                }
+                
                 //Keeper is carrying a crate; check if arrived at place
-                case State.Carry: {
-                    if (m_aiPath.remainingDistance < 1f && m_aiPath.pathPending == false) {
+                case State.Carry:
+                    if (m_aiPath.remainingDistance >= 0.1f) return;
+                    if (m_aiPath.pathPending) return;
 
-                        switch( currentTask.goal )
-                        {
-                            case Goal.PlaceExhibit: m_state = State.Place; break;
-                            case Goal.UpgradeExhibit: m_state = State.Upgrade; break;
-
-                        }
-                        m_placingTimer = 0f;
-                        m_carryBox.SetActive(false);
-                    }
+                    // TODO: Play an animation depending on the current goal/job
+                    m_state = State.Work;
+                    m_timer = m_keeperManager.GetPlacingDelay();
+                    m_carryBox.SetActive(false);
+                   
                     break;
-                }
+                
                 //keeper places the exhibit
-                case State.Place: {
+                case State.Work:
 
-                    // TODO: Play animation for placing the crate
-                    if (m_placingTimer >= m_keeperManager.GetPlacingDelay()) {
-                        Vector3 basePoint = m_keeperManager.GetBasePosition();
-                        SetMovePosition(basePoint);
-                        m_state = State.Return;
+
+                    // Look directly at the target object
+                    m_aiPath.enableRotation = false;
+                    LookAt(currentTask.position);
+
+                    if (m_timer >= float.Epsilon) return;
+
+
+                    // Finalize task depending on the task goal
+                    switch(currentTask.goal)
+                    {
+                        case Goal.PlaceExhibit:
+                            currentTask.target.SetStatus(Artifact.Status.Exhibit);
+                            break;
+                        case Goal.UpgradeExhibit:
+                            currentTask.target.Upgrade();
+                            break;
+
                     }
+                    // Set destination back to the elevator
+                    Vector3 basePoint = m_keeperManager.GetBasePosition();
+                    SetMovePosition(basePoint);
+                    m_state = State.Return;
+                    
                     break;
-                }
+
                 //Keeper is returning to base; check if arrived
-                case State.Return: {
-                    if (m_aiPath.remainingDistance < 0.5f  && m_aiPath.pathPending == false) {
-                        m_state = State.Idle;
-                        m_idleTimer = 0f;
-                        DisableRenderers();
-                    }
+                case State.Return:
+                    m_aiPath.enableRotation = true;
+
+
+                    if (m_aiPath.remainingDistance >= 0.5f) return;
+                    if (m_aiPath.pathPending) return;
+                    
+                    m_state = State.Idle;
+                    m_timer = m_keeperManager.GetIdleDelay();
+                    DisableRenderers();
                     break;
-                }
+                
                 //Keeper is idling; check if timer passed for becoming ready
-                case State.Idle: {
-                    if (m_idleTimer >= m_keeperManager.GetIdleDelay()) {
-                        m_state = State.Ready;
-                    }
+                case State.Idle:
+                    if (m_timer >= float.Epsilon) return;
+
+                    m_state = State.Ready;
                     break;
-                }
+                
             }
         }
 
         // Update is called once per frame
         void Update()
         {
+            // Update timer
+            m_timer = Mathf.Max(m_timer - Time.deltaTime, 0.0f);
+
+            // Update Keeper Logic
             ExecuteKeeperLogic();
         }
 
-        private void FixedUpdate()
-        {
-            //Timers
-            if (m_state == State.Place)
-                m_placingTimer += Time.fixedDeltaTime;
-            else
-                m_placingTimer = 0f;
-            
-            if (m_state == State.Idle)
-                m_idleTimer += Time.fixedDeltaTime;
-            else
-                m_idleTimer = 0f;
-        }
 
         private void SetMovePosition(Vector3 position)
         {
