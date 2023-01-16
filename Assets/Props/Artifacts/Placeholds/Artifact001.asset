@@ -18,8 +18,8 @@ MonoBehaviour:
   description: An urn
   artifactPrefab: {fileID: 1901441737926568151, guid: 1982ef71f36a54d45857a79851853971,
     type: 3}
-  exhibitPrefab01: {fileID: 1114330881176039450, guid: 2fc8b3b1924460c43821a85a65aca655,
+  exhibitPrefab01: {fileID: 6752671094462293184, guid: ebe492a2135596d4a96485f728feded0,
     type: 3}
-  exhibitPrefab02: {fileID: 308979768246996406, guid: f4828c50ade153a489fa4d6686dc9eb1,
+  exhibitPrefab02: {fileID: 6729932715442035118, guid: 130b7b6a73f8a964d8329cd82183a780,
     type: 3}
   upgradePricing: 100
