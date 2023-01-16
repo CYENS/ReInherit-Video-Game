@@ -18,6 +18,7 @@ namespace Cyens.ReInherit
         public GameObject placeholder;
         private Animator animator;
         private GameObject artifact;
+        private Selectable selectable;
 
         [Tooltip("Where people stand to look at the exhibit label")]
         public Transform standPoint;
@@ -72,7 +73,8 @@ namespace Cyens.ReInherit
             // Ghosts should be passable!
             //foreach(var collider in colliders )
             //    collider.isTrigger = value;
-            
+
+            selectable.enabled = !value;
         }
 
 
@@ -87,8 +89,9 @@ namespace Cyens.ReInherit
             // Remove the placeholder as it is not needed
             Destroy(placeholder);
 
+            selectable = GetComponent<Selectable>();
 
-            
+
         }
 
 

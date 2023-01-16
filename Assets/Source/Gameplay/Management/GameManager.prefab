@@ -236,7 +236,7 @@ MonoBehaviour:
   currentlySelected: {fileID: 0}
   layerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
 --- !u!1 &3158392665214394070
 GameObject:
   m_ObjectHideFlags: 0

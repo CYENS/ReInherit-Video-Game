@@ -41,16 +41,24 @@ namespace Cyens.ReInherit
 
         public void Select()
         {
+            m_highlightControllers = GetComponentsInChildren<HighlightController>(true);
             m_selected = true;
             foreach (var highlightController in m_highlightControllers)
+            {
+                if (highlightController == null) continue;
                 highlightController.Select();
+            }
         }
 
         public void DeSelect()
         {
             m_selected = false;
+            if (m_highlightControllers == null) return;
             foreach (var highlightController in m_highlightControllers)
+            {
+                if (highlightController == null) continue;
                 highlightController.DeSelect();
+            }
         }
         
         
@@ -79,7 +87,7 @@ namespace Cyens.ReInherit
             // selection system
             PickValidLayer();
 
-            m_highlightControllers = GetComponentsInChildren<HighlightController>(true);
+            
         }
         
     }

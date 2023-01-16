@@ -62,6 +62,8 @@ namespace Cyens.ReInherit
 
                 GameObject hitTarget = hitInfo.transform.gameObject;
                 selectable = hitTarget.GetComponent<Selectable>();
+                if (selectable == null) return null;
+                if (selectable.enabled == false) return null;
             }
             return selectable;
         }
