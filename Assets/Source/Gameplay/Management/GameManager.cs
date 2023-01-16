@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cyens.ReInherit.Patterns;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 
 namespace Cyens.ReInherit.Gameplay.Management
 {
@@ -22,8 +23,14 @@ namespace Cyens.ReInherit.Gameplay.Management
 
         public int funds = 1000;
 
+
+        private bool m_pointerOverUIElement;
+        public bool isPointerOverUIElement => m_pointerOverUIElement; 
+
+
         [Header("References")]
         public TMP_Text txtFunds;
+        private EventSystem eventSys;
 
         public static int GetFunds() => Instance.funds;
         public static void SetFunds(int amount)
@@ -43,7 +50,15 @@ namespace Cyens.ReInherit.Gameplay.Management
         public override void Awake()
         {
             base.Awake();
+            eventSys = GetComponentInChildren<EventSystem>();
             
         }
+
+
+        private void Update()
+        {
+            m_pointerOverUIElement = eventSys.IsPointerOverGameObject();
+        }
+
     }
 }

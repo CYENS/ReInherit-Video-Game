@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cyens.ReInherit.Gameplay.Management;
 
 namespace Cyens.ReInherit
 {
@@ -19,6 +20,8 @@ namespace Cyens.ReInherit
         private Animator animator;
         private GameObject artifact;
         private Selectable selectable;
+        private Artifact owner;
+
 
         [Tooltip("Where people stand to look at the exhibit label")]
         public Transform standPoint;
@@ -53,8 +56,9 @@ namespace Cyens.ReInherit
         public void SetGhost( bool value, Color color )
         {
             // Wait for the artifact to spawn first
+            // Place the artifact
             if (artifact == null)
-                return;
+                artifact = CreateArtifact();
 
             if (ghosties == null)
                 ghosties = GetComponentsInChildren<Ghostify>(true);
@@ -74,24 +78,51 @@ namespace Cyens.ReInherit
             //foreach(var collider in colliders )
             //    collider.isTrigger = value;
 
+            if(selectable == null)
+                selectable = GetComponent<Selectable>();
+
             selectable.enabled = !value;
         }
 
 
-        private void Start()
+        public void Upgrade()
         {
-            animator = GetComponent<Animator>();
+            if (owner.upgraded)
+                return;
 
-            // Place the artifact
+            int funds = GameManager.GetFunds();
+            int price = data.upgradePricing;
+
+            if( funds < price )
+            {
+                // Cannot buy. TODO: Play sounds or something
+                return;
+            }
+
+            GameManager.SetFunds(funds - price);
+            owner.Upgrade();
+        }
+
+        private GameObject CreateArtifact()
+        {
             artifact = GameObject.Instantiate(data.artifactPrefab, placeholder.transform.position, Quaternion.identity);
             artifact.transform.SetParent(placeholder.transform.parent);
 
             // Remove the placeholder as it is not needed
             Destroy(placeholder);
 
-            selectable = GetComponent<Selectable>();
+            return artifact;
+        }
 
+        private void Start()
+        {
+            animator = GetComponent<Animator>();
 
+            // Place the artifact
+            if( artifact == null ) 
+                artifact = CreateArtifact();
+
+            owner = GetComponentInParent<Artifact>();
         }
 
 

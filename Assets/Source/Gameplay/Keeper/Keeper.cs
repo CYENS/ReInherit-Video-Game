@@ -151,7 +151,7 @@ namespace Cyens.ReInherit
                             currentTask.target.SetStatus(Artifact.Status.Exhibit);
                             break;
                         case Goal.UpgradeExhibit:
-                            currentTask.target.Upgrade();
+                            currentTask.target.FinalizeUpgrade();
                             break;
 
                     }

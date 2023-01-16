@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cyens.ReInherit.Gameplay.Management;
 
 namespace Cyens.ReInherit
 {
@@ -131,13 +131,32 @@ namespace Cyens.ReInherit
         }
 
 
+        public void FinalizeUpgrade()
+        {
+            SetStatus(Status.Exhibit);
+            Refresh();
+        }
+
+
         /// <summary>
         /// Upgrades the exhibit
         /// </summary>
         public void Upgrade()
         {
+            if (upgraded)
+                return;
+
             upgraded = true;
-            Refresh();
+            SetStatus(Status.Transit);
+
+            // Rebake the navmesh (just in case)
+            AstarPath.active.Scan();
+
+            // Send keeper to upgrade the exhibit display case
+            KeeperManager.Instance.AddUpgradeTask(this);
+
+
+            Refresh(true);
         }
 
         private void Update()
