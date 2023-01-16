@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cyens.ReInherit.Gameplay.Management;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.Animations.Rigging;
 
 namespace Cyens.ReInherit
 {
@@ -24,7 +25,8 @@ namespace Cyens.ReInherit
         [SerializeField] private State m_state = State.Ready;
         [SerializeField] private float m_timer = 0f;
         [SerializeField] private GameObject m_showcasePrefab;
-        
+        [SerializeField] private GameObject m_RigHands;
+        private Rig m_WeightRigHand;
 
 
         [System.Serializable]
@@ -45,6 +47,7 @@ namespace Cyens.ReInherit
             m_aiPath = GetComponent<AIPath>();
             FindRenderers();
             EnableDisableRenderers(false);
+            m_WeightRigHand = m_RigHands.GetComponent<Rig>();
         }
 
         /// <summary>
@@ -115,6 +118,7 @@ namespace Cyens.ReInherit
                     m_state = State.Carry;
                     EnableRenderers();
                     m_carryBox.SetActive(true);
+                    m_WeightRigHand.weight = 1;
                     break;
                 
                 //Keeper is carrying a crate; check if arrived at place
@@ -126,7 +130,7 @@ namespace Cyens.ReInherit
                     m_state = State.Work;
                     m_timer = m_keeperManager.GetPlacingDelay();
                     m_carryBox.SetActive(false);
-                   
+                    m_WeightRigHand.weight = 0;
                     break;
                 
                 //keeper places the exhibit
