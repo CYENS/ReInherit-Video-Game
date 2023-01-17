@@ -20,8 +20,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Crate
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Name: Crate Dissolve
+  m_Shader: {fileID: -6465566751694194690, guid: d0f3ff0fd4b75f84cb4b239905d60dd9,
+    type: 3}
   m_ValidKeywords:
   - _ALPHATEST_ON
   m_InvalidKeywords: []
@@ -75,6 +76,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_63ed9d1157384b838005a58122a9e724_Texture_1:
+        m_Texture: {fileID: 2800000, guid: e697cfd5794ed134cb552f186d5a2eb9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -103,6 +108,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Dissolve_Amount: 0
     - _DstBlend: 0
     - _Edge_Width: 0.01
     - _EnvironmentReflections: 1

@@ -26,7 +26,11 @@ namespace Cyens.ReInherit
         [SerializeField] private float m_timer = 0f;
         [SerializeField] private GameObject m_showcasePrefab;
         [SerializeField] private GameObject m_RigHands;
+        [SerializeField] private GameObject m_BoxDissolve;
+        private GameObject newBox;
         private Rig m_WeightRigHand;
+        private float changeTimeDissolve = 1f; // time it takes to change the value
+        private float valueDissolve = 0f; // the value to change
 
 
         [System.Serializable]
@@ -129,8 +133,8 @@ namespace Cyens.ReInherit
                     // TODO: Play an animation depending on the current goal/job
                     m_state = State.Work;
                     m_timer = m_keeperManager.GetPlacingDelay();
-                    m_carryBox.SetActive(false);
-                    m_WeightRigHand.weight = 0;
+                    //m_carryBox.SetActive(false);
+                    //m_WeightRigHand.weight = 0;
                     break;
                 
                 //keeper places the exhibit
@@ -143,9 +147,13 @@ namespace Cyens.ReInherit
 
                     if (m_timer >= float.Epsilon) return;
 
+                    newBox = Instantiate(m_BoxDissolve, m_carryBox.transform.position, m_carryBox.transform.rotation);
+                    m_carryBox.SetActive(false);
+                    StartCoroutine(ChangeValueDissolve());
+                    Invoke("DestroyBox", 2f);
 
                     // Finalize task depending on the task goal
-                    switch(currentTask.goal)
+                    switch (currentTask.goal)
                     {
                         case Goal.PlaceExhibit:
                             currentTask.target.SetStatus(Artifact.Status.Exhibit);
@@ -200,6 +208,23 @@ namespace Cyens.ReInherit
         {
             m_aiPath.destination = position;
             m_aiPath.SearchPath();
+        }
+
+        private void DestroyBox()
+        {
+            Destroy(newBox);
+        }
+
+        IEnumerator ChangeValueDissolve()
+        {
+            float t = 0f;
+            while (t < changeTimeDissolve)
+            {
+                t += Time.deltaTime;
+                valueDissolve = Mathf.Lerp(0f, 1f, t / changeTimeDissolve);
+                newBox.GetComponent<MeshRenderer>().material.SetFloat("_Dissolve_Amount", valueDissolve);
+                yield return null;
+            }
         }
     }
 }
