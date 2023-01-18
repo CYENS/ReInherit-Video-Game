@@ -22,11 +22,11 @@ namespace Cyens.ReInherit
         private AIPath m_aiPath;
         [SerializeField] private Task currentTask;
         [SerializeField] private GameObject m_carryBox;
+        [SerializeField] private GameObject m_BoxDissolve;
         [SerializeField] private State m_state = State.Ready;
         [SerializeField] private float m_timer = 0f;
         [SerializeField] private GameObject m_showcasePrefab;
         [SerializeField] private GameObject m_RigHands;
-        [SerializeField] private GameObject m_BoxDissolve;
         private GameObject newBox;
         private Rig m_WeightRigHand;
         private float changeTimeDissolve = 1f; // time it takes to change the value
@@ -133,8 +133,7 @@ namespace Cyens.ReInherit
                     // TODO: Play an animation depending on the current goal/job
                     m_state = State.Work;
                     m_timer = m_keeperManager.GetPlacingDelay();
-                    //m_carryBox.SetActive(false);
-                    //m_WeightRigHand.weight = 0;
+                    
                     break;
                 
                 //keeper places the exhibit
@@ -147,10 +146,12 @@ namespace Cyens.ReInherit
 
                     if (m_timer >= float.Epsilon) return;
 
-                    newBox = Instantiate(m_BoxDissolve, m_carryBox.transform.position, m_carryBox.transform.rotation);
+                    m_BoxDissolve.transform.position = m_carryBox.transform.position;
+                    m_BoxDissolve.transform.rotation = m_carryBox.transform.rotation;
+                    m_BoxDissolve.SetActive(true);
                     m_carryBox.SetActive(false);
                     StartCoroutine(ChangeValueDissolve());
-                    Invoke("DestroyBox", 2f);
+                    Invoke("HideDissolveBox", 2f);
 
                     // Finalize task depending on the task goal
                     switch (currentTask.goal)
@@ -210,9 +211,9 @@ namespace Cyens.ReInherit
             m_aiPath.SearchPath();
         }
 
-        private void DestroyBox()
+        private void HideDissolveBox()
         {
-            Destroy(newBox);
+            m_BoxDissolve.SetActive(false);
         }
 
         IEnumerator ChangeValueDissolve()
@@ -222,7 +223,7 @@ namespace Cyens.ReInherit
             {
                 t += Time.deltaTime;
                 valueDissolve = Mathf.Lerp(0f, 1f, t / changeTimeDissolve);
-                newBox.GetComponent<MeshRenderer>().material.SetFloat("_Dissolve_Amount", valueDissolve);
+                m_BoxDissolve.GetComponent<MeshRenderer>().material.SetFloat("_Dissolve_Amount", valueDissolve);
                 yield return null;
             }
         }
