@@ -20,7 +20,7 @@ namespace Cyens.ReInherit.Gameplay.Management
         [SerializeField]
         [Tooltip("Whether the museum is currently open or closed")]
         private MuseumState m_museumState = MuseumState.Close;
-
+        private ErrorMessage m_errorMessageManager; 
 
         public int funds = 1000;
 
@@ -57,14 +57,16 @@ namespace Cyens.ReInherit.Gameplay.Management
         {
             if( m_museumState == MuseumState.Open )
             {
-                Debug.LogError("Attempting to open museum while it is Already Open!");
+                m_errorMessageManager.CreateErrorMessage("Cannot Open Museum", 
+                    "Attempting to open museum while it is Already Open!");
                 return;
             }
 
             // Check whether we should open museum
             if( KeeperManager.Instance.AllTasksFinished() == false )
             {
-                Debug.LogError("Attempting to open museum while there are still unfinished Keeper tasks!");
+                m_errorMessageManager.CreateErrorMessage("Cannot Open Museum", 
+                    "Attempting to open museum while there are still unfinished Keeper tasks!");
                 return;
             }
 
@@ -79,14 +81,14 @@ namespace Cyens.ReInherit.Gameplay.Management
 
         public void Refresh()
         {
-            txtFunds.text = "€" + funds.ToString();
+            txtFunds.text = "ï¿½" + funds.ToString();
         }
 
         public override void Awake()
         {
             base.Awake();
             eventSys = GetComponentInChildren<EventSystem>();
-            
+            m_errorMessageManager = ErrorMessage.Instance;
         }
 
 
