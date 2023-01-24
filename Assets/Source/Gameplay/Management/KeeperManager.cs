@@ -11,6 +11,7 @@ namespace Cyens.ReInherit.Gameplay.Management
 
 
         public Queue<Keeper.Task> m_keeperTasks = new Queue<Keeper.Task>();
+        public HashSet<Keeper> m_keeperWorking = new HashSet<Keeper>();
 
         [SerializeField] [Tooltip("Number of task left for the keeper.")]
         private int m_tasksLeft = 0;
@@ -52,12 +53,28 @@ namespace Cyens.ReInherit.Gameplay.Management
             return false;
         }
         
-        public Keeper.Task GetNextTask()
+        public Keeper.Task GetNextTask( Keeper worker )
         {
             m_tasksLeft -= 1;
-            if(m_keeperTasks.Count > 0)
+            if (m_keeperTasks.Count > 0)
+            {
+                m_keeperWorking.Add(worker);
                 return m_keeperTasks.Dequeue();
+            }
+
             return null;
+        }
+
+        public void DoneWorking( Keeper worker )
+        {
+            m_keeperWorking.Remove(worker);
+        }
+
+        public bool AllTasksFinished()
+        {
+            if (IsNewTaskAvailable()) return false;
+            if (m_keeperWorking.Count > 0) return false;
+            return true;
         }
 
         public Vector3 GetBasePosition()

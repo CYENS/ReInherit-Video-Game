@@ -13,6 +13,11 @@ namespace Cyens.ReInherit
 
 
         private bool ghost = false;
+        private float timer = 0;
+
+        [Header("Game Data")]
+        [Range(0.1f,0.9f)]
+        public float protection = 0.1f;
 
 
         [Header("References")]
@@ -23,11 +28,25 @@ namespace Cyens.ReInherit
         private Artifact owner;
 
 
+        [SerializeField]
+        private GameObject m_BoxDissolve;
+
+
+        [Header("UI Element References")]
+        public Transform healthMeter;
+        public GameObject uiExhibit;
+        public GameObject uiRestore;
+
+
         [Tooltip("Where people stand to look at the exhibit label")]
         public Transform standPoint;
 
         private Ghostify[] ghosties;
         private Collider[] colliders;
+
+
+
+        public GameObject GetBoxDissolve() => m_BoxDissolve;
 
 
         /// <summary>
@@ -103,6 +122,14 @@ namespace Cyens.ReInherit
             owner.Upgrade();
         }
 
+        /// <summary>
+        /// Sends the exhibit to be fixed / restored
+        /// </summary>
+        public void Restore()
+        {
+            owner.SetStatus(Artifact.Status.Restoration);
+        }
+
         private GameObject CreateArtifact()
         {
             artifact = GameObject.Instantiate(data.artifactPrefab, placeholder.transform.position, Quaternion.identity);
@@ -125,6 +152,33 @@ namespace Cyens.ReInherit
             owner = GetComponentInParent<Artifact>();
         }
 
+
+        private void Update()
+        {
+
+
+            // Make artifact in display case invisible if it is in restoration room.
+            bool inRestoration = (owner.GetStatus() == Artifact.Status.Restoration);
+            artifact.SetActive(!inRestoration);
+
+
+            // --- UI element management ---
+
+            uiExhibit.SetActive(!inRestoration);
+            uiRestore.SetActive(inRestoration);
+
+            // Update meter
+            healthMeter.localScale = new Vector3(owner.condition, 1.0f, 1.0f);
+
+            // Slowly degrade the condition of the artifact
+            // TODO: Artifact should only degrade during opening hours!
+            timer += Time.deltaTime;
+            if (timer > protection*10.0f)
+            {
+                timer = 0.0f;
+                owner.Damage(0.01f);
+            }
+        }
 
     }
 }

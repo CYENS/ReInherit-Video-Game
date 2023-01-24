@@ -135,6 +135,7 @@ namespace Cyens.ReInherit
                 //// Snap to grid
                 targetArtifact.transform.position = Snap(intersection);
 
+                // TODO: Check for obstacles, or if there is floor
                 // Check to see if placement is valid
                 validPlacement = true;
                 //if (IsGrounded(ghost.position) == false) validPlacement = false;

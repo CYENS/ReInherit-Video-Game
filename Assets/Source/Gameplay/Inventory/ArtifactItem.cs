@@ -13,6 +13,9 @@ namespace Cyens.ReInherit
 
         [Header("References")]
         public Image icon;
+        public Image stripesExhibition;
+        public Image stripesRestoration;
+
 
         private ArtifactInventory inventory;
         private ArtifactManager manager;
@@ -30,21 +33,58 @@ namespace Cyens.ReInherit
             manager = ArtifactManager.Instance;
         }
 
+        private void OnEnable()
+        {
+            if (artifact == null) return;
+            Refresh();
+        }
 
         public void Refresh()
         {
-            bool inStorage = artifact.GetStatus() == Artifact.Status.Storage;
-            icon.color = inStorage ? Color.white : Color.gray;
+            // Note: Moved code in Update. It's less efficient, but it works correctly without a lot of complications.
         }
-        
+
+        private void Update()
+        {
+            bool inStorage = artifact.GetStatus() == Artifact.Status.Storage;
+            bool inConservation = artifact.GetStatus() == Artifact.Status.Restoration;
+            bool inExhibition = !inStorage && !inConservation;
+
+            icon.color = inStorage ? Color.white : Color.gray;
+            stripesRestoration.gameObject.SetActive(inConservation);
+            stripesExhibition.gameObject.SetActive(inExhibition);
+        }
+
+
         // Ready to place artifact
         public void Place()
         {
             if (manager.mode != ArtifactManager.Mode.None) return;
-            if (artifact.GetStatus() != Artifact.Status.Storage) return;
 
+            switch ( artifact.GetStatus() )
+            {
+                case Artifact.Status.Storage:
+                    manager.PlaceArtifact(artifact);
+                    break;
 
-            manager.PlaceArtifact(artifact);
+                case Artifact.Status.Transit:
+                case Artifact.Status.Exhibit:
+                case Artifact.Status.Design:
+                    // TODO: Move the camera to the spot where the artifact is placed.
+                    Camera camera = Camera.main;
+                    camera.transform.position = artifact.transform.position + Vector3.up * 5 + Vector3.forward * 3 + Vector3.left * 3;
+                    camera.transform.LookAt(artifact.transform);
+                    break;
+
+                case Artifact.Status.Restoration:
+                    // TODO: Take players to the Conservation tab and highlight the artifact
+                    break;
+                    
+            }
+
+            
+
+            
         }
 
     }

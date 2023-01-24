@@ -22,11 +22,11 @@ namespace Cyens.ReInherit
         private AIPath m_aiPath;
         [SerializeField] private Task currentTask;
         [SerializeField] private GameObject m_carryBox;
-        [SerializeField] private GameObject m_BoxDissolve;
         [SerializeField] private State m_state = State.Ready;
         [SerializeField] private float m_timer = 0f;
         [SerializeField] private GameObject m_showcasePrefab;
         [SerializeField] private GameObject m_RigHands;
+        private GameObject m_BoxDissolve;
         private GameObject newBox;
         private Rig m_WeightRigHand;
         private float changeTimeDissolve = 1f; // time it takes to change the value
@@ -117,7 +117,7 @@ namespace Cyens.ReInherit
                 case State.Ready:
                     if (m_keeperManager.IsNewTaskAvailable() == false) return;
 
-                    currentTask = m_keeperManager.GetNextTask();
+                    currentTask = m_keeperManager.GetNextTask(this);
                     SetMovePosition(currentTask.target.GetStandPoint());
                     m_state = State.Carry;
                     EnableRenderers();
@@ -146,8 +146,7 @@ namespace Cyens.ReInherit
 
                     if (m_timer >= float.Epsilon) return;
 
-                    m_BoxDissolve.transform.position = m_carryBox.transform.position;
-                    m_BoxDissolve.transform.rotation = m_carryBox.transform.rotation;
+                    m_BoxDissolve = currentTask.target.GetExhibit().GetBoxDissolve();
                     m_BoxDissolve.SetActive(true);
                     m_carryBox.SetActive(false);
                     StartCoroutine(ChangeValueDissolve());
@@ -175,6 +174,8 @@ namespace Cyens.ReInherit
                 case State.Return:
                     m_aiPath.enableRotation = true;
 
+                    // Signal the keeper manager that there the task is complete
+                    m_keeperManager.DoneWorking(this);
 
                     if (m_aiPath.remainingDistance >= 0.5f) return;
                     if (m_aiPath.pathPending) return;

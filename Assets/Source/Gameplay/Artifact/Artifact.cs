@@ -32,6 +32,7 @@ namespace Cyens.ReInherit
 
         [Header("Game Data")]
         public bool upgraded = false;
+        public float condition = 1.0f;
 
 
         [Header("References")]
@@ -50,6 +51,11 @@ namespace Cyens.ReInherit
             return upgraded ? _exhibit02.standPoint.position : _exhibit01.standPoint.position;
         }
 
+        public Exhibit GetExhibit()
+        {
+            return upgraded ? _exhibit02 : _exhibit01;
+        }
+
         /// <summary>
         /// "Factory" function, to fascilitate with the creation of this specific class.
         /// Since the function is inside the Artifact class, we can set private data without having to
@@ -64,6 +70,7 @@ namespace Cyens.ReInherit
             var artifact = owner.AddComponent<Artifact>();
             artifact.data = data;
             artifact.status = Status.Storage;
+            artifact.condition = Random.Range(0.6f, 0.9f);
 
             // Generate the exhibit cases/tables
             artifact._exhibit01 = Exhibit.Create(owner, data.exhibitPrefab01, data);
@@ -90,6 +97,13 @@ namespace Cyens.ReInherit
             Refresh();
         }
 
+
+        public void Damage(float amount)
+        {
+            condition = Mathf.Clamp(condition - amount, 0.0f, 1.0f);
+            // TODO: If zero or close to zero do something!
+        }
+
         public void Refresh(bool valid = true)
         {
 
@@ -97,7 +111,6 @@ namespace Cyens.ReInherit
             switch (status)
             {
                 case Status.Storage:
-                case Status.Restoration:
                     _exhibit01.gameObject.SetActive(false);
                     _exhibit02.gameObject.SetActive(false);
                     break;
@@ -105,6 +118,7 @@ namespace Cyens.ReInherit
                 case Status.Design:
                 case Status.Transit:
                 case Status.Exhibit:
+                case Status.Restoration:
                     _exhibit01.gameObject.SetActive(!upgraded);
                     _exhibit02.gameObject.SetActive(upgraded);
                     break;
