@@ -49,10 +49,31 @@ namespace Cyens.ReInherit
         public void Place()
         {
             if (manager.mode != ArtifactManager.Mode.None) return;
-            if (artifact.GetStatus() != Artifact.Status.Storage) return;
 
+            switch ( artifact.GetStatus() )
+            {
+                case Artifact.Status.Storage:
+                    manager.PlaceArtifact(artifact);
+                    break;
 
-            manager.PlaceArtifact(artifact);
+                case Artifact.Status.Transit:
+                case Artifact.Status.Exhibit:
+                case Artifact.Status.Design:
+                    // TODO: Move the camera to the spot where the artifact is placed.
+                    Camera camera = Camera.main;
+                    camera.transform.position = artifact.transform.position + Vector3.up * 5 + Vector3.forward * 3 + Vector3.left * 3;
+                    camera.transform.LookAt(artifact.transform);
+                    break;
+
+                case Artifact.Status.Restoration:
+                    // TODO: Take players to the Conservation tab and highlight the artifact
+                    break;
+                    
+            }
+
+            
+
+            
         }
 
     }
