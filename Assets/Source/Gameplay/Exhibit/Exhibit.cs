@@ -13,10 +13,17 @@ namespace Cyens.ReInherit
 
 
         private bool ghost = false;
+        private float timer = 0;
+
+        [Header("Game Data")]
+        [Range(0.1f,0.9f)]
+        public float protection = 0.1f;
 
 
         [Header("References")]
         public GameObject placeholder;
+        public Transform healthMeter;
+
         private Animator animator;
         private GameObject artifact;
         private Selectable selectable;
@@ -125,6 +132,22 @@ namespace Cyens.ReInherit
             owner = GetComponentInParent<Artifact>();
         }
 
+
+        private void Update()
+        {
+            // Update meter
+            healthMeter.localScale = new Vector3(owner.condition, 1.0f, 1.0f);
+
+
+            // Slowly degrade the condition of the artifact
+            // TODO: Artifact should only degrade during opening hours!
+            timer += Time.deltaTime;
+            if (timer > protection*10.0f)
+            {
+                timer = 0.0f;
+                owner.Damage(0.01f);
+            }
+        }
 
     }
 }

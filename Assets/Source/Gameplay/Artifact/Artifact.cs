@@ -32,6 +32,7 @@ namespace Cyens.ReInherit
 
         [Header("Game Data")]
         public bool upgraded = false;
+        public float condition = 1.0f;
 
 
         [Header("References")]
@@ -64,6 +65,7 @@ namespace Cyens.ReInherit
             var artifact = owner.AddComponent<Artifact>();
             artifact.data = data;
             artifact.status = Status.Storage;
+            artifact.condition = Random.Range(0.6f, 0.9f);
 
             // Generate the exhibit cases/tables
             artifact._exhibit01 = Exhibit.Create(owner, data.exhibitPrefab01, data);
@@ -88,6 +90,13 @@ namespace Cyens.ReInherit
         {
             status = newStatus;
             Refresh();
+        }
+
+
+        public void Damage(float amount)
+        {
+            condition = Mathf.Clamp(condition - amount, 0.0f, 1.0f);
+            // TODO: If zero or close to zero do something!
         }
 
         public void Refresh(bool valid = true)
