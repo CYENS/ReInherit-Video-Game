@@ -51,6 +51,11 @@ namespace Cyens.ReInherit
             return upgraded ? _exhibit02.standPoint.position : _exhibit01.standPoint.position;
         }
 
+        public Exhibit GetExhibit()
+        {
+            return upgraded ? _exhibit02 : _exhibit01;
+        }
+
         /// <summary>
         /// "Factory" function, to fascilitate with the creation of this specific class.
         /// Since the function is inside the Artifact class, we can set private data without having to

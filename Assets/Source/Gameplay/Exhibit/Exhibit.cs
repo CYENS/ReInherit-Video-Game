@@ -27,6 +27,11 @@ namespace Cyens.ReInherit
         private Selectable selectable;
         private Artifact owner;
 
+
+        [SerializeField]
+        private GameObject m_BoxDissolve;
+
+
         [Header("UI Element References")]
         public Transform healthMeter;
         public GameObject uiExhibit;
@@ -38,6 +43,10 @@ namespace Cyens.ReInherit
 
         private Ghostify[] ghosties;
         private Collider[] colliders;
+
+
+
+        public GameObject GetBoxDissolve() => m_BoxDissolve;
 
 
         /// <summary>

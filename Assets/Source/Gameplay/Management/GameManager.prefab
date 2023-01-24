@@ -1117,11 +1117,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6170994391706725041}
+      objectReference: {fileID: 6170994391706725047}
     - target: {fileID: 2394843671042098178, guid: 92877714f598c6e42b48cb654be2ce86,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394843671042098178, guid: 92877714f598c6e42b48cb654be2ce86,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenMuseum
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394843671042098178, guid: 92877714f598c6e42b48cb654be2ce86,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Cyens.ReInherit.Gameplay.Management.GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394843671042098178, guid: 92877714f598c6e42b48cb654be2ce86,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2896027289292630010, guid: 92877714f598c6e42b48cb654be2ce86,
         type: 3}
@@ -1772,6 +1787,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256400180725715075, guid: 92877714f598c6e42b48cb654be2ce86,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278188361356546800, guid: 92877714f598c6e42b48cb654be2ce86,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 8787727086497542046, guid: 92877714f598c6e42b48cb654be2ce86,
         type: 3}
