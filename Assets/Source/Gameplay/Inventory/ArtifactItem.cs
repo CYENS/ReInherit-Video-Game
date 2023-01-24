@@ -13,6 +13,7 @@ namespace Cyens.ReInherit
 
         [Header("References")]
         public Image icon;
+        public Image stripes;
 
         private ArtifactInventory inventory;
         private ArtifactManager manager;
@@ -30,11 +31,18 @@ namespace Cyens.ReInherit
             manager = ArtifactManager.Instance;
         }
 
+        private void OnEnable()
+        {
+            if (artifact == null) return;
+            Refresh();
+        }
 
         public void Refresh()
         {
             bool inStorage = artifact.GetStatus() == Artifact.Status.Storage;
             icon.color = inStorage ? Color.white : Color.gray;
+
+            stripes.gameObject.SetActive(!inStorage);
         }
         
         // Ready to place artifact
