@@ -22,12 +22,15 @@ namespace Cyens.ReInherit
 
         [Header("References")]
         public GameObject placeholder;
-        public Transform healthMeter;
-
         private Animator animator;
         private GameObject artifact;
         private Selectable selectable;
         private Artifact owner;
+
+        [Header("UI Element References")]
+        public Transform healthMeter;
+        public GameObject uiExhibit;
+        public GameObject uiRestore;
 
 
         [Tooltip("Where people stand to look at the exhibit label")]
@@ -110,6 +113,14 @@ namespace Cyens.ReInherit
             owner.Upgrade();
         }
 
+        /// <summary>
+        /// Sends the exhibit to be fixed / restored
+        /// </summary>
+        public void Restore()
+        {
+            owner.SetStatus(Artifact.Status.Restoration);
+        }
+
         private GameObject CreateArtifact()
         {
             artifact = GameObject.Instantiate(data.artifactPrefab, placeholder.transform.position, Quaternion.identity);
@@ -135,9 +146,20 @@ namespace Cyens.ReInherit
 
         private void Update()
         {
+
+
+            // Make artifact in display case invisible if it is in restoration room.
+            bool inRestoration = (owner.GetStatus() == Artifact.Status.Restoration);
+            artifact.SetActive(!inRestoration);
+
+
+            // --- UI element management ---
+
+            uiExhibit.SetActive(!inRestoration);
+            uiRestore.SetActive(inRestoration);
+
             // Update meter
             healthMeter.localScale = new Vector3(owner.condition, 1.0f, 1.0f);
-
 
             // Slowly degrade the condition of the artifact
             // TODO: Artifact should only degrade during opening hours!

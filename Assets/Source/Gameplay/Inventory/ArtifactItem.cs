@@ -13,7 +13,9 @@ namespace Cyens.ReInherit
 
         [Header("References")]
         public Image icon;
-        public Image stripes;
+        public Image stripesExhibition;
+        public Image stripesRestoration;
+
 
         private ArtifactInventory inventory;
         private ArtifactManager manager;
@@ -39,12 +41,21 @@ namespace Cyens.ReInherit
 
         public void Refresh()
         {
-            bool inStorage = artifact.GetStatus() == Artifact.Status.Storage;
-            icon.color = inStorage ? Color.white : Color.gray;
-
-            stripes.gameObject.SetActive(!inStorage);
+            // Note: Moved code in Update. It's less efficient, but it works correctly without a lot of complications.
         }
-        
+
+        private void Update()
+        {
+            bool inStorage = artifact.GetStatus() == Artifact.Status.Storage;
+            bool inConservation = artifact.GetStatus() == Artifact.Status.Restoration;
+            bool inExhibition = !inStorage && !inConservation;
+
+            icon.color = inStorage ? Color.white : Color.gray;
+            stripesRestoration.gameObject.SetActive(inConservation);
+            stripesExhibition.gameObject.SetActive(inExhibition);
+        }
+
+
         // Ready to place artifact
         public void Place()
         {

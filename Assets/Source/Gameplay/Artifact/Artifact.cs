@@ -106,7 +106,6 @@ namespace Cyens.ReInherit
             switch (status)
             {
                 case Status.Storage:
-                case Status.Restoration:
                     _exhibit01.gameObject.SetActive(false);
                     _exhibit02.gameObject.SetActive(false);
                     break;
@@ -114,6 +113,7 @@ namespace Cyens.ReInherit
                 case Status.Design:
                 case Status.Transit:
                 case Status.Exhibit:
+                case Status.Restoration:
                     _exhibit01.gameObject.SetActive(!upgraded);
                     _exhibit02.gameObject.SetActive(upgraded);
                     break;
