@@ -117,7 +117,7 @@ namespace Cyens.ReInherit
                 case State.Ready:
                     if (m_keeperManager.IsNewTaskAvailable() == false) return;
 
-                    currentTask = m_keeperManager.GetNextTask();
+                    currentTask = m_keeperManager.GetNextTask(this);
                     SetMovePosition(currentTask.target.GetStandPoint());
                     m_state = State.Carry;
                     EnableRenderers();
@@ -175,6 +175,8 @@ namespace Cyens.ReInherit
                 case State.Return:
                     m_aiPath.enableRotation = true;
 
+                    // Signal the keeper manager that there the task is complete
+                    m_keeperManager.DoneWorking(this);
 
                     if (m_aiPath.remainingDistance >= 0.5f) return;
                     if (m_aiPath.pathPending) return;
