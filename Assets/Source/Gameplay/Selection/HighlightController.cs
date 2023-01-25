@@ -28,7 +28,7 @@ namespace Cyens.ReInherit
             outlineScript.enabled = false;
         }
 
-        private void Start()
+        private void Awake()
         {
             outlineScript = GetComponent<Outline>();
         }

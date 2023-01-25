@@ -15,6 +15,8 @@ public class DragColision : MonoBehaviour
     private DragColision dragColisionScript;
     private Color tempColor;
 
+    [SerializeField]
+    private LayerMask layerMask;
 
     private void Awake()
     {
@@ -27,6 +29,7 @@ public class DragColision : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+
         // A collision has occurred
         if(collision.name != "Floor" && dragColisionScript.enabled == true)
         {

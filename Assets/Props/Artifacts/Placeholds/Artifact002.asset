@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe107befc488fa4ca41d660c83f8270, type: 3}
+  m_Name: Artifact002
+  m_EditorClassIdentifier: 
+  label: Pharaoh
+  icon: {fileID: 21300000, guid: 607bf1e931731f440b01818eb773c916, type: 3}
+  type: 0
+  description: Statue head of the pharaoh
+  mesh: {fileID: 1708008239343550498, guid: 4a9cc14b2cd77fd42a852a298e1e14b6, type: 3}
+  material: {fileID: 2100000, guid: 55d4bbe4e4be2a748aa191f0c123b2bd, type: 2}

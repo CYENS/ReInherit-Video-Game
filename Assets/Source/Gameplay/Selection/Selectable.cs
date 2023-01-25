@@ -21,6 +21,10 @@ namespace Cyens.ReInherit
 
         private HighlightController[] m_highlightControllers;
 
+
+        [Header("References")]
+        [SerializeField]
+        private GameObject uiContent;
         
         private bool IsLayerValid( int layer )
         {
@@ -41,16 +45,33 @@ namespace Cyens.ReInherit
 
         public void Select()
         {
+            m_highlightControllers = GetComponentsInChildren<HighlightController>(true);
             m_selected = true;
             foreach (var highlightController in m_highlightControllers)
+            {
+                if (highlightController == null) continue;
                 highlightController.Select();
+            }
+
+            if (uiContent != null)
+                uiContent.SetActive(true);
+
         }
 
         public void DeSelect()
         {
             m_selected = false;
+            if (m_highlightControllers == null) return;
             foreach (var highlightController in m_highlightControllers)
+            {
+                if (highlightController == null) continue;
                 highlightController.DeSelect();
+            }
+
+
+            if (uiContent != null)
+                uiContent.SetActive(false);
+
         }
         
         
@@ -79,7 +100,8 @@ namespace Cyens.ReInherit
             // selection system
             PickValidLayer();
 
-            m_highlightControllers = GetComponentsInChildren<HighlightController>(true);
+            if(uiContent != null)
+                uiContent.SetActive(false);
         }
         
     }

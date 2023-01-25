@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.Serialization;
+using Cyens.ReInherit.Gameplay.Management;
 
 namespace Cyens.ReInherit
 {
@@ -62,6 +63,8 @@ namespace Cyens.ReInherit
 
                 GameObject hitTarget = hitInfo.transform.gameObject;
                 selectable = hitTarget.GetComponent<Selectable>();
+                if (selectable == null) return null;
+                if (selectable.enabled == false) return null;
             }
             return selectable;
         }
@@ -72,6 +75,11 @@ namespace Cyens.ReInherit
         /// <param name="context"></param>
         protected override void OnSelect(InputAction.CallbackContext context)
         {
+            // Ignore UI Elements (Important!)
+            if (GameManager.Instance.isPointerOverUIElement)
+                return;
+
+
             // Debug.Log("Clicked Left Mouse Button");
 
             // Create and cast ray
