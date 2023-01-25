@@ -121,6 +121,9 @@ namespace Cyens.ReInherit
                     SetMovePosition(currentTask.target.GetStandPoint());
                     m_state = State.Carry;
                     EnableRenderers();
+                    m_BoxDissolve = currentTask.target.GetExhibit().GetBoxDissolve();
+                    m_carryBox.transform.localScale = m_BoxDissolve.transform.localScale;
+                    m_carryBox.transform.position = new Vector3(m_carryBox.transform.position.x, m_BoxDissolve.transform.position.y, m_carryBox.transform.position.z);
                     m_carryBox.SetActive(true);
                     m_WeightRigHand.weight = 1;
                     break;

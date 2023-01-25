@@ -17,6 +17,7 @@ namespace Cyens.ReInherit
         [SerializeField] private bool m_panelShowing = false;
         [SerializeField] private float m_dissapearDelay = 4f;
         private IEnumerator m_coroutine;
+        private Animator m_animator;
 
         // Creates a new error message. If panel already showing, hide it and reshow the new one.
         public void CreateErrorMessage(string title, string text)
@@ -48,17 +49,24 @@ namespace Cyens.ReInherit
 
         private void ShowAnimation()
         {
-            m_panel.gameObject.SetActive(true);   
+            m_panel.gameObject.SetActive(true);
+            m_animator.Play("Error Panel Animation");
         }
-
+        
         private void HideAnimation()
         {
+            m_animator.Play("Error Close Panel Animation");
             m_panel.gameObject.SetActive(false); 
         }
 
         public override void Awake()
         {
             base.Awake();
+        }
+
+        private void Start()
+        {
+            m_animator = GetComponent<Animator>();
         }
     }
 }
