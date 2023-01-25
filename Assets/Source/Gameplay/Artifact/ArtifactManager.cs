@@ -64,6 +64,17 @@ namespace Cyens.ReInherit
             input.GamePlay.Cancel.performed -= OnCancel;
         }
 
+
+        /// <summary>
+        /// Returns an array of exhibits that are currently on display
+        /// </summary>
+        public Exhibit[] GetExhibits()
+        {
+            Exhibit[] exhibits = GetComponentsInChildren<Exhibit>(false);
+            return exhibits;
+        }
+
+
         public void PlaceArtifact(Artifact artifact)
         {
             mode = Mode.Placement;

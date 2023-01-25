@@ -1828,7 +1828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0.053036366, g: 1, b: 0.0141509175, a: 0.49803922}
-  ghostMaterial: {fileID: 2100000, guid: 847381bc33bea244bb62c66ec20b7e78, type: 2}
+  m_ghost: {fileID: 2100000, guid: 847381bc33bea244bb62c66ec20b7e78, type: 2}
 --- !u!114 &7864631927591513243
 MonoBehaviour:
   m_ObjectHideFlags: 0

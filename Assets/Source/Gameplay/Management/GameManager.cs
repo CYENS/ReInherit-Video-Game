@@ -75,7 +75,8 @@ namespace Cyens.ReInherit.Gameplay.Management
             // TODO: Decide the amount of time for the museum to be open
             time = 65.0f;
 
-
+            // Spawn visitors
+            VisitorManager.Instance.Spawn();
         }
 
 
