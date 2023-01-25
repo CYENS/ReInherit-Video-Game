@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Cyens.ReInherit.Architect;
+using Cyens.ReInherit.Extensions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Cyens.ReInherit.Scene
 {
@@ -28,6 +30,9 @@ namespace Cyens.ReInherit.Scene
         private float m_currentAngle;
         private float m_currentDistance;
         private float m_currentOrbit;
+        private Camera m_camera;
+
+        public Camera UnityCamera => m_camera;
 
         public Vector3 Target
         {
@@ -62,6 +67,7 @@ namespace Cyens.ReInherit.Scene
 
         private void Awake()
         {
+            m_camera = GetComponent<Camera>();
             SnapToTarget();
         }
 
@@ -136,5 +142,41 @@ namespace Cyens.ReInherit.Scene
 
             UpdateTransform();
         }
+
+        public bool GroundCast(out Vector3 groundHit, float maxTargetDistance = 1000f)
+        {
+            var ray = Raycast();
+
+            if (!Picker.TryPlaneIntersect(ray, Vector3.up, Target.x0z(), out groundHit)) {
+                return false;
+            }
+
+            return Vector3.Distance(groundHit, Target) <= maxTargetDistance;
+        }
+
+        public bool IndexCast(out Index indexHit, float maxTargetDistance = 1000f)
+        {
+            if (!GroundCast(out var hit, maxTargetDistance)) {
+                indexHit = default;
+                return false;
+            }
+
+            indexHit = Index.FromWorld(hit);
+            return true;
+        }
+
+        public bool PlaneCast(out Vector3 hit)
+        {
+            var planeNormal = -m_camera.transform.forward;
+            var ray = Raycast();
+            return Picker.TryPlaneIntersect(ray, planeNormal, Target, out hit);
+        }
+
+        public Ray Raycast()
+        {
+            return m_camera.ScreenPointToRay(Input.mousePosition);
+        }
+
+        public bool IsMouseWithinGame => !EventSystem.current.IsPointerOverGameObject();
     }
 }
