@@ -26,6 +26,7 @@ namespace Cyens.ReInherit.Gameplay.Management
 
         public float time;
 
+        private float m_bufferTimer;
 
         private bool m_pointerOverUIElement;
         public bool isPointerOverUIElement => m_pointerOverUIElement; 
@@ -62,6 +63,13 @@ namespace Cyens.ReInherit.Gameplay.Management
                 return;
             }
 
+            // A small delay to prevent restarting the museum immediately after it closes.
+            // This will give the little visitors enough time to gracefully despawn.
+            if(m_bufferTimer > float.Epsilon)
+            {
+                return;
+            }
+
             // Check whether we should open museum
             if( KeeperManager.Instance.AllTasksFinished() == false )
             {
@@ -82,7 +90,7 @@ namespace Cyens.ReInherit.Gameplay.Management
 
         public void Refresh()
         {
-            txtFunds.text = "�" + funds.ToString();
+            txtFunds.text = "€" + funds.ToString();
         }
 
         public override void Awake()
@@ -101,6 +109,9 @@ namespace Cyens.ReInherit.Gameplay.Management
             if( time <= float.Epsilon )
             {
                 m_museumState = MuseumState.Close;
+                VisitorManager.Instance.DeSpawn();
+                m_bufferTimer = 1.0f;
+                return;
             }
 
 
@@ -113,6 +124,8 @@ namespace Cyens.ReInherit.Gameplay.Management
 
         private void Update()
         {
+            m_bufferTimer = Mathf.Clamp(m_bufferTimer - Time.deltaTime, 0.0f, 1.0f);
+
             m_pointerOverUIElement = eventSys.IsPointerOverGameObject();
 
             closedMuseumUI.SetActive(m_museumState == MuseumState.Close);
