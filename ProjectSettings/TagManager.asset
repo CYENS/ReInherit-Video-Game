@@ -16,11 +16,15 @@ TagManager:
   - CleanArea
   - TicketCollider
   - EntranceCollider
+  - Checkpoint
+  - Room
+  - Entrance
+  - Exhibit
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Selectable
   - Water
   - UI
   - Interactable
@@ -30,8 +34,8 @@ TagManager:
   - Ground
   - Entrance
   - EntranceAgent
-  - 
-  - 
+  - Checkpoint
+  - Exhibits
   - 
   - 
   - 

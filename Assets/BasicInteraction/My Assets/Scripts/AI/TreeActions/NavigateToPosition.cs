@@ -11,7 +11,7 @@ namespace  Cyens.ReInherit.Test.Example
         [SerializeField] private float m_stoppingDistance = 0.1f;
         [SerializeField] private bool m_updateRotation = true;
         [SerializeField] private float m_acceleration = 40.0f;
-        [SerializeField] private float m_tolerance = 1.0f;
+        [SerializeField] private float m_tolerance = 2f;
 
         private float SetRandomSpeed()
         {
@@ -28,8 +28,8 @@ namespace  Cyens.ReInherit.Test.Example
                 context.agent.acceleration = m_acceleration;
             }
             else {
-                context.agentAstar.maxSpeed = SetRandomSpeed();
                 context.agentAstar.destination = blackboard.moveToPosition;
+                context.agentAstar.SearchPath();
             }
         }
 
@@ -43,7 +43,7 @@ namespace  Cyens.ReInherit.Test.Example
                 }
 
                 if (context.agent.remainingDistance < m_tolerance) {
-                    return State.Success;
+                   return State.Success;
                 }
 
                 if (context.agent.pathStatus == UnityEngine.AI.NavMeshPathStatus.PathInvalid) {
@@ -51,11 +51,13 @@ namespace  Cyens.ReInherit.Test.Example
                 }
             }
             else {
+                context.agentAstar.canMove = true;
                 if (context.agentAstar.pathPending) {
                     return State.Running;
                 }
-
                 if (context.agentAstar.remainingDistance < m_tolerance) {
+                    if(blackboard.moveToExit)
+                        Destroy(context.gameObject);
                     return State.Success;
                 }
             }

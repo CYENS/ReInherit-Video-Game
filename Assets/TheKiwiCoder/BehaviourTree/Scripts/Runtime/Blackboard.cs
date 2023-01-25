@@ -10,10 +10,23 @@ namespace TheKiwiCoder {
     [System.Serializable]
     public class Blackboard {
         public Vector3 moveToPosition;
-        
         public GameObject garbage;
-        
         public GameObject exhibit;
+        public int entranceRowId;
+        public bool waitingForTicket; //if agent wait to buy a ticket
+        public bool inTicketRow; //if agent entered a ticket queue
+        public bool moveToExit = false; //if agent is ready to leave
+        public List<GameObject> rooms; //all rooms
+        public List<int> visitedRooms; //ObjectIDs of visited rooms
+        public GameObject currentRoom; //current room the agent is in
+        public GameObject nextRoom; //next room agent will visit
+        public bool exhibitInitial = true; //If if agent enters first room with exhibits
+        public int exhibitIndex; //Index of exhibit that agent visits 
+        public int exhibitPosIndex; //Index of position around exhibit that agent visit
+        public int exhibitsVisited = 0; //Number of exhibits visited in current room
+        public bool firstExhibit = true; //If agent just entered a room and will find first exhibit
+        public bool waitSeeExhibit = false; //if agent will wait in font of exhibits
+        
         public List<Variable> variables;
 
         public int FindVariable(string key)

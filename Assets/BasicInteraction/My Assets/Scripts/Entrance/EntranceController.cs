@@ -9,15 +9,80 @@ namespace Cyens.ReInherit
 {
     public class EntranceController : MonoBehaviour
     {
-        public int m_numOfAgents;
-    	public GameObject m_agentPrefab;
-    	public Transform m_agentsParent;
-    	public BoxCollider m_spawnArea;
-    	public BoxCollider m_goalArea;
-        public BoxCollider m_areaCollider;
+	    //For TESTING
+	    public int m_numOfAgents;
+	    public GameObject m_agentPrefab;
+	    public Transform m_agentsParent;
+	    public BoxCollider m_spawnArea;
+	    public BoxCollider m_goalArea;
+	    //For TESTING
+	    
+	    private class EntranceRow
+	    {
+		    public int m_id;
+		    public int m_density;
+		    public Vector3 m_point;
 
-	    //Return random point inside a box xollider
-    	private Vector3 GetRandomGoalPoint()
+		    public EntranceRow(int id, Vector3 p)
+		    {
+			    m_id = id;
+			    m_density = 0;
+			    m_point = p;
+		    }
+	    }
+	    
+	    private List<EntranceRow> m_entranceRows;
+	    private List<EntranceRow> m_exitRows;
+	    public Transform m_EntranceRowsParent;
+	    public Transform m_ExitRowsParent;
+
+	    public int GetFreeSpotRowId(Vector3 agentPos)
+	    {
+		    //Find least busier row
+		    List<float> distances = new List<float>(m_entranceRows.Count);
+		    float maxDistance = 0;
+		    for (int i = 0; i < m_entranceRows.Count; i++) {
+			    float dis = Vector3.Distance(m_entranceRows[i].m_point, agentPos);
+			    distances.Add(dis);
+			    if (dis > maxDistance)
+				    maxDistance = dis;
+		    }
+
+		    for (int i = 0; i < distances.Count; i++) {
+			    distances[i] /= maxDistance;
+		    }
+
+		    float density = 1000;
+		    int index = 0;
+		    for (int i = 0; i < m_entranceRows.Count; i++) {
+			    float tempDensity = m_entranceRows[i].m_density + (distances[i] * m_entranceRows.Count);
+			    if (tempDensity < density) {
+				    index = i;
+				    density = tempDensity;
+			    }
+		    }
+
+		    m_entranceRows[index].m_density += 1;
+		    return index;
+	    }
+
+	    public Vector3 GetRowPoint(int id)
+	    {
+		    return m_entranceRows[id].m_point;
+	    }
+
+	    public void DecreaseDesnity(int id)
+	    {
+		    m_entranceRows[id].m_density -= 1;
+	    }
+
+	    public Vector3 GetExitRowPoint()
+	    {
+		    return m_exitRows[UnityEngine.Random.Range(0,m_exitRows.Count)].m_point;
+	    }
+	    
+	    //Return random point inside a box collider
+    	public Vector3 GetRandomGoalPoint()
     	{
       	  return new Vector3(
       	      Random.Range(m_goalArea.bounds.min.x, m_goalArea.bounds.max.x),
@@ -26,6 +91,7 @@ namespace Cyens.ReInherit
       	  );
     	}
 
+        //Return spawn point based on agent's ID
     	private Vector3 GetSpawnPoint(int id)
     	{
         	float spawnHeight = Mathf.Abs(m_spawnArea.bounds.max.x - m_spawnArea.bounds.min.x);
@@ -48,58 +114,55 @@ namespace Cyens.ReInherit
                 }
             }
 
+            if (id >= spawnPoints.Count)
+	            id = id % spawnPoints.Count;
+            
         	return spawnPoints[id];
     	}
     
     	// Start is called before the first frame update
     	void Start()
-    	{
-        	StartCoroutine(InstantiateAgents());
+        {
+	        InitializeEntranceRows();
+	        InitializeExitRows();
+	        StartCoroutine(InstantiateAgents());
     	}
+
+        private void InitializeEntranceRows()
+        {
+	        m_entranceRows = new List<EntranceRow>();
+	        int count = 0;
+	        foreach (Transform child in m_EntranceRowsParent) {
+		        Transform point = child.Find("Point");
+		        EntranceRow entranceRow = new EntranceRow(count, point.position);
+		        m_entranceRows.Add(entranceRow);
+		        count += 1;
+	        }
+        }
+        
+        private void InitializeExitRows()
+        {
+	        m_exitRows = new List<EntranceRow>();
+	        int count = 0;
+	        foreach (Transform child in m_ExitRowsParent) {
+		        Transform point = child.Find("Point");
+		        EntranceRow entranceRow = new EntranceRow(count, point.position);
+		        m_exitRows.Add(entranceRow);
+		        count += 1;
+	        }
+        }
 
         //Spawn agents with a random interval
     	private IEnumerator InstantiateAgents()
     	{
-        	WaitForSeconds wait = new WaitForSeconds(UnityEngine.Random.Range(0.75f, 2.25f));
+        	WaitForSeconds wait = new WaitForSeconds(UnityEngine.Random.Range(4f, 12.5f));
         	for (int i = 1; i < m_numOfAgents; i++)
         	{
             	//--------Select Spawn Area-------------
             	Vector3 spawnPoint = GetSpawnPoint(i);
             	GameObject tempAgent = Instantiate(m_agentPrefab, spawnPoint, Quaternion.identity, m_agentsParent);
-            	//--------Select Goal Area-------------
-            	tempAgent.GetComponent<IAstarAI>().destination = GetRandomGoalPoint();
-            
-            	yield return wait;
+                yield return wait;
         	}
     	}
-
-        //Calculate and assign penalty to nodes based on desnity
-        private void CalculateNodeDensity()
-        {
-	        RecastGraph navmeshGraph = AstarPath.active.data.recastGraph;
-	        int[] nodesAgents = new int[navmeshGraph.CountNodes()];
-	        for (int i = 0; i < nodesAgents.Length; i++) {
-		        nodesAgents[i] = 0;
-	        }
-	        
-	        //Count number of agents in each node
-	        foreach (Transform agent in m_agentsParent)
-	        {
-		        int index = navmeshGraph.GetNearest(agent.position).node.NodeIndex - 1;
-		        nodesAgents[index] += 1;
-	        }
-
-	        navmeshGraph.GetNodes(node => {
-		        node.Penalty = 0;
-		        if (m_areaCollider.bounds.Contains((Vector3)node.position)) {
-			        node.Penalty = (uint)nodesAgents[node.NodeIndex - 1] * 7500;
-		        }
-	        });
-        }
-
-        private void Update()
-        {
-	        CalculateNodeDensity();
-        }
     }
 }
