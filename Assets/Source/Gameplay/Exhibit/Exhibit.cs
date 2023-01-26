@@ -23,9 +23,9 @@ namespace Cyens.ReInherit
         [Header("References")]
         public GameObject placeholder;
         private Animator animator;
-        private GameObject artifact;
+        private GameObject prop;
         private Selectable selectable;
-        private Artifact owner;
+        private Artifact artifact;
 
 
         [SerializeField]
@@ -48,12 +48,13 @@ namespace Cyens.ReInherit
 
         public GameObject GetBoxDissolve() => m_BoxDissolve;
 
+        public Artifact GetArtifact() => artifact;
 
         /// <summary>
         /// "Factory" function that generates exhibit cases based on a prefab,
         /// Useful for setting up the artifact data without using setters.
         /// </summary>
-        /// <param name="owner"></param>
+        /// <param name="artifact"></param>
         /// <param name="prefab"></param>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -72,12 +73,55 @@ namespace Cyens.ReInherit
         }
 
 
+        /// <summary>
+        /// Returns a value that represents the impression this exhibit gives to visitors.
+        /// 0 means no interest.
+        /// 0.5 means it is worth looking at
+        /// 1.0 means that it is a star attraction piece
+        /// </summary>
+        /// <returns></returns>
+        public float GetAttraction()
+        {
+            // TODO: Get inherent coolness value from the artifact data
+            float attraction = 1.0f;
+
+            // The condition of the artifact will negatively affect it
+            float condition = artifact.condition;
+            if (condition > 0.75f) attraction *= 1.0f;
+            else if (condition > 0.5f) attraction *= 0.9f;
+            else if (condition > 0.25f) attraction *= 0.7f;
+            else if (condition > float.Epsilon) attraction *= 0.5f;
+            else attraction *= 0.3f;
+
+            // If the artifact is currently on display it will be more interesting for obvious reasons
+            switch (artifact.GetStatus())
+            {
+                case Artifact.Status.Exhibit:
+                    attraction *= 1.0f;
+                    break;
+                case Artifact.Status.Restoration:
+                    attraction *= 0.9f;
+                    break;
+                default:
+                    Debug.LogError("This shouldn't be called!");
+                    attraction *= 0.0f;
+                    break;
+            }
+
+            // Factor novelty into the equation
+            attraction *= Mathf.Lerp( 0.75f, 1.0f, artifact.Novelty );
+
+
+            return attraction;
+        }
+
+
         public void SetGhost( bool value, Color color )
         {
             // Wait for the artifact to spawn first
             // Place the artifact
-            if (artifact == null)
-                artifact = CreateArtifact();
+            if (prop == null)
+                prop = CreateProp();
 
             if (ghosties == null)
                 ghosties = GetComponentsInChildren<Ghostify>(true);
@@ -106,7 +150,7 @@ namespace Cyens.ReInherit
 
         public void Upgrade()
         {
-            if (owner.upgraded)
+            if (artifact.upgraded)
                 return;
 
             int funds = GameManager.GetFunds();
@@ -119,7 +163,7 @@ namespace Cyens.ReInherit
             }
 
             GameManager.SetFunds(funds - price);
-            owner.Upgrade();
+            artifact.Upgrade();
         }
 
         /// <summary>
@@ -127,18 +171,18 @@ namespace Cyens.ReInherit
         /// </summary>
         public void Restore()
         {
-            owner.SetStatus(Artifact.Status.Restoration);
+            artifact.SetStatus(Artifact.Status.Restoration);
         }
 
-        private GameObject CreateArtifact()
+        private GameObject CreateProp()
         {
-            artifact = GameObject.Instantiate(data.artifactPrefab, placeholder.transform.position, Quaternion.identity);
-            artifact.transform.SetParent(placeholder.transform.parent);
+            prop = GameObject.Instantiate(data.artifactPrefab, placeholder.transform.position, Quaternion.identity);
+            prop.transform.SetParent(placeholder.transform.parent);
 
             // Remove the placeholder as it is not needed
             Destroy(placeholder);
 
-            return artifact;
+            return prop;
         }
 
         private void Start()
@@ -146,10 +190,10 @@ namespace Cyens.ReInherit
             animator = GetComponent<Animator>();
 
             // Place the artifact
-            if( artifact == null ) 
-                artifact = CreateArtifact();
+            if(prop == null )
+                prop = CreateProp();
 
-            owner = GetComponentInParent<Artifact>();
+            artifact = GetComponentInParent<Artifact>();
         }
 
 
@@ -158,8 +202,8 @@ namespace Cyens.ReInherit
 
 
             // Make artifact in display case invisible if it is in restoration room.
-            bool inRestoration = (owner.GetStatus() == Artifact.Status.Restoration);
-            artifact.SetActive(!inRestoration);
+            bool inRestoration = (artifact.GetStatus() == Artifact.Status.Restoration);
+            prop.SetActive(!inRestoration);
 
 
             // --- UI element management ---
@@ -168,7 +212,7 @@ namespace Cyens.ReInherit
             uiRestore.SetActive(inRestoration);
 
             // Update meter
-            healthMeter.localScale = new Vector3(owner.condition, 1.0f, 1.0f);
+            healthMeter.localScale = new Vector3(artifact.condition, 1.0f, 1.0f);
 
             // Slowly degrade the condition of the artifact
             // TODO: Artifact should only degrade during opening hours!
@@ -176,7 +220,7 @@ namespace Cyens.ReInherit
             if (timer > protection*10.0f)
             {
                 timer = 0.0f;
-                owner.Damage(0.01f);
+                artifact.Damage(0.01f);
             }
         }
 

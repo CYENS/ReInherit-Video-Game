@@ -110,6 +110,7 @@ namespace Cyens.ReInherit.Gameplay.Management
             {
                 m_museumState = MuseumState.Close;
                 VisitorManager.Instance.DeSpawn();
+                ArtifactManager.Instance.UpdateNovelty();
                 m_bufferTimer = 1.0f;
                 return;
             }

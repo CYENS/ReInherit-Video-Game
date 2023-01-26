@@ -23,8 +23,14 @@ namespace Cyens.ReInherit
         public Status GetStatus() => status;
 
         public ArtifactData GetData() => data;
-        
-        
+
+
+        public float Novelty
+        {
+            get => data.Novelty;
+            set => data.Novelty = value;
+        }
+
         //public Mesh GetMesh() => data.mesh;
         
         public string GetLabel() => data.label;

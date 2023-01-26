@@ -25,6 +25,11 @@ namespace Cyens.ReInherit
             // Spawn a random number of visitors around each exhibit
             foreach( var exhibit in exhibits )
             {
+                // Find how interesting the exhibit is
+                float coolness = exhibit.GetAttraction();
+
+
+
                 int count = Random.Range(1, 3);
                 float angleStep = 360.0f / count;
                 float angle = Random.Range(0, 360.0f);
@@ -50,6 +55,9 @@ namespace Cyens.ReInherit
                 }
                 
             }
+
+            // TODO: Calculate formula to calculate the total funds
+
         }
 
 

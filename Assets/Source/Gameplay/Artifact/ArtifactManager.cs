@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,6 +78,27 @@ namespace Cyens.ReInherit
         }
 
 
+        public Artifact[] GetArtifactsByStatus( Artifact.Status status )
+        {
+            Artifact[] allArtifacts = GetComponentsInChildren<Artifact>(true);
+            return Array.FindAll<Artifact>(allArtifacts, artifact => artifact.GetStatus() == status);
+        }
+
+        public ArtifactData[] GetArtifactData()
+        {
+            // Grab the artifacts contained within and get their data
+            // Collect their data in hashsets to remove duplicates
+            Artifact[] artifacts = GetComponentsInChildren<Artifact>(true);
+            HashSet<ArtifactData> dataSet = new HashSet<ArtifactData>();
+            foreach( var artifact in artifacts )
+                dataSet.Add(artifact.GetData());
+            
+            // Convert the hashset to an array
+            ArtifactData[] artifactData = new ArtifactData[dataSet.Count];
+            dataSet.CopyTo(artifactData);
+            return artifactData;
+        }
+
         public void PlaceArtifact(Artifact artifact)
         {
             mode = Mode.Placement;
@@ -126,6 +150,38 @@ namespace Cyens.ReInherit
             return snapped;
         }
 
+
+        /// <summary>
+        /// Updates the novelty of each artifact based on how long it was 
+        /// on display.
+        /// </summary>
+        public void UpdateNovelty()
+        {
+
+            // Get All artifact data
+            var artifactData = GetArtifactData();
+
+            // Get artifacts that are on display, and their data
+            var displayedArtifacts = GetArtifactsByStatus(Artifact.Status.Exhibit);
+            HashSet<ArtifactData> displayedArtifactData = new HashSet<ArtifactData>();
+            foreach( var artifact in displayedArtifacts )
+                displayedArtifactData.Add(artifact.GetData());
+
+            // Get artifacts that are in the Conservation area
+            var restorationArtifacts = GetArtifactsByStatus(Artifact.Status.Restoration);
+            HashSet<ArtifactData> restorationArtifactData = new HashSet<ArtifactData>();
+            foreach (var artifact in restorationArtifacts)
+                restorationArtifactData.Add(artifact.GetData());
+
+            // Add / subtract points accordingly
+            foreach( var data in artifactData )
+            {
+                if (displayedArtifactData.Contains(data)) data.Novelty -= 0.1f;
+                else if (restorationArtifactData.Contains(data)) data.Novelty += 0.0f;
+                else data.Novelty += 0.5f;
+            }
+
+        }
 
         private void UpdatePlacement()
         {

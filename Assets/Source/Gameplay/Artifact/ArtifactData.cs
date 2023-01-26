@@ -19,6 +19,16 @@ namespace Cyens.ReInherit
         
         public string description;
 
+        [Header("Runtime variables")]
+        [Tooltip("How novel the specific artifact is")]
+        [SerializeField]
+        private float novelty;
+
+        public float Novelty
+        {
+            get => novelty;
+            set => novelty = Mathf.Clamp(value,0.0f,1.0f);
+        }
 
 
         [Header("Physical")]
@@ -34,7 +44,10 @@ namespace Cyens.ReInherit
         
         [Tooltip("How much it costs to upgrade the exhibit case")]
         public int upgradePricing;
-        
 
+        private void Awake()
+        {
+            novelty = 1.0f;
+        }
     }
 }
