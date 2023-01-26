@@ -12,17 +12,19 @@ namespace Cyens.ReInherit
     public class ErrorMessage : Singleton<ErrorMessage>
     {
         [SerializeField] private Image m_panel;
+        [SerializeField] private Image m_image;
         [SerializeField] private TextMeshProUGUI m_title;
         [SerializeField] private TextMeshProUGUI m_message;
         [SerializeField] private bool m_panelShowing = false;
         [SerializeField] private float m_dissapearDelay = 4f;
         private IEnumerator m_coroutine;
-        private Animator m_animator;
+        private float time = 0.5f;
 
         // Creates a new error message. If panel already showing, hide it and reshow the new one.
         public void CreateErrorMessage(string title, string text)
         {
-            if (m_panelShowing) {
+            if (m_panelShowing)
+            {
                 StopCoroutine(m_coroutine);
                 HideAnimation();
             }
@@ -49,14 +51,24 @@ namespace Cyens.ReInherit
 
         private void ShowAnimation()
         {
+
+            StartCoroutine(LerpImageColorAlpha(m_panel, 0.0f, 1f));
+            StartCoroutine(LerpImageColorAlpha(m_image, 0.0f, 1f));
+            StartCoroutine(LerpTextColorAlpha(m_title, 0.0f, 1f));
+            StartCoroutine(LerpTextColorAlpha(m_message, 0.0f, 1f));
+            StartCoroutine(LerpHeight());
             m_panel.gameObject.SetActive(true);
-            m_animator.Play("Error Panel Animation");
+
         }
-        
+
         private void HideAnimation()
         {
-            m_animator.Play("Error Close Panel Animation");
-            m_panel.gameObject.SetActive(false); 
+            
+            StartCoroutine(LerpImageColorAlpha(m_panel, 1.0f, 0f));
+            StartCoroutine(LerpImageColorAlpha(m_image, 1.0f, 0f));
+            StartCoroutine(LerpTextColorAlpha(m_title, 1.0f, 0f));
+            StartCoroutine(LerpTextColorAlpha(m_message, 1.0f, 0f));
+            StartCoroutine(HideAfterTime());
         }
 
         public override void Awake()
@@ -64,9 +76,51 @@ namespace Cyens.ReInherit
             base.Awake();
         }
 
-        private void Start()
+        private IEnumerator LerpImageColorAlpha(Image imageToLerp, float start, float end)
         {
-            m_animator = GetComponent<Animator>();
+            Color newColor = imageToLerp.color;
+            float currentTime = 0f;
+            while (currentTime < time)
+            {
+                newColor.a = Mathf.Lerp(start, end, currentTime / time);
+                imageToLerp.color = newColor;
+                currentTime += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        private IEnumerator LerpTextColorAlpha(TextMeshProUGUI textToLerp, float start, float end)
+        {
+            Color newColor = textToLerp.color;
+            float currentTime = 0f;
+            while (currentTime < time)
+            {
+                newColor.a = Mathf.Lerp(start, end, currentTime / time);
+                textToLerp.color = newColor;
+                currentTime += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        IEnumerator HideAfterTime()
+        {
+            yield return new WaitForSeconds(time);
+
+            // Code to execute after the delay
+            m_panel.gameObject.SetActive(false);
+        }
+
+        private IEnumerator LerpHeight()
+        {
+            float currentTime = 0f;
+            Vector3 panelPosition = m_panel.rectTransform.position;
+            while (currentTime < time)
+            {
+                m_panel.transform.position = new Vector3(panelPosition.x, Mathf.Lerp(panelPosition.y + 100, panelPosition.y, currentTime / time), panelPosition.z);
+
+                currentTime += Time.deltaTime;
+                yield return null;
+            }
         }
     }
 }
