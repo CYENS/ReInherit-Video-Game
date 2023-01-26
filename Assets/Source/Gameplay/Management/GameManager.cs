@@ -22,10 +22,43 @@ namespace Cyens.ReInherit.Gameplay.Management
         private MuseumState m_museumState = MuseumState.Close;
         private ErrorMessage m_errorMessageManager; 
 
-        public int funds = 1000;
+
+        [Header("Game Data")]
+
+        [SerializeField]
+        [Tooltip("The amount of available funds to buy items and services with")]
+        private int m_funds = 1000;
+
+        public static int Funds
+        {
+            get => Instance.m_funds;
+            set
+            {
+                Instance.m_funds = Mathf.Max(value,0);
+                Instance.Refresh();
+            }
+        }
+
+
+        [SerializeField][Tooltip("The star rating of your museum")]
+        private float m_rating = 0.35f;
+
+        public static float Rating
+        {
+            get => Instance.m_rating;
+            set
+            {
+                Instance.m_rating = Mathf.Clamp(value, 0.0f, 5.0f);
+                Instance.Refresh();
+            }
+        }
+
 
         public float time;
 
+
+
+        // -----------------------
         private float m_bufferTimer;
 
         private bool m_pointerOverUIElement;
@@ -45,13 +78,6 @@ namespace Cyens.ReInherit.Gameplay.Management
         [SerializeField]
         private TMP_Text txtTime;
 
-
-        public static int GetFunds() => Instance.funds;
-        public static void SetFunds(int amount)
-        {
-            Instance.funds = amount;
-            Instance.Refresh();
-        }
 
 
         public void OpenMuseum()
@@ -90,7 +116,7 @@ namespace Cyens.ReInherit.Gameplay.Management
 
         public void Refresh()
         {
-            txtFunds.text = "€" + funds.ToString();
+            txtFunds.text = "€" + m_funds.ToString();
         }
 
         public override void Awake()
@@ -111,6 +137,7 @@ namespace Cyens.ReInherit.Gameplay.Management
                 m_museumState = MuseumState.Close;
                 VisitorManager.Instance.DeSpawn();
                 ArtifactManager.Instance.UpdateNovelty();
+                ArtifactManager.Instance.ApplyDamage();
                 m_bufferTimer = 1.0f;
                 return;
             }

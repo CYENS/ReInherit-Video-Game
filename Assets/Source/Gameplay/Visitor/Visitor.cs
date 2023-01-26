@@ -25,6 +25,15 @@ namespace Cyens.ReInherit
         private Exhibit m_exhibit;
 
 
+        [SerializeField]
+        [Tooltip("How impressed the visitor was from the last visit")]
+        [Range(0.0f, 1.0f)]
+        private float m_impression;
+
+        public float Impression
+        {
+            get => m_impression;
+        }
 
         public void SetExhibit( Exhibit exhibit )
         {
@@ -38,6 +47,8 @@ namespace Cyens.ReInherit
             m_alphaSpeed = Random.Range(0.25f,1.0f);
             m_alpha = Random.Range(-m_alphaSpeed,0.0f);
             SetOpacity(m_alpha);
+
+            m_impression = 0.0f;
 
         }
 

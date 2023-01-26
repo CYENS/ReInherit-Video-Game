@@ -153,7 +153,7 @@ namespace Cyens.ReInherit
 
         /// <summary>
         /// Updates the novelty of each artifact based on how long it was 
-        /// on display.
+        /// on display. Should be called at the end of a round
         /// </summary>
         public void UpdateNovelty()
         {
@@ -181,6 +181,17 @@ namespace Cyens.ReInherit
                 else data.Novelty += 0.5f;
             }
 
+        }
+
+        /// <summary>
+        /// Applies damage to each artifact on display.
+        /// Should be called at the end of a round.
+        /// </summary>
+        public void ApplyDamage()
+        {
+            var artifacts = GetArtifactsByStatus(Artifact.Status.Exhibit);
+            foreach( var artifact in artifacts )
+                artifact.Damage(0.1f);
         }
 
         private void UpdatePlacement()

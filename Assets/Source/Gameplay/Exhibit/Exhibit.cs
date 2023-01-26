@@ -17,7 +17,14 @@ namespace Cyens.ReInherit
 
         [Header("Game Data")]
         [Range(0.1f,0.9f)]
-        public float protection = 0.1f;
+        [SerializeField]
+        [Tooltip("How well protected the artifact is")]
+        private float protection = 0.1f;
+
+        public float Protection
+        {
+            get => protection;
+        }
 
 
         [Header("References")]
@@ -153,7 +160,7 @@ namespace Cyens.ReInherit
             if (artifact.upgraded)
                 return;
 
-            int funds = GameManager.GetFunds();
+            int funds = GameManager.Funds;
             int price = data.upgradePricing;
 
             if( funds < price )
@@ -162,7 +169,7 @@ namespace Cyens.ReInherit
                 return;
             }
 
-            GameManager.SetFunds(funds - price);
+            GameManager.Funds -= price;
             artifact.Upgrade();
         }
 
@@ -214,14 +221,6 @@ namespace Cyens.ReInherit
             // Update meter
             healthMeter.localScale = new Vector3(artifact.condition, 1.0f, 1.0f);
 
-            // Slowly degrade the condition of the artifact
-            // TODO: Artifact should only degrade during opening hours!
-            timer += Time.deltaTime;
-            if (timer > protection*10.0f)
-            {
-                timer = 0.0f;
-                artifact.Damage(0.01f);
-            }
         }
 
     }

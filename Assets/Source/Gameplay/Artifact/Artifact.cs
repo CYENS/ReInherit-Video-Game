@@ -104,9 +104,20 @@ namespace Cyens.ReInherit
         }
 
 
+        /// <summary>
+        /// Damages the artifact by a small amount
+        /// </summary>
         public void Damage(float amount)
         {
-            condition = Mathf.Clamp(condition - amount, 0.0f, 1.0f);
+            Exhibit exhibit = GetExhibit();
+            float protection = exhibit.Protection;
+
+            // Damage is reduced when placed in a protective case
+            float damage = amount;
+            damage -= amount * protection;
+
+            // Affect the 'health' of the exhibit
+            condition = Mathf.Clamp(condition - damage, 0.0f, 1.0f);
             // TODO: If zero or close to zero do something!
         }
 
