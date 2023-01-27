@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 3583077540391312433}
   - component: {fileID: 3269833686131806505}
   - component: {fileID: 3786242790405568693}
+  - component: {fileID: 8366460825119343702}
   m_Layer: 5
   m_Name: Meter
   m_TagString: Untagged
@@ -293,6 +294,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8366460825119343702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629105237742939995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03566078e625464a98a1a109edf6d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zeroColor: {r: 0.7264151, g: 0.25698647, b: 0.25698647, a: 1}
+  fullColor: {r: 0.1822268, g: 0.38444614, b: 0.8584906, a: 1}
 --- !u!1 &1291063564412895277
 GameObject:
   m_ObjectHideFlags: 0
@@ -2741,6 +2756,7 @@ MonoBehaviour:
   placeholder: {fileID: 222475666088077631}
   m_BoxDissolve: {fileID: 3492472823223663460}
   healthMeter: {fileID: 3239243694962609658}
+  healthMeter2: {fileID: 3583077540391312433}
   uiExhibit: {fileID: 6527328681831652618}
   uiRestore: {fileID: 3961497646140996616}
   standPoint: {fileID: 6752822980851771253}

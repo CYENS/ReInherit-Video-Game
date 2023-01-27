@@ -194,6 +194,24 @@ namespace Cyens.ReInherit
                 artifact.Damage(0.1f);
         }
 
+        /// <summary>
+        /// Fixes all the artifacts in the restoration room.
+        /// Then returns them to their exhibits after they're fixed
+        /// </summary>
+        public void FixArtifacts()
+        {
+            var artifacts = GetArtifactsByStatus(Artifact.Status.Restoration);
+            foreach( var artifact in artifacts )
+            {
+                artifact.Restore(0.3f);
+                if (artifact.condition >= 1.0f - float.Epsilon)
+                {
+                    artifact.SetStatus(Artifact.Status.Exhibit);
+                    Debug.Log("" + gameObject + " artifact is fully restored!");
+                }
+            }
+        }
+
         private void UpdatePlacement()
         {
             // Find cursor position in world space

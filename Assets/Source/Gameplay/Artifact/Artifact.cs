@@ -121,6 +121,10 @@ namespace Cyens.ReInherit
             // TODO: If zero or close to zero do something!
         }
 
+
+        public void Restore( float amount ) => condition = Mathf.Clamp(condition + amount, 0.0f, 1.0f);
+        
+
         public void Refresh(bool valid = true)
         {
 

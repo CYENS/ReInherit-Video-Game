@@ -41,6 +41,7 @@ namespace Cyens.ReInherit
 
         [Header("UI Element References")]
         public Transform healthMeter;
+        public Transform healthMeter2;
         public GameObject uiExhibit;
         public GameObject uiRestore;
 
@@ -178,6 +179,19 @@ namespace Cyens.ReInherit
         /// </summary>
         public void Restore()
         {
+            if (artifact.condition > 1.0f - float.Epsilon)
+                return;
+
+            int funds = GameManager.Funds;
+            int price = 100;
+
+            if( funds < price )
+            {
+                ErrorMessage.Instance.CreateErrorMessage("Cannot restore artifact", "Not enough funds to afford it.");
+                return;
+            }
+
+            GameManager.Funds -= price;
             artifact.SetStatus(Artifact.Status.Restoration);
         }
 
@@ -220,7 +234,7 @@ namespace Cyens.ReInherit
 
             // Update meter
             healthMeter.localScale = new Vector3(artifact.condition, 1.0f, 1.0f);
-
+            healthMeter2.localScale = healthMeter.localScale;
         }
 
     }
