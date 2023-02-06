@@ -9,7 +9,7 @@ namespace Cyens.ReInherit.Architect
         public int x;
         public int y;
 
-        public const float UnitsPerIndex = 15;
+        public const float UnitsPerIndex = 9;
 
         public Index(int x, int y)
         {
