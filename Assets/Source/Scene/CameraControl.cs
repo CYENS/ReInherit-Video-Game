@@ -1,6 +1,5 @@
 ﻿using Cyens.ReInherit.Extensions;
 using UnityEngine;
-using UnityEngine.ProBuilder;
 
 namespace Cyens.ReInherit.Scene
 {
@@ -10,7 +9,6 @@ namespace Cyens.ReInherit.Scene
         [SerializeField] private float panSpeed = 20f;
         [SerializeField] private float zoomSpeed = 30f;
         [SerializeField] private float rotateSpeed = 180f;
-        [SerializeField] private float mousePanSpeed = 0.05f;
 
         private TopdownCamera m_camera;
         private Vector3 m_lastPanPoint;
@@ -61,24 +59,37 @@ namespace Cyens.ReInherit.Scene
 
             if (Input.GetMouseButtonDown(2)) {
                 m_lastPanPoint = Input.mousePosition;
-                m_camera.PlaneCast(out m_lastPlaneHit);
+                // m_camera.PlaneCast(out m_lastPlaneHit);
             } else if (Input.GetMouseButton(2)) {
-                if (m_camera.PlaneCast(out var pointNow)) {
+                var cameraTransform = m_camera.transform;
 
+                Vector3 p1;
+                Vector3 p2;
+
+                if (m_camera.GroundCast(Input.mousePosition, out p1) && m_camera.GroundCast(m_lastPanPoint, out p2)) {
+                    // Natural "grab" panning mode in regards to the ground 
+                    m_camera.Target += p2 - p1;
+                } else {
+                    // Less natural but failsafe panning mode for when the user doesn't drag along the ground.
+
+                    var ray1 = m_camera.Raycast(Input.mousePosition);
+                    var ray2 = m_camera.Raycast(m_lastPanPoint);
+                    var forward = cameraTransform.forward;
+                    
+                    Picker.TryPlaneIntersect(ray1, forward, m_camera.Target, out p1);
+                    Picker.TryPlaneIntersect(ray2, forward, m_camera.Target, out p2);
+                    
+                    var delta = p2 - p1;
+                    
+                    var forward2d = forward.xz();
+                    var side2d = cameraTransform.right.xz();
+                    var delta2d = (delta.x * side2d + delta.y * forward2d).normalized;
+                    
+                    m_camera.Target += delta2d.x0z();
                 }
-                // var mouseDelta = m_lastPanPoint - Input.mousePosition;
-                // m_lastPanPoint = Input.mousePosition;
-                //
-                // var cameraTransform = m_camera.transform;
-                // var forward2d = cameraTransform.forward.xz();
-                // var side2d = cameraTransform.right.xz();
-                //
-                // var delta2d = (mouseDelta.x * side2d + mouseDelta.y * forward2d).normalized;
-                //
-                // m_camera.Target += delta2d.x0z() * mousePanSpeed;
-            }
 
-            // TODO: Add controls for mouse panning and rotating
+                m_lastPanPoint = Input.mousePosition;
+            }
 
             if (x == 0 && z == 0) {
                 return;

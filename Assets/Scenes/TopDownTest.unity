@@ -359,7 +359,7 @@ MonoBehaviour:
   panSpeed: 70
   zoomSpeed: 70
   rotateSpeed: 180
-  mousePanSpeed: 1
+  mousePanSpeed: 0.35
 --- !u!114 &288806791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,11 +374,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothing: 0.15
   target: {x: 0, y: 0, z: 0}
-  minDistance: 50
-  maxDistance: 160
-  distance: 80
-  minAngle: 15
-  maxAngle: 60
+  minDistance: 30
+  maxDistance: 180
+  distance: 50
+  minAngle: 25
+  maxAngle: 75
   angle: 45
   orbitAngle: 0
 --- !u!1 &307391848

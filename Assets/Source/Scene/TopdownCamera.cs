@@ -145,7 +145,12 @@ namespace Cyens.ReInherit.Scene
 
         public bool GroundCast(out Vector3 groundHit, float maxTargetDistance = 1000f)
         {
-            var ray = Raycast();
+            return GroundCast(Input.mousePosition, out groundHit, maxTargetDistance);
+        }
+
+        public bool GroundCast(in Vector3 mousePos, out Vector3 groundHit, float maxTargetDistance = 1000f)
+        {
+            var ray = m_camera.ScreenPointToRay(mousePos);
 
             if (!Picker.TryPlaneIntersect(ray, Vector3.up, Target.x0z(), out groundHit)) {
                 return false;
@@ -175,6 +180,11 @@ namespace Cyens.ReInherit.Scene
         public Ray Raycast()
         {
             return m_camera.ScreenPointToRay(Input.mousePosition);
+        }
+        
+        public Ray Raycast(Vector3 mousePosition)
+        {
+            return m_camera.ScreenPointToRay(mousePosition);
         }
 
         public bool IsMouseWithinGame => !EventSystem.current.IsPointerOverGameObject();
