@@ -28,7 +28,8 @@ namespace Cyens.ReInherit
         private bool validPlacement;
         protected Plane groundPlane;
         protected Artifact targetArtifact;
-
+        private bool rayFloor;
+        [SerializeField] LayerMask raycastIgnoreLayer;
 
         public enum Mode { None = 0, Placement = 1 }
         public Mode mode = Mode.None;
@@ -214,12 +215,14 @@ namespace Cyens.ReInherit
 
         private void UpdatePlacement()
         {
+            validPlacement = false;
             // Find cursor position in world space
             Vector3 screenPos = camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, camera.nearClipPlane));
             Vector3 cameraPos = camera.transform.position;
 
             // Find intersection of screen ray and the ground plane
             Ray screenRay = new Ray(camera.transform.position, screenPos - cameraPos);
+            RaycastHit hit;
             float t = 0.0f;
             if (groundPlane.Raycast(screenRay, out t))
             {
@@ -233,8 +236,17 @@ namespace Cyens.ReInherit
                 targetArtifact.transform.position = Snap(intersection);
 
                 // TODO: Check for obstacles, or if there is floor
+                rayFloor = false;
+                if (Physics.Raycast(screenRay, out hit, 1000f, ~raycastIgnoreLayer))
+                {
+                    if (hit.transform.tag == "Floor")
+                        validPlacement = true;
+                    else
+                        validPlacement = false;
+                }
+                
                 // Check to see if placement is valid
-                validPlacement = true;
+                //validPlacement = true;
                 //if (IsGrounded(ghost.position) == false) validPlacement = false;
             }
 
