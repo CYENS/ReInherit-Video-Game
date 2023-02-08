@@ -28,7 +28,6 @@ namespace Cyens.ReInherit
         private bool validPlacement;
         protected Plane groundPlane;
         protected Artifact targetArtifact;
-        private bool rayFloor;
         [SerializeField] LayerMask raycastIgnoreLayer;
 
         public enum Mode { None = 0, Placement = 1 }
@@ -236,7 +235,6 @@ namespace Cyens.ReInherit
                 targetArtifact.transform.position = Snap(intersection);
 
                 // TODO: Check for obstacles, or if there is floor
-                rayFloor = false;
                 if (Physics.Raycast(screenRay, out hit, 1000f, ~raycastIgnoreLayer))
                 {
                     if (hit.transform.tag == "Floor")
