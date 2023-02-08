@@ -186,7 +186,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4390151502075634571}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5404221518707372361
+--- !u!114 &8062711755790048007
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,3 +198,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10d337e134fc0a540b2825f7c522e94f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isColliding: 0

@@ -29,6 +29,7 @@ namespace Cyens.ReInherit
         protected Plane groundPlane;
         protected Artifact targetArtifact;
         [SerializeField] LayerMask raycastIgnoreLayer;
+        private colliding collidingScript;
 
         public enum Mode { None = 0, Placement = 1 }
         public Mode mode = Mode.None;
@@ -227,27 +228,31 @@ namespace Cyens.ReInherit
             {
                 Vector3 intersection = screenRay.GetPoint(t);
                 targetArtifact.transform.position = intersection;
-
+                
                 // Snap to center of a 1x1 cell
 
-                
+
                 //// Snap to grid
                 targetArtifact.transform.position = Snap(intersection);
 
                 // TODO: Check for obstacles, or if there is floor
                 if (Physics.Raycast(screenRay, out hit, 1000f, ~raycastIgnoreLayer))
                 {
-                    if (hit.transform.tag == "Floor")
+                    if (hit.transform.tag == "Floor" && targetArtifact.transform.GetComponentInChildren<colliding>().isColliding == false)
+                    {
+                        
                         validPlacement = true;
+                    }
+                       
                     else
                         validPlacement = false;
                 }
-                
+                Debug.Log(targetArtifact.transform.GetComponentInChildren<colliding>().isColliding);
                 // Check to see if placement is valid
                 //validPlacement = true;
                 //if (IsGrounded(ghost.position) == false) validPlacement = false;
             }
-
+            //Debug.Log(targetArtifact.transform.GetChild(0).ToString());
             targetArtifact.Refresh(validPlacement);
 
         }
