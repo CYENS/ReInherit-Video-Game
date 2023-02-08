@@ -228,6 +228,7 @@ namespace Cyens.ReInherit
 
                 // Snap to center of a 1x1 cell
 
+                
                 //// Snap to grid
                 targetArtifact.transform.position = Snap(intersection);
 

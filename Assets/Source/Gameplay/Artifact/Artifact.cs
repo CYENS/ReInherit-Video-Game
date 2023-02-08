@@ -146,11 +146,15 @@ namespace Cyens.ReInherit
             }
 
             // Step Two: Set transparency based on state
+            _exhibit01.navCollider.gameObject.SetActive(true);
+            _exhibit02.navCollider.gameObject.SetActive(true);
             switch (status)
             {
                 case Status.Design:
                     _exhibit01.SetGhost(true, valid? validGhost : invalidGhost );
                     _exhibit02.SetGhost(true, valid ? validGhost : invalidGhost);
+                    _exhibit01.navCollider.gameObject.SetActive(false);
+                    _exhibit02.navCollider.gameObject.SetActive(false);
                     break;
                 case Status.Transit:
                     _exhibit01.SetGhost(true, validGhost);
@@ -160,6 +164,8 @@ namespace Cyens.ReInherit
                 default:
                     _exhibit01.SetGhost(false, validGhost);
                     _exhibit02.SetGhost(false, validGhost);
+                    // Rebake the navmesh
+                    AstarPath.active.Scan();
                     break;
             }
 
@@ -184,14 +190,16 @@ namespace Cyens.ReInherit
             upgraded = true;
             SetStatus(Status.Transit);
 
-            // Rebake the navmesh (just in case)
-            AstarPath.active.Scan();
+
 
             // Send keeper to upgrade the exhibit display case
             KeeperManager.Instance.AddUpgradeTask(this);
 
 
             Refresh(true);
+
+            // Rebake the navmesh (just in case)
+            AstarPath.active.Scan();
         }
 
         private void Update()
