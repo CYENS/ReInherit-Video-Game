@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Gameplay.Management;
+using Pathfinding;
 
 namespace Cyens.ReInherit
 {
@@ -12,7 +13,6 @@ namespace Cyens.ReInherit
     {
         [SerializeField]
         private ArtifactData data;
-
 
         public enum Status { Storage = 0, Design = 1, Transit = 2, Exhibit = 3, Restoration = 4  }
 
@@ -159,16 +159,29 @@ namespace Cyens.ReInherit
                 case Status.Transit:
                     _exhibit01.SetGhost(true, validGhost);
                     _exhibit02.SetGhost(true, validGhost);
+                    // Cut navmesh area around exhibit
+                    CutNavmeshArea(true);
                     break;
-
                 default:
                     _exhibit01.SetGhost(false, validGhost);
                     _exhibit02.SetGhost(false, validGhost);
-                    // Rebake the navmesh
-                    AstarPath.active.Scan();
                     break;
             }
 
+        }
+
+        // Enable/Disable NavMeshCut component
+        private void CutNavmeshArea(bool enable)
+        {
+            if (enable) {
+                NavmeshCut navCut = gameObject.AddComponent<NavmeshCut>();
+                navCut.circleRadius = 1f;
+                navCut.type = NavmeshCut.MeshType.Circle;
+            }
+            else {
+                if(gameObject.GetComponent<NavmeshCut>() != null)
+                    Destroy(GetComponent<NavmeshCut>());
+            }
         }
 
 
@@ -197,9 +210,6 @@ namespace Cyens.ReInherit
 
 
             Refresh(true);
-
-            // Rebake the navmesh (just in case)
-            AstarPath.active.Scan();
         }
 
         private void Update()
