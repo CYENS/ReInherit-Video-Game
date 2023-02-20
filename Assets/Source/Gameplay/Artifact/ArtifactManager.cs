@@ -268,7 +268,7 @@ namespace Cyens.ReInherit
             targetArtifact.SetStatus(Artifact.Status.Transit);
 
             // Rebake the navmesh
-            AstarPath.active.Scan();
+            //AstarPath.active.Scan();
 
             KeeperManager.Instance.AddPlaceTask(targetArtifact);
         }
