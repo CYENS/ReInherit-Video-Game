@@ -18,6 +18,7 @@ namespace Cyens.ReInherit
 
         [SerializeField] Text QuestionTxt;
         [SerializeField] Text CloseTitle;
+        [SerializeField] GameObject CloseImage;
 
         private void Start()
         {
@@ -42,6 +43,7 @@ namespace Cyens.ReInherit
         public void correct()
         {
             CloseTitle.text = "You Won This Artifact";
+            CloseImage.GetComponent<Image>().sprite = QnA[currentQuestion].Answers[QnA[currentQuestion].CorrectAnswer - 1];
             QnA.RemoveAt(currentQuestion);
             generateQuestion();
         }
@@ -49,6 +51,7 @@ namespace Cyens.ReInherit
         public void wrong()
         {
             CloseTitle.text = "You Lost This Artifact";
+            CloseImage.GetComponent<Image>().sprite = QnA[currentQuestion].Answers[QnA[currentQuestion].CorrectAnswer - 1];
             QnA.RemoveAt(currentQuestion);
             generateQuestion();
         }
