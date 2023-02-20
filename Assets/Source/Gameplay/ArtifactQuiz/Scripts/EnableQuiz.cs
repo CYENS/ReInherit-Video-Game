@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Cyens.ReInherit
 {
-    public class testscript : MonoBehaviour
+    public class EnableQuiz : MonoBehaviour
     {
         public GameObject objectToEnable;
         // Start is called before the first frame update
