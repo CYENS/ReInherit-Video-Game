@@ -768,7 +768,22 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
+    Android: 
+    CloudRendering: 
+    EmbeddedLinux: 
+    GameCoreScarlett: 
+    GameCoreXboxOne: 
+    Lumin: 
+    Nintendo Switch: 
+    PS4: 
+    PS5: 
+    Stadia: 
     Standalone: STARTER_ASSETS_PACKAGES_CHECKED
+    WebGL: 
+    Windows Store Apps: 
+    XboxOne: 
+    iPhone: 
+    tvOS: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
