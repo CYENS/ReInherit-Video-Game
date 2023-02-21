@@ -38,7 +38,7 @@ TagManager:
   - EntranceAgent
   - Checkpoint
   - Exhibits
-  - 
+  - NavMeshCollider
   - 
   - 
   - 
