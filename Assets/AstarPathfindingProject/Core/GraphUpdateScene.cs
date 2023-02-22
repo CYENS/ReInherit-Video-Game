@@ -286,7 +286,8 @@ namespace Pathfinding {
 			guo.modifyTag = modifyTag;
 			guo.setTag = setTag;
 
-			AstarPath.active.UpdateGraphs(guo);
+			AstarPath.active.UpdateGraphs(guo, 0.1f);
+			AstarPath.active.FlushGraphUpdates();
 		}
 
 		/// <summary>Draws some gizmos</summary>

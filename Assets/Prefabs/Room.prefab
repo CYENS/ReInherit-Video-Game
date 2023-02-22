@@ -485,51 +485,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &6359111272096101348
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7352542048075879846}
-  - component: {fileID: 8878001570996056160}
-  m_Layer: 15
-  m_Name: NavMeshCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7352542048075879846
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6359111272096101348}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7375879214044714864}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8878001570996056160
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6359111272096101348}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.1, y: 3, z: 1.1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6796077881061609471
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,7 +594,7 @@ GameObject:
   - component: {fileID: 7375879212311193319}
   - component: {fileID: 7375879212311193312}
   - component: {fileID: 7375879212311193313}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1013,7 +968,7 @@ GameObject:
   - component: {fileID: 7375879214044714865}
   - component: {fileID: 7375879214044714866}
   - component: {fileID: 7375879214044714867}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Floor
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -1031,8 +986,7 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.125, z: 0}
   m_LocalScale: {x: 9, y: 0.25, z: 9}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7352542048075879846}
+  m_Children: []
   m_Father: {fileID: 7375879214359835241}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1208,7 +1162,7 @@ GameObject:
   - component: {fileID: 7375879214322326854}
   - component: {fileID: 7375879214322326855}
   - component: {fileID: 7375879214322326848}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1305,7 +1259,7 @@ GameObject:
   - component: {fileID: 7375879214332975894}
   - component: {fileID: 7375879214332975895}
   - component: {fileID: 7375879214332975888}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1400,7 +1354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7375879214359835241}
   - component: {fileID: 7375879214359835242}
-  - component: {fileID: 8453528270109339244}
+  - component: {fileID: 3122594620133939211}
   m_Layer: 0
   m_Name: Room
   m_TagString: Untagged
@@ -1448,7 +1402,7 @@ MonoBehaviour:
   startIndex:
     x: 0
     y: 0
---- !u!114 &8453528270109339244
+--- !u!114 &3122594620133939211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1461,17 +1415,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  uniqueID: 566017085317191630
+  uniqueID: 3297240376588062336
   points:
-  - {x: 7, y: 0, z: 7}
-  - {x: 7, y: 0, z: -7}
-  - {x: -7, y: 0, z: 7}
-  - {x: -7, y: 0, z: -7}
+  - {x: 4.25, y: 0, z: 4.25}
+  - {x: 4.25, y: 0, z: -4.25}
+  - {x: -4.25, y: 0, z: 4.25}
+  - {x: -4.25, y: 0, z: -4.25}
   convex: 1
-  minBoundsHeight: 1
+  minBoundsHeight: 2
   penaltyDelta: 0
-  modifyWalkability: 0
-  setWalkability: 0
+  modifyWalkability: 1
+  setWalkability: 1
   applyOnStart: 1
   applyOnScan: 1
   updatePhysics: 1
@@ -1527,7 +1481,7 @@ GameObject:
   - component: {fileID: 5182830919770555590}
   - component: {fileID: 8359837050569632723}
   - component: {fileID: 9003306947831673691}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
