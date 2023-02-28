@@ -26,15 +26,21 @@ namespace Cyens.ReInherit.Architect
             blockOut.m_parent = parent;
 
             blockOut.m_model = ArchitectLibrary.RoomPrefabs.Spawn(parent.Graph.transform, index.WorldCenter);
-
+            
+            
             parent.Add(blockOut);
             parent.Graph.AddBlock(blockOut);
 
+            blockOut.m_model.RecreateNavMesh();
+            
             return blockOut;
         }
 
         private void OnDestroy()
         {
+            if (m_model != null)
+                m_model.DisableFloorAndRemoveNavMesh();
+            
             if (!ArchitectLibrary.IsDisposing) {
                 ArchitectLibrary.RoomPrefabs.Gather(Model);
             }
