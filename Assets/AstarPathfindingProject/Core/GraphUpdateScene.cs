@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Pathfinding {
@@ -33,7 +34,8 @@ namespace Pathfinding {
 	/// So if you for example have a grid in the XY plane then the transform should have the rotation (-90,0,0).
 	/// </summary>
 	[HelpURL("http://arongranberg.com/astar/docs/class_pathfinding_1_1_graph_update_scene.php")]
-	public class GraphUpdateScene : GraphModifier {
+	public class GraphUpdateScene : GraphModifier
+	{
 		/// <summary>Points which define the region to update</summary>
 		public Vector3[] points;
 
@@ -286,7 +288,8 @@ namespace Pathfinding {
 			guo.modifyTag = modifyTag;
 			guo.setTag = setTag;
 
-			AstarPath.active.UpdateGraphs(guo);
+			AstarPath.active.UpdateGraphs(guo, 0.1f);
+			AstarPath.active.FlushGraphUpdates();
 		}
 
 		/// <summary>Draws some gizmos</summary>

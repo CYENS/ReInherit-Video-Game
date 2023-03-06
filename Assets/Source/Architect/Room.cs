@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
+using Unity.VisualScripting;
 
 namespace Cyens.ReInherit.Architect
 {

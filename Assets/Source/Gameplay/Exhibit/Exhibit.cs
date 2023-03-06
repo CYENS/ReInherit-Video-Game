@@ -28,6 +28,7 @@ namespace Cyens.ReInherit
 
 
         [Header("References")]
+        public Collider navCollider;
         public GameObject placeholder;
         private Animator animator;
         private GameObject prop;
@@ -101,6 +102,8 @@ namespace Cyens.ReInherit
             else if (condition > float.Epsilon) attraction *= 0.5f;
             else attraction *= 0.3f;
 
+            
+
             // If the artifact is currently on display it will be more interesting for obvious reasons
             switch (artifact.GetStatus())
             {
@@ -138,6 +141,7 @@ namespace Cyens.ReInherit
                 colliders = GetComponentsInChildren<Collider>(true);
 
 
+
             ghost = value;
             foreach(var ghostie in ghosties)
             {
@@ -146,8 +150,8 @@ namespace Cyens.ReInherit
             }
 
             // Ghosts should be passable!
-            //foreach(var collider in colliders )
-            //    collider.isTrigger = value;
+            foreach(var collider in colliders )
+                collider.isTrigger = value;
 
             if(selectable == null)
                 selectable = GetComponent<Selectable>();

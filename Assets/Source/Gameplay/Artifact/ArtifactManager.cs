@@ -28,7 +28,8 @@ namespace Cyens.ReInherit
         private bool validPlacement;
         protected Plane groundPlane;
         protected Artifact targetArtifact;
-
+        [SerializeField] LayerMask raycastIgnoreLayer;
+        private colliding collidingScript;
 
         public enum Mode { None = 0, Placement = 1 }
         public Mode mode = Mode.None;
@@ -214,29 +215,47 @@ namespace Cyens.ReInherit
 
         private void UpdatePlacement()
         {
+            validPlacement = false;
             // Find cursor position in world space
             Vector3 screenPos = camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, camera.nearClipPlane));
             Vector3 cameraPos = camera.transform.position;
 
             // Find intersection of screen ray and the ground plane
             Ray screenRay = new Ray(camera.transform.position, screenPos - cameraPos);
+            RaycastHit hit;
             float t = 0.0f;
             if (groundPlane.Raycast(screenRay, out t))
             {
                 Vector3 intersection = screenRay.GetPoint(t);
                 targetArtifact.transform.position = intersection;
-
+                
                 // Snap to center of a 1x1 cell
+
 
                 //// Snap to grid
                 targetArtifact.transform.position = Snap(intersection);
 
+
+                Ray dropRay = new Ray(targetArtifact.transform.position + Vector3.up * 100.0f, Vector3.down);
+
                 // TODO: Check for obstacles, or if there is floor
+                if (Physics.Raycast(dropRay, out hit, 1000f, ~raycastIgnoreLayer))
+                {
+                    if (hit.transform.tag == "Floor" && targetArtifact.transform.GetComponentInChildren<colliding>().isColliding == false)
+                    {
+                        
+                        validPlacement = true;
+                    }
+                       
+                    else
+                        validPlacement = false;
+                }
+                Debug.Log(targetArtifact.transform.GetComponentInChildren<colliding>().isColliding);
                 // Check to see if placement is valid
-                validPlacement = true;
+                //validPlacement = true;
                 //if (IsGrounded(ghost.position) == false) validPlacement = false;
             }
-
+            //Debug.Log(targetArtifact.transform.GetChild(0).ToString());
             targetArtifact.Refresh(validPlacement);
 
         }
@@ -249,7 +268,7 @@ namespace Cyens.ReInherit
             targetArtifact.SetStatus(Artifact.Status.Transit);
 
             // Rebake the navmesh
-            AstarPath.active.Scan();
+            //AstarPath.active.Scan();
 
             KeeperManager.Instance.AddPlaceTask(targetArtifact);
         }

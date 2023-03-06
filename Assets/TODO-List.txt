@@ -1,0 +1,18 @@
+
+Core
+- Gaining new artifact at the end of the round (Announcement)
+- Add building mechanics into the game
+
+- Mini-game deciding if new artifact is fake or not
+
+
+Functional
+- Ability to cancel placement of artifact
+
+
+Visual
+- Visitor counter on the top of the screen
+- Rating of the museum
+- General impression score on that round
+- Round/Day counter
+- Flashing warning sign above damaged artifacts

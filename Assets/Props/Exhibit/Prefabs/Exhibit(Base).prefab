@@ -2753,6 +2753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   protection: 0.1
+  navCollider: {fileID: 1033227799935582672}
   placeholder: {fileID: 222475666088077631}
   m_BoxDissolve: {fileID: 3492472823223663460}
   healthMeter: {fileID: 3239243694962609658}

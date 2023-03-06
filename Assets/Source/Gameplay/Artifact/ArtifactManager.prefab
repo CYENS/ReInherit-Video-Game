@@ -45,5 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starterArtifacts:
-  - {fileID: 11400000, guid: e58d555bede04fc4dba678d5253d8a5d, type: 2}
+  - {fileID: 11400000, guid: 01d916d704f947f40b3d1b8510acd303, type: 2}
+  raycastIgnoreLayer:
+    serializedVersion: 2
+    m_Bits: 32776
   mode: 0
