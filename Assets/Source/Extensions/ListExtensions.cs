@@ -26,7 +26,9 @@ namespace Cyens.ReInherit.Extensions {
         }
 
         public static void ReserveCapacity<T>(this List<T> list, int capacity) {
-            if (list.Capacity < capacity) list.Capacity = capacity;
+            if (list.Capacity < capacity) {
+                list.Capacity = capacity;
+            }
         }
     }
 }

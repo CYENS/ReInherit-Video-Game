@@ -61,7 +61,7 @@ namespace Cyens.ReInherit.Architect
 
         public static IndexBounds Zero => new();
 
-        public IndexBounds Readjusted => new(
+        public readonly IndexBounds Readjusted => new(
             Mathf.Min(min.x, max.x), Mathf.Min(min.y, max.y),
             Mathf.Max(min.x, max.x), Mathf.Max(min.y, max.y)
         );
@@ -119,6 +119,25 @@ namespace Cyens.ReInherit.Architect
             bounds.ReadjustCorners();
             return bounds;
         }
+        
+        public readonly IndexBounds Clipped
+        {
+            get {
+                var newMin = new Index(
+                    Mathf.Max(FullBounds.min.x, Mathf.Min(min.x, max.x)),
+                    Mathf.Max(FullBounds.min.y, Mathf.Min(min.y, max.y))
+                );
+
+                var newMax = new Index(
+                    Mathf.Min(FullBounds.max.x, Mathf.Max(min.x, max.x)),
+                    Mathf.Min(FullBounds.max.y, Mathf.Max(min.y, max.y))
+                );
+
+                return new IndexBounds(newMin, newMax);
+            }
+        }
+
+        public static readonly IndexBounds FullBounds = new IndexBounds(Index.MinValue, Index.MaxValue);
 
         public static bool operator ==(IndexBounds lhs, IndexBounds rhs) => lhs.min == rhs.min && lhs.max == rhs.max;
 

@@ -1355,7 +1355,7 @@ GameObject:
   - component: {fileID: 7375879214359835241}
   - component: {fileID: 7375879214359835242}
   m_Layer: 0
-  m_Name: Room
+  m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1401,6 +1401,12 @@ MonoBehaviour:
   startIndex:
     x: 0
     y: 0
+  test2:
+    data:
+    - 
+    - 
+    - 
+    - 
 --- !u!1 &8146860866086595708
 GameObject:
   m_ObjectHideFlags: 0

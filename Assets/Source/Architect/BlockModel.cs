@@ -11,6 +11,41 @@ namespace Cyens.ReInherit.Architect
 
         [SerializeField] private bool moveToIndex;
         [SerializeField] private Index startIndex;
+        
+        public void Clear()
+        {
+            eastWall.Type = WallModel.WallType.None;   
+            westWall.Type = WallModel.WallType.None;   
+            northWall.Type = WallModel.WallType.None;   
+            southWall.Type = WallModel.WallType.None;   
+        }
+        
+        public WallModel.WallType GetModelType(Direction direction)
+        {
+            return direction.Id switch {
+                DirectionId.East => EastType,
+                DirectionId.West => WestType,
+                DirectionId.North => NorthType,
+                DirectionId.South => SouthType,
+                _ => WallModel.WallType.None,
+            };
+        }
+        
+        public void SetModelType(Direction direction, WallModel.WallType type)
+        {
+            // TODO use DirectionList
+            var model = direction.Id switch {
+                DirectionId.East => eastWall,
+                DirectionId.West => westWall,
+                DirectionId.North => northWall,
+                DirectionId.South => southWall,
+                _ => null,
+            };
+
+            if (model != null) {
+                model.Type = type;
+            }
+        }
 
         public WallModel.WallType EastType 
         {

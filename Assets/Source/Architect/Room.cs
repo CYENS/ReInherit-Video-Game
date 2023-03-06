@@ -3,66 +3,18 @@ using UnityEngine;
 
 namespace Cyens.ReInherit.Architect
 {
-    public class Room : ScriptableObject
+    public abstract class Room : ScriptableObject
     {
-        private List<Block> m_tiles;
-        private RoomGraph m_parent;
-        
-        public RoomGraph Graph => m_parent;
+        public abstract RoomGraph Graph { get; }
 
-        public static Room Create(RoomGraph graph)
-        {
-            var room = CreateInstance<Room>();
-            room.m_tiles = new List<Block>(4);
-            room.m_parent = graph;
-            
-            return room;
-        }
-        
-        public void Add(Block block)
-        {
-            if (block.Parent != this) {
-                return;
-            }
-            
-            m_tiles.Add(block);
-        }
+        public abstract IReadOnlyList<Index> Tiles { get; }
 
-        private void OnDestroy()
-        {
-            foreach (var block in m_tiles) {
-                Destroy(block);
-            }
-        }
+        public abstract bool Contains(Index index);
 
-        public void RefreshAll()
-        {
-            foreach (var tile in m_tiles) {
-                if (m_parent.GetRoomAt(tile.Index.East) == this) {
-                    tile.Model.EastType = WallModel.WallType.None;
-                } else {
-                    tile.Model.EastType = WallModel.WallType.Wall;
-                }
-                
-                if (m_parent.GetRoomAt(tile.Index.West) == this) {
-                    tile.Model.WestType = WallModel.WallType.None;
-                } else {
-                    tile.Model.WestType = WallModel.WallType.Wall;
-                }
-                
-                if (m_parent.GetRoomAt(tile.Index.North) == this) {
-                    tile.Model.NorthType = WallModel.WallType.None;
-                } else {
-                    tile.Model.NorthType = WallModel.WallType.Wall;
-                }
-                
-                if (m_parent.GetRoomAt(tile.Index.South) == this) {
-                    tile.Model.SouthType = WallModel.WallType.None;
-                } else {
-                    tile.Model.SouthType = WallModel.WallType.Wall;
-                }
-                
-            }
-        }
+        public bool ContainsPoint(Vector3 point) => Contains(Index.FromWorld(point));
+
+        // public abstract void Add(Index index);
+        //
+        // public abstract void Remove(Index index);
     }
 }

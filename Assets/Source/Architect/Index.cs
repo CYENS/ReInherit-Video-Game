@@ -6,6 +6,12 @@ namespace Cyens.ReInherit.Architect
     [Serializable]
     public struct Index
     {
+        public const int MaxSizeX = 48;
+        public const int MaxSizeY = 32;
+
+        private const int OffsetX = MaxSizeX / 2;
+        private const int OffsetY = 0;
+
         public int x;
         public int y;
 
@@ -21,46 +27,67 @@ namespace Cyens.ReInherit.Architect
         public Index East => new(x + 1, y);
         public Index South => new(x, y - 1);
         public Index North => new(x, y + 1);
-        public Index NorthWest => new(x - 1, y + 1);
-        public Index NorthEast => new(x + 1, y + 1);
-        public Index SouthWest => new(x - 1, y - 1);
-        public Index SouthEast => new(x + 1, y - 1);
 
-        public Index Towards(Direction direction) => this + direction.ToIndex();
+        public static readonly Index MinValue = new(0, 0);
+        public static readonly Index MaxValue = new(MaxSizeX, MaxSizeY);
+
+        private int WorldX => x - OffsetX;
+        private int WorldY => y - OffsetY;
+
+        public Index Towards(Direction direction) => this + direction.AsIndex;
 
         public Vector3 WorldCenter => new(
-            x * UnitsPerIndex + UnitsPerIndex * 0.5f,
+            WorldX * UnitsPerIndex + UnitsPerIndex * 0.5f,
             0,
-            y * UnitsPerIndex + UnitsPerIndex * 0.5f
+            WorldY * UnitsPerIndex + UnitsPerIndex * 0.5f
         );
 
+        public static float TransformX(int pointX) => (pointX - OffsetX) * UnitsPerIndex + UnitsPerIndex * 0.5f;
+        public static float TransformY(int pointY) => (pointY - OffsetY) * UnitsPerIndex + UnitsPerIndex * 0.5f;
+
+        public static bool AreAdjacent(Index lhs, Index rhs)
+        {
+            var diff = lhs - rhs;
+            diff.x = Mathf.Abs(diff.x);
+            diff.y = Mathf.Abs(diff.y);
+
+            return diff is { x: <= 1, y: <= 1 } && diff.x != diff.y;
+        }
+
+        public bool IsValid => x is >= 0 and < MaxSizeX && y is >= 0 and < MaxSizeY;
+
         public static Index FromWorld(Vector3 worldCoordinates) => new() {
-            x = Mathf.RoundToInt((worldCoordinates.x - UnitsPerIndex * 0.5f) / UnitsPerIndex),
-            y = Mathf.RoundToInt((worldCoordinates.z - UnitsPerIndex * 0.5f) / UnitsPerIndex),
+            x = Mathf.RoundToInt((worldCoordinates.x - UnitsPerIndex * 0.5f) / UnitsPerIndex) + OffsetX,
+            y = Mathf.RoundToInt((worldCoordinates.z - UnitsPerIndex * 0.5f) / UnitsPerIndex) + OffsetY,
+        };
+
+        public static Vector2 ToFractionalIndex(Vector3 worldCoordinates) => new() {
+            x = (worldCoordinates.x - UnitsPerIndex * 0.5f) / UnitsPerIndex + OffsetX,
+            y = (worldCoordinates.z - UnitsPerIndex * 0.5f) / UnitsPerIndex + OffsetY,
         };
 
         public Vector3 WorldSECorner => new(
-            x * UnitsPerIndex + UnitsPerIndex,
+            WorldX * UnitsPerIndex + UnitsPerIndex,
             0,
-            y * UnitsPerIndex
+            WorldY * UnitsPerIndex
         );
 
         public Vector3 WorldNECorner => new(
-            x * UnitsPerIndex + UnitsPerIndex,
+            WorldX * UnitsPerIndex + UnitsPerIndex,
             0,
-            y * UnitsPerIndex + UnitsPerIndex
+            WorldY * UnitsPerIndex + UnitsPerIndex
         );
 
         public Vector3 WorldSWCorner => new(
-            x * UnitsPerIndex,
+            WorldX * UnitsPerIndex,
             0,
-            y * UnitsPerIndex
+            WorldY * UnitsPerIndex
         );
 
         public Vector3 WorldNWCorner => new(
-            x * UnitsPerIndex,
+            WorldX * UnitsPerIndex,
             0,
-            y * UnitsPerIndex + UnitsPerIndex
+            WorldY * UnitsPerIndex + UnitsPerIndex
         );
 
         public static Index Zero => new();

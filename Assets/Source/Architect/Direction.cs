@@ -3,81 +3,167 @@ using UnityEngine;
 
 namespace Cyens.ReInherit.Architect
 {
-    [Flags, Serializable]
-    public enum Direction
+    [Serializable]
+    public enum DirectionId
     {
-        None,
-        South = 0b0001,
-        North = 0b0010,
-        West = 0b0100,
-        East = 0b1000,
+        Invalid, // Must be the first item!
+
+        East,
+        West,
+        North,
+        South,
     }
 
-    public static class DirectionExt
+    [Serializable]
+    public struct Direction
     {
-        private static readonly int[] SignMap = { 0, -1, 1, 0 };
+        private static readonly Index[] Indices;
+        private static readonly Direction[] Directions;
+        private static readonly Direction[] Opposites;
+        private static readonly string[] StringValues;
 
-        private static readonly int[] OrdinalMap4 = {
-            -1,
-            0, // South
-            1, // North
-            -1,
-            2, // West
-            -1, -1, -1,
-            3, // East
-            -1, -1, -1, -1, -1, -1, -1,
-        };
+        // We're using an enum for its underlying type, even though an int would be better.
+        // This is so the inspector will treat its value as an enum.
+        [SerializeField] private DirectionId value;
 
-        private static readonly int[] OrdinalMap8 = {
-            -1,
-            0, // South
-            1, // North
-            -1,
-            2, // West
-            3, // Southwest
-            4, // Northwest
-            -1,
-            5, // East
-            6, // Southeast
-            7, // Northeast
-            -1, -1, -1, -1, -1,
-        };
+        // We expose the enum value for use with switch statements 
+        public DirectionId Id => value;
 
-        public static int ToOrdinalIndex4(this Direction direction)
+        public const int Length = 4;
+
+        public int Ordinal => (int)value - 1;
+
+        private Direction(DirectionId value)
         {
-            return OrdinalMap4[(int)direction];
+            this.value = value;
         }
 
-        public static int ToOrdinalIndex8(this Direction direction)
+        public Index AsIndex => Indices[Ordinal];
+
+        public Direction Opposite => Opposites[Ordinal];
+
+        public bool IsValid => (int)value is >= 0 and < Length;
+
+        public static ReadOnlySpan<Direction> Values => Directions;
+        public static ReadOnlySpan<string> Names => StringValues;
+
+        public override string ToString() => StringValues[Ordinal];
+
+        static Direction()
         {
-            return OrdinalMap8[(int)direction];
+            East = new Direction(DirectionId.East);
+            West = new Direction(DirectionId.West);
+            North = new Direction(DirectionId.North);
+            South = new Direction(DirectionId.South);
+
+            Indices = new Index[Length];
+            Indices[East.Ordinal] = new Index(1, 0);
+            Indices[West.Ordinal] = new Index(-1, 0);
+            Indices[North.Ordinal] = new Index(0, 1);
+            Indices[South.Ordinal] = new Index(0, -1);
+
+            Opposites = new Direction[Length];
+            Opposites[East.Ordinal] = West;
+            Opposites[West.Ordinal] = East;
+            Opposites[North.Ordinal] = South;
+            Opposites[South.Ordinal] = North;
+
+            Directions = new Direction[Length];
+            Directions[East.Ordinal] = East;
+            Directions[West.Ordinal] = West;
+            Directions[North.Ordinal] = North;
+            Directions[South.Ordinal] = South;
+
+            StringValues = new string[Length];
+            StringValues[East.Ordinal] = "East";
+            StringValues[West.Ordinal] = "West";
+            StringValues[North.Ordinal] = "North";
+            StringValues[South.Ordinal] = "South";
+        }
+        
+        public static Direction FromIndices(Index from, Index to)
+        {
+            return FromIndexNormalized(to - from);
         }
 
-        public static bool IsValid(this Direction direction)
+        public static Direction FromIndexNormalized(in Index index)
         {
-            return OrdinalMap8[(int)direction] >= 0;
+            var signX = Math.Sign(index.x);
+            var signY = Math.Sign(index.y);
+            if (Math.Abs(signX) == Math.Abs(signY)) {
+                return default;
+            }
+
+            return signX switch {
+                -1 => West,
+                1 => East,
+                _ => signY switch {
+                    -1 => South,
+                    1 => North,
+                    _ => default,
+                },
+            };
         }
 
+        public static readonly Direction East;
+        public static readonly Direction West;
+        public static readonly Direction North;
+        public static readonly Direction South;
 
-        public static Index ToIndex(this Direction direction)
+        public bool Equals(Direction other)
         {
-            var xFlag = unchecked(((uint)direction & 0b1100) >> 2);
-            var x = SignMap[xFlag];
-            var yFlag = unchecked((uint)direction & 0b11);
-            var y = SignMap[yFlag];
-
-            return new Index(x, y);
+            return value == other.value;
         }
 
-        public static Vector3 ToVector3(this Direction direction)
+        public override bool Equals(object obj)
         {
-            var index = direction.ToIndex();
+            return obj is Direction other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Ordinal.GetHashCode();
+        }
+
+        public static bool operator ==(Direction left, Direction right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Direction left, Direction right)
+        {
+            return !left.Equals(right);
+        }
+
+        public Vector3 ToVector3()
+        {
+            var index = AsIndex;
             return new Vector3(index.x, 0, index.y).normalized;
         }
 
-        public static bool Has(this Direction direction, Direction flag)
+        public Vector2 ToVector2()
         {
-            return (direction & flag) != Direction.None;
+            var index = AsIndex;
+            return new Vector2(index.x, index.y).normalized;
+        }
+    }
+
+    [Serializable]
+    public class DirectionList<T>
+    {
+        [SerializeField, HideInInspector] private T[] data = new T[Direction.Length];
+
+        public T this[Direction direction]
+        {
+            get => data[direction.Ordinal];
+            set => data[direction.Ordinal] = value;
+        }
+
+        public void Clear()
+        {
+            for (var i = 0; i < data.Length; ++i) {
+                data[i] = default;
+            }
         }
     }
 }
