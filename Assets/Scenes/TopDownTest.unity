@@ -380,6 +380,38 @@ MonoBehaviour:
   maxAngle: 75
   angle: 45
   orbitAngle: 0
+--- !u!1 &370161164 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1021566118684102197, guid: 682b3e052f8e4da43bbc2375faf655d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1021566116886978901}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &370161168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370161164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8189ab733d7447f898827bb4b0e6d55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rooms: []
+--- !u!114 &370161169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370161164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 402bb27f2effb4bd183ec7f7dd47b078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
 --- !u!1 &379629181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1517,6 +1549,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1021566118684102193, guid: 682b3e052f8e4da43bbc2375faf655d2,
+        type: 3}
+      propertyPath: graph
+      value: 
+      objectReference: {fileID: 370161168}
     - target: {fileID: 1021566118684102197, guid: 682b3e052f8e4da43bbc2375faf655d2,
         type: 3}
       propertyPath: m_Name
@@ -1577,7 +1614,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1021566118684102198, guid: 682b3e052f8e4da43bbc2375faf655d2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 682b3e052f8e4da43bbc2375faf655d2, type: 3}
 --- !u!1001 &6786419625067985192
 PrefabInstance:

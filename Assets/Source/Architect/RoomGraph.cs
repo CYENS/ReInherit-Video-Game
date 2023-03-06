@@ -377,6 +377,7 @@ namespace Cyens.ReInherit.Architect
                 }
 
                 if (model == null) {
+                    model.RecreateNavMesh();
                     model = ArchitectLibrary.RoomPrefabs.Spawn(room.Graph.transform, index.WorldCenter);
                 }
 
@@ -431,6 +432,7 @@ namespace Cyens.ReInherit.Architect
             public void ClearBlockAndGatherModel()
             {
                 if (model != null) {
+                    model.DisableFloorAndRemoveNavMesh();
                     ArchitectLibrary.RoomPrefabs.Gather(model);
                 }
 
