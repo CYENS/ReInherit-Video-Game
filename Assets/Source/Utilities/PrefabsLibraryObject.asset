@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b078c8ba3452154fa5e7464384632ce, type: 3}
+  m_Name: PrefabsLibraryObject
+  m_EditorClassIdentifier: 
+  m_refreshPrefabs: 0
+  m_directories:
+  - Assets/Prefabs
+  m_objectFilters:
+  - t:Prefab
+  m_prefabs:
+    m_keys:
+    - Architect Library
+    - Architect
+    - Floor
+    - Room 1
+    - Room
+    - Wall
+    m_values:
+    - {fileID: 6786419623444471604, guid: aaf33050543f93f49ab53d4693177265, type: 3}
+    - {fileID: 1021566118684102197, guid: 682b3e052f8e4da43bbc2375faf655d2, type: 3}
+    - {fileID: 101475149820759661, guid: 5ab393ddcbcba364db178e4d703d1bd5, type: 3}
+    - {fileID: 7375879214359835243, guid: bc6ad7eb9c977354fb1c74bfb6d1a3df, type: 3}
+    - {fileID: 7375879214359835243, guid: b3a66137dd90442449a2ebf047997918, type: 3}
+    - {fileID: 707693561344329137, guid: 9a842a20e24e379498f83e1b930c7536, type: 3}
