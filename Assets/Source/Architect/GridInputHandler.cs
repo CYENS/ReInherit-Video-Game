@@ -39,6 +39,8 @@ namespace Cyens.ReInherit.Architect
 
         [SerializeField] private Color indicatorEnabledColor = Color.green.WithAlpha(0.15f);
 
+        [SerializeField] private Color indicatorBlueColor = Color.blue.WithAlpha(0.15f);
+
         [SerializeField] private Color indicatorDisabledColor = Color.red.WithAlpha(0.15f);
 
         private void Awake()
@@ -58,6 +60,7 @@ namespace Cyens.ReInherit.Architect
                 indicator = indicator,
                 colorOn = indicatorEnabledColor,
                 colorOff = indicatorDisabledColor,
+                colorBlue = indicatorBlueColor,
             };
 
             var isLeftStarted = false;
@@ -66,17 +69,19 @@ namespace Cyens.ReInherit.Architect
             var isSelectionOnGround = m_camera.GroundCast(out var groundHit);
 
             var index = Index.FromWorld(groundHit);
-            
+
             // Debug.Log(index);
 
             var data = new RoomTool.EventData {
                 index = index,
                 lastIndex = m_lastIndex,
                 point = groundHit,
-                lastPoint = m_lastGroundHit
+                lastPoint = m_lastGroundHit,
+                fractional = Index.ToFractionalIndex(groundHit),
+                lastFractional = Index.ToFractionalIndex(m_lastGroundHit),
             };
             var mousePosition = m_lastMousePosition;
-            
+
             m_lastMousePosition = mousePosition;
             m_lastIndex = index;
             m_lastGroundHit = groundHit;
@@ -103,7 +108,7 @@ namespace Cyens.ReInherit.Architect
                     IsInUse = true;
                 }
             }
-            
+
             var isLeftDown = Input.GetMouseButtonDown(m_leftDragHelper.ButtonId);
             var isRightDown = Input.GetMouseButtonDown(m_rightDragHelper.ButtonId);
 
@@ -114,7 +119,7 @@ namespace Cyens.ReInherit.Architect
             var isLeftHeld = m_leftDragHelper.Update();
             var isMiddleHeld = m_middleDragHelper.Update();
             var isRightHeld = m_rightDragHelper.Update();
-            
+
             if (!isLeftHeld && m_lastButtonMode == m_leftDragHelper.ButtonId) {
                 // Whether to end "add" mode input
                 if (SelectedTool != null && !m_isCanceled) {

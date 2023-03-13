@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Pathfinding;
 using UnityEngine;
 
 namespace Cyens.ReInherit.Architect
@@ -7,7 +6,7 @@ namespace Cyens.ReInherit.Architect
     public class AddRoomTool : RoomTool
     {
         private Index m_firstIndex;
-        
+
         // Used when extending a room
         private Room m_startRoom;
 
@@ -17,7 +16,7 @@ namespace Cyens.ReInherit.Architect
         {
             m_buffer.Clear();
             var area = data.indicator.InclusiveBounds;
-            if (!RoomGraph.Bounds.Contains(area)) {
+            if (!IndexBounds.FullBounds.Contains(area)) {
                 return false;
             }
 
@@ -35,7 +34,7 @@ namespace Cyens.ReInherit.Architect
             roomData.indicator.Clear(data.index);
 
             roomData.indicator.SetArea(data.index);
-            m_startRoom = roomData.graph.GetRoomAt(data.index);
+            m_startRoom = roomData.graph[data.index];
 
             var color = CheckValid(in roomData) ? roomData.colorOn : roomData.colorOff;
 
@@ -60,27 +59,16 @@ namespace Cyens.ReInherit.Architect
             roomData.indicator.IsDrawing = false;
 
             if (CheckValid(roomData)) {
-                AddRoom(roomData.graph, roomData.indicator.InclusiveBounds);
+                roomData.graph.AddArea(roomData.indicator.InclusiveBounds);
             }
+            
+            roomData.indicator.Clear();
         }
 
-        private void AddRoom(RoomGraph graph, IndexBounds bounds)
+        public override bool OnAddCanceling(in RoomData roomData, in EventData data)
         {
-            var room = m_startRoom != null ? m_startRoom : Room.Create(graph);
-
-            for (var x = bounds.min.x; x < bounds.max.x; ++x) {
-                for (var y = bounds.min.y; y < bounds.max.y; ++y) {
-                    var index = new Index(x, y);
-                    if (graph.GetBlockAtIndex(index) == null) {
-                        
-                        // TODO: Should we do something with the return value of Block.Create?
-                        var block = Block.Create(room, index);
-                    }
-                }
-            }
-
-            // TODO: Only refresh blocks that are necessary.
-            room.RefreshAll();
+            roomData.indicator.IsDrawing = false;
+            return true;
         }
     }
 }

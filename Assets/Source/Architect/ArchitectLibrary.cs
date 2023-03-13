@@ -1,5 +1,4 @@
-﻿using System;
-using Cyens.ReInherit.Pooling;
+﻿using Cyens.ReInherit.Pooling;
 using UnityEngine;
 
 namespace Cyens.ReInherit.Architect
@@ -20,8 +19,7 @@ namespace Cyens.ReInherit.Architect
                 return _instance.roomPrefabs.RoomModelPool;
             }
         }
-
-
+        
         private void Awake()
         {
             if (_instance != null) {
