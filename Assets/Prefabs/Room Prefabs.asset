@@ -15,4 +15,4 @@ MonoBehaviour:
   roomModelInfo:
     prefab: {fileID: 7375879214359835242, guid: bc6ad7eb9c977354fb1c74bfb6d1a3df,
       type: 3}
-    preconstruct: 16
+    preconstruct: 64

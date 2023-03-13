@@ -27,9 +27,9 @@ namespace Cyens.ReInherit.Architect
 
             blockOut.m_model = ArchitectLibrary.RoomPrefabs.Spawn(parent.Graph.transform, index.WorldCenter);
             
-            
-            parent.Add(blockOut);
-            parent.Graph.AddBlock(blockOut);
+            //
+            // parent.Add(blockOut);
+            // parent.Graph.AddBlock(blockOut);
 
             blockOut.m_model.RecreateNavMesh();
             
