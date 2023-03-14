@@ -8,18 +8,15 @@ namespace Cyens.ReInherit
 {
     public class VisitorManager : Singleton<VisitorManager>
     {
-
         [SerializeField]
         [Tooltip("Visitor prefab to spawn")]
         private GameObject m_visitorPrefab;
 
         private List<Visitor> m_visitors = new List<Visitor>();
 
-
         [SerializeField] 
         [Tooltip("The overall impression that visitors got from the museum")]
         private float m_impression;
-
 
         [SerializeField][Tooltip("The number of visitors that will visit your museum on the next round")]
         private int m_visitorCount;
@@ -28,15 +25,11 @@ namespace Cyens.ReInherit
         [Range(10,1000)]
         private int m_maxVisitorCount = 100;
 
-
         private void Start()
         {
-            m_visitorCount = Random.Range(5, 10); 
+            m_visitorCount = Random.Range(5, 10);
         }
-
-
-
-
+        
         /// <summary>
         /// Spawn visitors around the exhibits
         /// </summary>
@@ -105,9 +98,6 @@ namespace Cyens.ReInherit
                 visitor.DeSpawn();
             }
             m_visitors.Clear();
-
-
-
 
             // TODO: Calculate formula to calculate the total funds
             // ? Donations, Ticket sales?

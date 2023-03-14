@@ -375,7 +375,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.65
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1.16, z: 0}
@@ -391,8 +391,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a48748a731d5e40b1f29ddb5b877bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
-  m_exhibit: {fileID: 0}
+  m_state: 0
+  m_behavior: 0
+  m_emotion: 0
+  m_exhibitPosition: {x: 0, y: 0, z: 0}
+  m_impression: 0
+  m_boredom: 0
+  m_lookDuration: 0
+  m_talkDuration: 0
+  m_talkTarget: {fileID: 0}
 --- !u!114 &1106620458242135116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,7 +502,7 @@ Animator:
   m_GameObject: {fileID: 1106620458242135120}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 809d1589de720624a94b7f7e8595a39d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
+  m_Controller: {fileID: 9100000, guid: 08dd508d05f4c2541aba0ee3843fa168, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -512,7 +519,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1106620458242135120}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eafdd8251c0ba1d4883773a74531cd1f, type: 3}
   m_Name: 
