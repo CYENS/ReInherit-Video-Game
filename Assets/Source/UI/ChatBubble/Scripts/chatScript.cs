@@ -11,7 +11,7 @@ namespace Cyens.ReInherit
         // Start is called before the first frame update
         void Start()
         {
-            ChatBubble.Create(player, new Vector3(3f, 3f), ChatBubble.IconType.Happy, "Here is some text");
+            ChatBubble.Create(player, new Vector3(0, 3), ChatBubble.IconType.Angry, "Hello");
         }
 
        

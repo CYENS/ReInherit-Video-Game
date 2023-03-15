@@ -18,7 +18,7 @@ namespace Cyens.ReInherit
         [SerializeField] private Sprite happyIconSprite;
         [SerializeField] private Sprite neutralIconSprite;
         [SerializeField] private Sprite angryIconSprite;
-        [SerializeField] private Sprite disgustedIconSprite;
+        //[SerializeField] private Sprite disgustedIconSprite;
 
         private SpriteRenderer backgroundSpriteRenderer;
         private SpriteRenderer iconSpriteRenderer;
@@ -37,7 +37,7 @@ namespace Cyens.ReInherit
 
             chatBubble.transform.GetComponent<ChatBubble>().Setup(iconType, text);
 
-            //Destroy(chatBubble, 4f);
+            Destroy(chatBubble, 12f);
         }
 
         private void Awake()
@@ -49,8 +49,7 @@ namespace Cyens.ReInherit
 
         private void Start()
         {
-            //Setup(IconType.Happy, "Hello");
-            //mainCamera = Camera.main;
+            mainCamera = Camera.main;
         }
 
         private void Setup(IconType iconType, string text)
@@ -74,13 +73,13 @@ namespace Cyens.ReInherit
                 case IconType.Happy:return happyIconSprite;
                 case IconType.Neutral: return neutralIconSprite;
                 case IconType.Angry: return angryIconSprite;
-                case IconType.Disgusted: return disgustedIconSprite;
+                //case IconType.Disgusted: return disgustedIconSprite;
             }
         }
 
         private void Update()
         {
-            //transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward, mainCamera.transform.rotation * Vector3.up);
+            transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward, mainCamera.transform.rotation * Vector3.up);
         }
 
     }
