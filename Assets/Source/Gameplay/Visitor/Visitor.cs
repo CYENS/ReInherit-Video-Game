@@ -28,12 +28,20 @@ namespace Cyens.ReInherit
         [SerializeField] private float m_lookDuration;
         [SerializeField] private float m_talkDuration;
         [SerializeField] private Visitor m_talkTarget;
+
+        public List<Vector3> visitedExhibits;
         
         public float Impression { get => m_impression; }
 
-        public void SetExhibit( Exhibit exhibit ) { m_exhibitPosition = exhibit.transform.position; }
+        public void SetExhibit(Exhibit exhibit)
+        {
+            m_exhibitPosition = exhibit.transform.position;
+        }
 
-        public void SetExhibit(Vector3 exhibitPos) { m_exhibitPosition = exhibitPos; }
+        public void SetExhibit(Vector3 exhibitPos)
+        {
+            m_exhibitPosition = exhibitPos;
+        }
 
         void Start()
         {
@@ -42,6 +50,7 @@ namespace Cyens.ReInherit
             m_alpha = Random.Range(-m_alphaSpeed,0.0f);
             SetOpacity(m_alpha);
             m_impression = 0.0f;
+            visitedExhibits = new List<Vector3>();
         }
 
         private void SetOpacity(float alpha)
@@ -55,18 +64,18 @@ namespace Cyens.ReInherit
             }
         }
 
+        public void RotateVisitorTowardsExhibit()
+        {
+            Vector3 targetPos = m_exhibitPosition;
+            Vector3 myPos = transform.position;
+            Vector3 lookDir = targetPos - myPos;
+            lookDir.y = 0.0f;
+            transform.rotation = Quaternion.LookRotation(lookDir);
+        }
+        
         // Update is called once per frame
         void Update()
         {
-            /*if( m_exhibitPosition != Vector3.zero )
-            {
-                Vector3 targetPos = m_exhibitPosition;
-                Vector3 myPos = transform.position;
-                Vector3 lookDir = targetPos - myPos;
-                lookDir.y = 0.0f;
-                transform.rotation = Quaternion.LookRotation(lookDir);
-            }*/
-
             switch (m_state)
             {
                 case State.Appear:

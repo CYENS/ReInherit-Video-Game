@@ -6,7 +6,7 @@ using Cyens.ReInherit.Gameplay.Management;
 
 namespace Cyens.ReInherit
 {
-    public class VisitorManagerTesting : MonoBehaviour
+    public class VisitorManagerTesting : Singleton<VisitorManagerTesting>
     {
         [SerializeField]
         [Tooltip("Visitor prefab to spawn")]
@@ -25,6 +25,10 @@ namespace Cyens.ReInherit
         [Range(10,1000)]
         private int m_maxVisitorCount = 100;
 
+        private Transform[] m_exhibits;
+
+        public Transform[] GetExhibits(){return m_exhibits; }
+        
         private void Start()
         {
             m_visitorCount = Random.Range(25, 50);
@@ -48,12 +52,12 @@ namespace Cyens.ReInherit
         public void Spawn()
         {
             // Get a list of exhibits
-            Transform[] exhibits = TestingGetExhibits();
+            m_exhibits = TestingGetExhibits();
 
             // Grab interest amount and store in a 1-to-1 array
             float sumAttraction = 0.0f;
-            float[] probabilities = new float[exhibits.Length];
-            for(int i=0; i<exhibits.Length; i++ ) {
+            float[] probabilities = new float[m_exhibits.Length];
+            for(int i=0; i<m_exhibits.Length; i++ ) {
                 float attraction = UnityEngine.Random.Range(0.25f, 1f);
                 sumAttraction += attraction;
                 probabilities[i] = attraction;
@@ -64,9 +68,9 @@ namespace Cyens.ReInherit
                 probabilities[i] /= sumAttraction;
 
             // Distribute visitors
-            for(int i=0; i<exhibits.Length; i++)
+            for(int i=0; i<m_exhibits.Length; i++)
             {
-                var exhibit = exhibits[i];
+                var exhibit = m_exhibits[i];
                 int spectators = Mathf.Max( Mathf.RoundToInt(m_visitorCount * probabilities[i]), 0 );
 
                 float angleStep = 360.0f / spectators;
@@ -91,7 +95,7 @@ namespace Cyens.ReInherit
                     m_visitors.Add(visitor);
                 }
             }
-            float meanAttraction = (exhibits.Length > 0) ? sumAttraction / exhibits.Length  : 0.0f;
+            float meanAttraction = (m_exhibits.Length > 0) ? sumAttraction / m_exhibits.Length  : 0.0f;
  
             // Calculate base impression based on how well the museum is setup;
             // TODO: Consider how this impression may be affected while the museum is open
