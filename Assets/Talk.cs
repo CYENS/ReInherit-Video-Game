@@ -35,14 +35,12 @@ namespace Cyens.ReInherit
         
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            ExitTalkState(animator);
         }
 
         private void ExitTalkState(Animator animator)
         {
             m_visitor.TalkVisitor = null;
             animator.SetBool("OpenToTalk", false);
-            animator.SetBool("DestinationReached", true);
             animator.SetBool("Talk", false);
         }
     }

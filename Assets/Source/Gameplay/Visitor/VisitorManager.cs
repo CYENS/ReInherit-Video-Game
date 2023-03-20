@@ -37,7 +37,7 @@ namespace Cyens.ReInherit
         
         private void Start()
         {
-            m_visitorCount = Random.Range(25, 40);
+            m_visitorCount = Random.Range(25, 50);
             m_exitPosition = GameObject.Find("Exit").transform.position;
             Spawn();
         }
@@ -110,7 +110,6 @@ namespace Cyens.ReInherit
 
                     visitor.ID = visitorID;
                     visitorID += 1;
-                    visitor.Animator.SetBool("DestinationReached", true);
 
                     Vector3 freeSlot = artifact.GetFreeViewSpot();
                     visitor.visitedArtifacts.Add(artifact);

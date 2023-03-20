@@ -17,7 +17,7 @@ namespace Cyens.ReInherit
         public float moveSpeed;
         public enum State { Appear = 0, Alive = 1, Disappear = 2}
         public enum Behavior { Walking = 0, Watching = 1, Talking = 2, Exiting = 3 };
-        public enum Emotion { Excited = 0, Bored = 1, };
+        public enum Emotion { Excited = 0, Bored = 1, Angry = 2 };
 
         [SerializeField] private int m_id;
         private IAstarAI m_agentAstar;
@@ -70,7 +70,7 @@ namespace Cyens.ReInherit
             m_viewSlotID = viewSlotID;
         }
 
-        // Free up the reserver slot around the arttifact
+        // Free up the reserved slot around the artifact
         public void ReleaseArtifactSlot()
         {
             if (m_artifact != null) {

@@ -9,8 +9,10 @@ namespace Cyens.ReInherit
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            animator.SetBool("DestinationReached", false);
             animator.SetBool("Talk", false);
             animator.SetBool("OpenToTalk", false);
+            
             // Decide if visitor will be open to talk in the next artifact visit
             float random = UnityEngine.Random.Range(0f, 1f);
             if(random <= 0.7f)

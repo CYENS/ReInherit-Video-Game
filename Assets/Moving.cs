@@ -11,7 +11,6 @@ namespace Cyens.ReInherit
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            animator.SetBool("DestinationReached", false);
             animator.SetBool("Walk", true);
             m_visitor = animator.GetComponent<Visitor>();
             if(m_visitor.VisitorBehavior != Visitor.Behavior.Exiting)
@@ -22,16 +21,18 @@ namespace Cyens.ReInherit
         override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             if (m_visitor.NavAgent.reachedEndOfPath) {
+                animator.SetBool("DestinationReached", true);
+                // If destination is the exit, despawn agent
                 if(m_visitor.VisitorBehavior == Visitor.Behavior.Exiting)
                     m_visitor.DeSpawn();
-                animator.SetBool("DestinationReached", true);   
+                m_visitor.RotateVisitorTowardsDestination();
+                animator.SetBool("Walk", false);
             }
         }
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            animator.SetBool("Walk", false);
         }
     }
 }

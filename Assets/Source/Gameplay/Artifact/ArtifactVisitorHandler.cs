@@ -39,17 +39,26 @@ namespace Cyens.ReInherit
 
         private void GenerateViewPoints()
         {
+            // Only Ground Layer
+            int layerMask = 1 << 10;
             
             float angleStep = 360.0f / (float)m_numberOfViewPoints;
             float angle = Random.Range(0, 360.0f);
             for ( int i = 0; i < 8; i++ )
             {
                 Vector3 center = transform.position;
-                Vector3 offset = Vector3.forward * 2.5f;
+                Vector3 offset = Vector3.forward * 2f;
                 offset = Quaternion.Euler(Vector3.up * angle) * offset;
+
+                Vector3 pos = center + offset;
                 
-                m_viewPoints.Add(center + offset);
-                m_viewPointReserved.Add(false);
+                // Check if spot is not blocked or outside the scene
+                Vector3 rayPos = center + (offset * 1.5f);
+                RaycastHit hit;
+                if (Physics.Raycast(rayPos - new Vector3(0f, 5f, 0f), transform.TransformDirection(Vector3.up), out hit, 10f, layerMask)) {
+                    m_viewPoints.Add(pos);
+                    m_viewPointReserved.Add(false);
+                }
 
                 angle += angleStep;
             }
