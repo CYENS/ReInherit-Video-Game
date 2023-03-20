@@ -210,7 +210,7 @@ namespace Cyens.ReInherit
             return prop;
         }
 
-        private void Start()
+        private void Awake()
         {
             animator = GetComponent<Animator>();
 
@@ -224,8 +224,6 @@ namespace Cyens.ReInherit
 
         private void Update()
         {
-
-
             // Make artifact in display case invisible if it is in restoration room.
             bool inRestoration = (artifact.GetStatus() == Artifact.Status.Restoration);
             prop.SetActive(!inRestoration);
