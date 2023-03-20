@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9878d03c093d74e4297bd093387438e7, type: 3}
   m_Name: ServantBoy_Data
   m_EditorClassIdentifier: 
+  myid: 01d916d704f947f40b3d1b8510acd303
   label: ServantBoy
   icon: {fileID: 21300000, guid: 68c72603885b79548b0b907e44133f38, type: 3}
   type: 0

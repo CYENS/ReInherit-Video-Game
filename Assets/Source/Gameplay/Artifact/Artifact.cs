@@ -12,7 +12,7 @@ namespace Cyens.ReInherit
     public class Artifact : MonoBehaviour
     {
         [SerializeField]
-        private ArtifactInfo info;
+        private ArtifactInfo m_info;
 
         public enum Status { Storage = 0, Design = 1, Transit = 2, Exhibit = 3, Restoration = 4  }
 
@@ -22,18 +22,11 @@ namespace Cyens.ReInherit
 
         public Status GetStatus() => status;
 
-        public ArtifactInfo GetInfo() => info;
+        public ArtifactInfo GetInfo() => m_info;
 
 
-        public float Novelty
-        {
-            get => info.Novelty;
-            set => info.Novelty = value;
-        }
-
-        //public Mesh GetMesh() => data.mesh;
-        
-        public string GetLabel() => info.label;
+        public float Novelty => m_info.Novelty;        
+        public string GetLabel() => m_info.label;
 
 
         [Header("Game Data")]
@@ -74,7 +67,7 @@ namespace Cyens.ReInherit
         public static Artifact Create( GameObject owner, ArtifactInfo info )
         {
             var artifact = owner.AddComponent<Artifact>();
-            artifact.info = info;
+            artifact.m_info = info;
             artifact.status = Status.Storage;
             artifact.condition = Random.Range(0.6f, 0.9f);
 
@@ -212,11 +205,31 @@ namespace Cyens.ReInherit
             Refresh(true);
         }
 
-        private void Update()
-        {
-            
-        }
+        
 
+        /// <summary>
+        /// Returns a serializable data object containing
+        /// all the important info for this artifact
+        /// </summary>
+        /// <returns></returns>
+        public ArtifactData GetData()
+        {
+            ArtifactData data = new ArtifactData();
+            data.position = transform.position;
+            data.angle = transform.rotation.eulerAngles.y;
+
+            data.infoId = m_info.myid;
+            data.condition = condition;
+            data.upgraded = upgraded;
+            switch(status)
+            {
+                case Status.Design: data.status = (int)Status.Storage; break;
+                case Status.Transit: data.status = (int)Status.Exhibit; break;
+                default: data.status = (int)status; break;
+            }
+
+            return data;
+        }
 
     }
 }

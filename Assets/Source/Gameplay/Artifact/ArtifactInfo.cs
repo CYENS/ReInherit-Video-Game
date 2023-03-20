@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Cyens.ReInherit
 {
@@ -8,9 +11,13 @@ namespace Cyens.ReInherit
     /// Stores all the information relevant to the specific artifact.
     /// </summary>
     
-    [CreateAssetMenu(fileName = "ArtifactInfo", menuName = "Data/Artifact", order = 1)]
+    [CreateAssetMenu(fileName = "ArtifactInfo", menuName = "Artifact/Info", order = 1)]
     public class ArtifactInfo : ScriptableObject
     {
+
+        [Header("Persistent Unique Identifier")]
+        public string myid;
+
         [Header("General Information")]
         public string label;
         public Sprite icon;
@@ -49,5 +56,14 @@ namespace Cyens.ReInherit
         {
             novelty = 1.0f;
         }
+
+        #if UNITY_EDITOR
+        private void OnValidate() 
+        {
+            var path = AssetDatabase.GetAssetPath(this);
+            var guid = AssetDatabase.GUIDFromAssetPath(path);
+            myid = guid.ToString();
+        }
+        #endif
     }
 }
