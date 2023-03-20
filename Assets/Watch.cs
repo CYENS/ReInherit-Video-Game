@@ -28,6 +28,9 @@ namespace Cyens.ReInherit
             // Check if visitor could talk to an other visitor
             else if(animator.GetBool("OpenToTalk"))
                 CheckTalkAvailability(animator);
+            // Talk ended, rotate back to artifact
+            else
+                m_visitor.RotateVisitorTowardsDestination();
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

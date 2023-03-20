@@ -37,7 +37,7 @@ namespace Cyens.ReInherit
         
         private void Start()
         {
-            m_visitorCount = Random.Range(25, 50);
+            m_visitorCount = Random.Range(25, 40);
             m_exitPosition = GameObject.Find("Exit").transform.position;
             Spawn();
         }

@@ -17,12 +17,13 @@ namespace Cyens.ReInherit
         public float moveSpeed;
         public enum State { Appear = 0, Alive = 1, Disappear = 2}
         public enum Behavior { Walking = 0, Watching = 1, Talking = 2, Exiting = 3 };
-        public enum Emotion { Excited = 0, Bored = 1, Angry = 2 };
+        public enum Emotion { Happy = 0, Neutral = 1, Angry = 2, Disgusted = 3, Bored = 4};
 
         [SerializeField] private int m_id;
         private IAstarAI m_agentAstar;
         private RVOController m_rvoController;
         private Animator m_animator;
+        private ChatBubble m_chat;
         
         // Ghosting effect
         private Ghostify[] m_ghosties;
@@ -51,7 +52,7 @@ namespace Cyens.ReInherit
         [Tooltip("An adjustment value in case movement speed parameter isn't a value from 0 to 1")]
         [SerializeField] private float m_motionMult = 3.0f;
         private Quaternion m_lookDirection;
-        
+
         public int ID { get => m_id; set => m_id = value; }
         public IAstarAI NavAgent { get => m_agentAstar; }
         public Animator Animator { get => m_animator; }
@@ -63,6 +64,7 @@ namespace Cyens.ReInherit
         public float TalkDuration { get => m_talkDuration; }
         public Visitor TalkVisitor { get => m_talkVisitor; set => m_talkVisitor = value; }
         public float Boredome { get => m_boredom; set => m_boredom = value; }
+        public ChatBubble ChatBubble { get => m_chat; }
 
         public void SetArtifact(ArtifactVisitorHandler artifact, int viewSlotID)
         {
@@ -85,10 +87,12 @@ namespace Cyens.ReInherit
             m_animator = GetComponent<Animator>();
             m_rvoController = GetComponent<RVOController>();
             m_agentAstar = GetComponent<IAstarAI>();
+            m_agentAstar.maxSpeed *= UnityEngine.Random.Range(0.85f, 1.15f); 
             visitedArtifacts = new List<ArtifactVisitorHandler>();
             m_ghosties = GetComponentsInChildren<Ghostify>(true);
             m_lookDuration = UnityEngine.Random.Range(7.5f, 12f);
             m_talkDuration = 10f;
+            m_chat = ChatBubble.Create(transform, new Vector3(0, 3, 0f));
         }
 
         void Start()
