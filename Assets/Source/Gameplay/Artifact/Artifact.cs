@@ -12,7 +12,7 @@ namespace Cyens.ReInherit
     public class Artifact : MonoBehaviour
     {
         [SerializeField]
-        private ArtifactData data;
+        private ArtifactInfo info;
 
         public enum Status { Storage = 0, Design = 1, Transit = 2, Exhibit = 3, Restoration = 4  }
 
@@ -22,18 +22,18 @@ namespace Cyens.ReInherit
 
         public Status GetStatus() => status;
 
-        public ArtifactData GetData() => data;
+        public ArtifactInfo GetInfo() => info;
 
 
         public float Novelty
         {
-            get => data.Novelty;
-            set => data.Novelty = value;
+            get => info.Novelty;
+            set => info.Novelty = value;
         }
 
         //public Mesh GetMesh() => data.mesh;
         
-        public string GetLabel() => data.label;
+        public string GetLabel() => info.label;
 
 
         [Header("Game Data")]
@@ -71,18 +71,18 @@ namespace Cyens.ReInherit
         /// <param name="data"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static Artifact Create( GameObject owner, ArtifactData data )
+        public static Artifact Create( GameObject owner, ArtifactInfo info )
         {
             var artifact = owner.AddComponent<Artifact>();
-            artifact.data = data;
+            artifact.info = info;
             artifact.status = Status.Storage;
             artifact.condition = Random.Range(0.6f, 0.9f);
 
             // Generate the exhibit cases/tables
-            artifact._exhibit01 = Exhibit.Create(owner, data.exhibitPrefab01, data);
+            artifact._exhibit01 = Exhibit.Create(owner, info.exhibitPrefab01, info);
             artifact._exhibit01.gameObject.SetActive(false);
 
-            artifact._exhibit02 = Exhibit.Create(owner, data.exhibitPrefab02, data);
+            artifact._exhibit02 = Exhibit.Create(owner, info.exhibitPrefab02, info);
             artifact._exhibit02.gameObject.SetActive(false);
 
 

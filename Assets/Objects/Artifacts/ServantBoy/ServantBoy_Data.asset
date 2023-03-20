@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abe107befc488fa4ca41d660c83f8270, type: 3}
+  m_Script: {fileID: 11500000, guid: 9878d03c093d74e4297bd093387438e7, type: 3}
   m_Name: ServantBoy_Data
   m_EditorClassIdentifier: 
   label: ServantBoy
   icon: {fileID: 21300000, guid: 68c72603885b79548b0b907e44133f38, type: 3}
   type: 0
-  description: Servant Boy - Cypriot Sculpture circa 400BC
+  description: Statue of a servant boy
   novelty: 1
   artifactPrefab: {fileID: 7012283354349878552, guid: bb619e53f0f83bc4a9202f1d627b7cca,
     type: 3}

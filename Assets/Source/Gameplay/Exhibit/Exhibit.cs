@@ -9,7 +9,7 @@ namespace Cyens.ReInherit
     {
 
 
-        private ArtifactData data;
+        private ArtifactInfo info;
 
 
         private bool ghost = false;
@@ -65,14 +65,14 @@ namespace Cyens.ReInherit
         /// </summary>
         /// <param name="artifact"></param>
         /// <param name="prefab"></param>
-        /// <param name="data"></param>
+        /// <param name="info"></param>
         /// <returns></returns>
-        public static Exhibit Create(GameObject owner, GameObject prefab, ArtifactData data)
+        public static Exhibit Create(GameObject owner, GameObject prefab, ArtifactInfo info)
         {
             GameObject temp = GameObject.Instantiate(prefab, owner.transform);
             temp.transform.localPosition = Vector3.zero;
             Exhibit exhibit = temp.GetComponent<Exhibit>();
-            exhibit.data = data;
+            exhibit.info = info;
             return exhibit;
         }
 
@@ -166,7 +166,7 @@ namespace Cyens.ReInherit
                 return;
 
             int funds = GameManager.Funds;
-            int price = data.upgradePricing;
+            int price = info.upgradePricing;
 
             if( funds < price )
             {
@@ -201,7 +201,7 @@ namespace Cyens.ReInherit
 
         private GameObject CreateProp()
         {
-            prop = GameObject.Instantiate(data.artifactPrefab, placeholder.transform.position, Quaternion.identity);
+            prop = GameObject.Instantiate(info.artifactPrefab, placeholder.transform.position, Quaternion.identity);
             prop.transform.SetParent(placeholder.transform.parent);
 
             // Remove the placeholder as it is not needed

@@ -8,8 +8,8 @@ namespace Cyens.ReInherit
     /// Stores all the information relevant to the specific artifact.
     /// </summary>
     
-    [CreateAssetMenu(fileName = "ArtifactData", menuName = "Data/Artifact", order = 1)]
-    public class ArtifactData : ScriptableObject
+    [CreateAssetMenu(fileName = "ArtifactInfo", menuName = "Data/Artifact", order = 1)]
+    public class ArtifactInfo : ScriptableObject
     {
         [Header("General Information")]
         public string label;
