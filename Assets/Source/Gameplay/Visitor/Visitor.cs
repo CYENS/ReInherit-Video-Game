@@ -20,6 +20,7 @@ namespace Cyens.ReInherit
         public enum Emotion { Happy = 0, Neutral = 1, Angry = 2, Disgusted = 3, Bored = 4};
 
         [SerializeField] private int m_id;
+        private bool m_inSpawnArtifact;
         private IAstarAI m_agentAstar;
         private RVOController m_rvoController;
         private Animator m_animator;
@@ -52,8 +53,10 @@ namespace Cyens.ReInherit
         [Tooltip("An adjustment value in case movement speed parameter isn't a value from 0 to 1")]
         [SerializeField] private float m_motionMult = 3.0f;
         private Quaternion m_lookDirection;
+        private List<GraphNode> m_standingNodes;
 
         public int ID { get => m_id; set => m_id = value; }
+        public bool InSpawnArtifact { get => m_inSpawnArtifact; set => m_inSpawnArtifact = value; }
         public IAstarAI NavAgent { get => m_agentAstar; }
         public Animator Animator { get => m_animator; }
         public float Impression { get => m_impression; set => m_impression = value; }
@@ -87,17 +90,17 @@ namespace Cyens.ReInherit
             m_animator = GetComponent<Animator>();
             m_rvoController = GetComponent<RVOController>();
             m_agentAstar = GetComponent<IAstarAI>();
-            m_agentAstar.maxSpeed *= UnityEngine.Random.Range(0.85f, 1.15f); 
             visitedArtifacts = new List<ArtifactVisitorHandler>();
             m_ghosties = GetComponentsInChildren<Ghostify>(true);
             m_lookDuration = UnityEngine.Random.Range(7.5f, 12f);
             m_talkDuration = 10f;
-            m_chat = ChatBubble.Create(transform, new Vector3(0, 3, 0f));
+            m_chat = transform.Find("ChatBubble").GetComponent<ChatBubble>();
+            m_standingNodes = new List<GraphNode>();
         }
 
         void Start()
         {
-            m_alphaSpeed = Random.Range(0.25f,1.0f);
+            m_alphaSpeed = Random.Range(0.25f,0.5f);
             m_alpha = Random.Range(-m_alphaSpeed,0.0f);
             SetOpacity(m_alpha);
             m_impression = 0.0f;
@@ -153,7 +156,30 @@ namespace Cyens.ReInherit
                 var step = 300f * Time.deltaTime;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, m_lookDirection, step);
             }
-        }        
+        }
+
+        // Sets high penalty on navmesh around visitor
+        public void SetCurrentStandingNodePenalty(uint penalty)
+        {
+            if (penalty > 1) {
+                foreach (var n in m_standingNodes) {
+                    n.Penalty = 0;
+                }
+                m_standingNodes.Clear();
+                GraphNode node = AstarPath.active.GetNearest(transform.position).node;
+                node.Penalty = penalty;
+                m_standingNodes.Add(node);
+                node.GetConnections(connectedTo => {
+                    connectedTo.Penalty = penalty;
+                        m_standingNodes.Add(connectedTo);
+                    });
+            }
+            else {
+                foreach (var node in m_standingNodes) {
+                    node.Penalty = penalty;
+                }
+            }
+        }
         
         // Update is called once per frame
         void Update()

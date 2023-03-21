@@ -12,7 +12,7 @@ namespace Cyens.ReInherit
         void Start()
         {
             ChatBubble chat = ChatBubble.Create(player, new Vector3(0, 3));
-            chat.Setup(Visitor.Emotion.Angry, "Hello", true);
+            chat.Setup(Visitor.Emotion.Angry, "Hello");
         }
     }
 }

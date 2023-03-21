@@ -20,12 +20,23 @@ namespace Cyens.ReInherit
             // add a little randomness to watching time.
             // Then set destination for the next artifact
             if (animator.GetFloat("WatchTimer") <= 0f) {
-                m_timeCounter = m_visitor.LookDuration * UnityEngine.Random.Range(0.75f, 1.25f);
+                m_timeCounter = m_visitor.LookDuration * UnityEngine.Random.Range(0.5f, 1.25f);
                 animator.SetFloat("WatchTimer", m_timeCounter);
                 animator.SetBool("DestinationReached", false);
-                m_visitor.NavAgent.destination = CalculateDestination(animator);
+                // If visitor is view its spawn artifact wait for timer before select next artifact
+                if (m_visitor.InSpawnArtifact) {
+                    m_visitor.InSpawnArtifact = false;
+                    m_timeCounter /= UnityEngine.Random.Range(1.5f, 2f);
+                    animator.SetFloat("WatchTimer", m_timeCounter);
+                    animator.SetBool("DestinationReached", true);
+                }
+                else {
+                    m_visitor.NavAgent.destination = CalculateDestination(animator);
+                    m_visitor.NavAgent.SearchPath();
+                    animator.SetBool("Walk", true);
+                }
             }
-            // Check if visitor could talk to an other visitor
+            // Check if visitor could talk to other visitor
             else if(animator.GetBool("OpenToTalk"))
                 CheckTalkAvailability(animator);
             // Talk ended, rotate back to artifact
@@ -85,6 +96,7 @@ namespace Cyens.ReInherit
             
             m_visitor.visitedArtifacts.Add(nextArtifact);
             m_visitor.SetArtifact(nextArtifact, (int)freeSlot.y);
+            freeSlot.y = 0f;
             return freeSlot;
         }
 
@@ -92,7 +104,8 @@ namespace Cyens.ReInherit
         {
             Visitor closer = VisitorManager.Instance.FindCloserAgent(m_visitor, 3f);
             if (closer != null && closer.Animator.GetBool("OpenToTalk") &&
-                closer.Animator.GetBool("Walk") == false && closer.TalkVisitor == null) {
+                closer.Animator.GetBool("Walk") == false && closer.TalkVisitor == null 
+                && closer.Animator.GetFloat("WatchTimer") >= 2f) {
                 closer.TalkVisitor = m_visitor;
                 m_visitor.TalkVisitor = closer;
                 animator.SetBool("Talk", true);

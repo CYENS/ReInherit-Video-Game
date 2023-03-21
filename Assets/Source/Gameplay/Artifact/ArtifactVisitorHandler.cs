@@ -43,8 +43,8 @@ namespace Cyens.ReInherit
             int layerMask = 1 << 10;
             
             float angleStep = 360.0f / (float)m_numberOfViewPoints;
-            float angle = Random.Range(0, 360.0f);
-            for ( int i = 0; i < 8; i++ )
+            float angle = 0f;
+            for ( int i = 0; i < m_numberOfViewPoints; i++ )
             {
                 Vector3 center = transform.position;
                 Vector3 offset = Vector3.forward * 2f;
