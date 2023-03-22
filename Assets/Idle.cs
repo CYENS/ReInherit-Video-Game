@@ -15,8 +15,10 @@ namespace Cyens.ReInherit
             
             // Decide if visitor will be open to talk in the next artifact visit
             float random = UnityEngine.Random.Range(0f, 1f);
-            if(random <= 0.7f)
+            if(random <= 0.8f)
                 animator.SetBool("OpenToTalk", true);
+            
+            animator.SetBool("Idle", false);
             
             animator.SetFloat("WatchTimer", 0f);
             animator.SetBool("Watch", true);
@@ -30,7 +32,6 @@ namespace Cyens.ReInherit
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            animator.SetBool("Idle", false);
         }
     }
 }

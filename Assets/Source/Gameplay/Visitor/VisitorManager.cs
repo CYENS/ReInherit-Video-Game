@@ -37,7 +37,7 @@ namespace Cyens.ReInherit
         
         private void Start()
         {
-            m_visitorCount = Random.Range(25, 50);
+            m_visitorCount = Random.Range(25, 40);
             m_exitPosition = GameObject.Find("Exit").transform.position;
             Spawn();
         }
@@ -109,6 +109,7 @@ namespace Cyens.ReInherit
                     if (visitor == null) continue;
 
                     visitor.ID = visitorID;
+                    visitor.InSpawnArtifact = true;
                     visitorID += 1;
 
                     Vector3 freeSlot = artifact.GetFreeViewSpot();
@@ -120,7 +121,7 @@ namespace Cyens.ReInherit
                     Vector3 lookDir = targetPos - visitor.transform.position;
                     lookDir.y = 0.0f;
                     visitor.transform.rotation = Quaternion.LookRotation(lookDir);
-                    
+
                     m_visitors.Add(visitor);
                 }
             }

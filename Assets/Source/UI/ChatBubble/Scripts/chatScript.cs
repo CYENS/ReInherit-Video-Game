@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Cyens.ReInherit
 {
-    public class chatScript : MonoBehaviour
+    public class ChatScript : MonoBehaviour
     {
         [SerializeField] GameObject player;
         private GameObject ChatGameobject;
@@ -19,7 +19,5 @@ namespace Cyens.ReInherit
             ChatGameobject = player.transform.Find("CanvasChat").gameObject;
             ChatGameobject.GetComponentInChildren<VisitorChat>().Setup(VisitorChat.IconType.Angry);
         }
-
-       
     }
 }
