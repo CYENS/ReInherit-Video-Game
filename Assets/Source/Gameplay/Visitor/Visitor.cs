@@ -24,7 +24,7 @@ namespace Cyens.ReInherit
         private IAstarAI m_agentAstar;
         private RVOController m_rvoController;
         private Animator m_animator;
-        private ChatBubble m_chat;
+        private VisitorChat m_chat;
         
         // Ghosting effect
         private Ghostify[] m_ghosties;
@@ -67,7 +67,7 @@ namespace Cyens.ReInherit
         public float TalkDuration { get => m_talkDuration; }
         public Visitor TalkVisitor { get => m_talkVisitor; set => m_talkVisitor = value; }
         public float Boredome { get => m_boredom; set => m_boredom = value; }
-        public ChatBubble ChatBubble { get => m_chat; }
+        public VisitorChat ChatBubble { get => m_chat; }
 
         public void SetArtifact(ArtifactVisitorHandler artifact, int viewSlotID)
         {
@@ -94,7 +94,7 @@ namespace Cyens.ReInherit
             m_ghosties = GetComponentsInChildren<Ghostify>(true);
             m_lookDuration = UnityEngine.Random.Range(7.5f, 12f);
             m_talkDuration = 10f;
-            m_chat = transform.Find("ChatBubble").GetComponent<ChatBubble>();
+            m_chat = transform.Find("VisitorsChat").GetChild(0).GetComponent<VisitorChat>();
             m_standingNodes = new List<GraphNode>();
         }
 

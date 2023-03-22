@@ -19,7 +19,7 @@ namespace Cyens.ReInherit
             Visitor.Emotion emotion = (Visitor.Emotion)UnityEngine.Random.Range(0, 5);
             animator.SetFloat("Emotion", ((float)emotion / 5f));
             m_visitor.VisitorEmotion = emotion;
-            m_visitor.ChatBubble.Setup(emotion, "");
+            m_visitor.ChatBubble.Setup(emotion);
             m_visitor.ChatBubble.ShowBubble(true);
         }
 
