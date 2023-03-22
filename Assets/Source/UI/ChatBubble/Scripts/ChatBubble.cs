@@ -12,7 +12,7 @@ namespace Cyens.ReInherit
             Happy,
             Neutral,
             Angry,
-            Disgusted,
+            //Disgusted,
         }
 
         [SerializeField] private Sprite happyIconSprite;
@@ -52,17 +52,20 @@ namespace Cyens.ReInherit
             mainCamera = Camera.main;
         }
 
-        private void Setup(IconType iconType, string text)
+        public void Setup(IconType iconType, string text)
         {
             textMeshPro.SetText(text);
             textMeshPro.ForceMeshUpdate();
             Vector2 textSize = textMeshPro.GetRenderedValues(false);
+            Debug.Log(textSize);
             Vector2 padding = new Vector2(8f, 2f);
             Vector3 offset = new Vector3(-16f, 0f);
             backgroundSpriteRenderer.size = textSize + padding;
-            backgroundSpriteRenderer.transform.localPosition = new Vector3(backgroundSpriteRenderer.size.x / 2f, 0f) + offset;
+            //backgroundSpriteRenderer.transform.localPosition = new Vector3(backgroundSpriteRenderer.size.x / 2f, 0f) + offset;
 
             iconSpriteRenderer.sprite = GetIconSprite(iconType);
+            iconSpriteRenderer.transform.localPosition =  backgroundSpriteRenderer.transform.localPosition;
+
         }
 
         private Sprite GetIconSprite(IconType iconType)
@@ -77,10 +80,11 @@ namespace Cyens.ReInherit
             }
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward, mainCamera.transform.rotation * Vector3.up);
         }
+       
 
     }
 }
