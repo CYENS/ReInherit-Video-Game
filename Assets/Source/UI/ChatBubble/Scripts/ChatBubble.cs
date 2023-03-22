@@ -7,6 +7,14 @@ namespace Cyens.ReInherit
 {
     public class ChatBubble : MonoBehaviour
     {
+        public enum IconType
+        {
+            Happy,
+            Neutral,
+            Angry,
+            //Disgusted,
+        }
+        
         [SerializeField] private Sprite m_happyIconSprite;
         [SerializeField] private Sprite m_neutralIconSprite;
         [SerializeField] private Sprite m_angryIconSprite;
@@ -53,16 +61,17 @@ namespace Cyens.ReInherit
 
         public void Setup(Visitor.Emotion emotion, string text)
         {
-            m_textMeshPro.SetText(text);
-            m_textMeshPro.ForceMeshUpdate();
-            Vector2 textSize = m_textMeshPro.GetRenderedValues(false);
-            Vector2 padding = new Vector2(7f, 7f);
-            m_backgroundSpriteRenderer.size = padding;
-            //Vector3 offset = new Vector3(-16f, 0.5f);
-            //m_backgroundSpriteRenderer.size = textSize + padding;
-            //m_backgroundSpriteRenderer.transform.localPosition = new Vector3(m_backgroundSpriteRenderer.size.x / 2f, 0f) + offset;
-            m_iconSpriteRenderer.sprite = GetIconSprite(emotion);
-            m_iconSpriteRenderer.transform.localPosition = m_backgroundSpriteRenderer.transform.localPosition;
+            textMeshPro.SetText(text);
+            textMeshPro.ForceMeshUpdate();
+            Vector2 textSize = textMeshPro.GetRenderedValues(false);
+            Debug.Log(textSize);
+            Vector2 padding = new Vector2(8f, 2f);
+            Vector3 offset = new Vector3(-16f, 0f);
+            backgroundSpriteRenderer.size = textSize + padding;
+            //backgroundSpriteRenderer.transform.localPosition = new Vector3(backgroundSpriteRenderer.size.x / 2f, 0f) + offset;
+
+            iconSpriteRenderer.sprite = GetIconSprite(iconType);
+            iconSpriteRenderer.transform.localPosition =  backgroundSpriteRenderer.transform.localPosition;
         }
 
         private Sprite GetIconSprite(Visitor.Emotion iconType)
