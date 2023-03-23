@@ -14,7 +14,7 @@ namespace Cyens.ReInherit
     public class Artifact : MonoBehaviour
     {
         [SerializeField]
-        private ArtifactData data;
+        private ArtifactInfo m_info;
 
         public enum Status { Storage = 0, Design = 1, Transit = 2, Exhibit = 3, Restoration = 4  }
 
@@ -24,18 +24,11 @@ namespace Cyens.ReInherit
 
         public Status GetStatus() => status;
 
-        public ArtifactData GetData() => data;
+        public ArtifactInfo GetInfo() => m_info;
 
 
-        public float Novelty
-        {
-            get => data.Novelty;
-            set => data.Novelty = value;
-        }
-
-        //public Mesh GetMesh() => data.mesh;
-        
-        public string GetLabel() => data.label;
+        public float Novelty => m_info.Novelty;        
+        public string GetLabel() => m_info.label;
 
 
         [Header("Game Data")]
@@ -70,23 +63,55 @@ namespace Cyens.ReInherit
         /// rely on setters.
         /// </summary>
         /// <param name="owner"></param>
-        /// <param name="data"></param>
-        /// <param name="status"></param>
-        /// <returns></returns>
-        public static Artifact Create( GameObject owner, ArtifactData data )
+        /// <param name="info"></param>
+        /// <returns>The created artifact class</returns>
+        public static Artifact Create( GameObject owner, ArtifactInfo info )
         {
             var artifact = owner.AddComponent<Artifact>();
-            artifact.data = data;
+            artifact.m_info = info;
             artifact.status = Status.Storage;
             artifact.condition = Random.Range(0.6f, 0.9f);
 
             // Generate the exhibit cases/tables
-            artifact._exhibit01 = Exhibit.Create(owner, data.exhibitPrefab01, data);
+            artifact._exhibit01 = Exhibit.Create(owner, info.exhibitPrefab01, info);
             artifact._exhibit01.gameObject.SetActive(false);
 
-            artifact._exhibit02 = Exhibit.Create(owner, data.exhibitPrefab02, data);
+            artifact._exhibit02 = Exhibit.Create(owner, info.exhibitPrefab02, info);
             artifact._exhibit02.gameObject.SetActive(false);
 
+
+            return artifact;
+        }
+
+        /// <summary>
+        /// An alternate version of the artifact factory, which instead created an artifact
+        /// based on some save data.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="saveData"></param>
+        /// <returns>The created artifact class</returns>
+        public static Artifact Create( GameObject owner, ArtifactData saveData )
+        {
+            // Load position and rotation
+            owner.transform.position = saveData.position;
+            owner.transform.rotation = Quaternion.Euler(0, saveData.angle,0);
+
+            // Load artifact info data
+            var artifact = owner.AddComponent<Artifact>();
+            var infoId = saveData.infoId;
+            var info = ArtifactInfoLibrary.Find(infoId);
+            artifact.m_info = info;
+
+            // Load other game data
+            artifact.status = (Status)saveData.status;
+            artifact.condition = saveData.condition;
+            
+            // Generate the exhibit cases/tables
+            artifact._exhibit01 = Exhibit.Create(owner, info.exhibitPrefab01, info);
+            artifact._exhibit01.gameObject.SetActive(false);
+
+            artifact._exhibit02 = Exhibit.Create(owner, info.exhibitPrefab02, info);
+            artifact._exhibit02.gameObject.SetActive(false);
 
             return artifact;
         }
@@ -212,11 +237,31 @@ namespace Cyens.ReInherit
             Refresh(true);
         }
 
-        private void Update()
-        {
-            
-        }
+        
 
+        /// <summary>
+        /// Returns a serializable data object containing
+        /// all the important info for this artifact
+        /// </summary>
+        /// <returns></returns>
+        public ArtifactData GetData()
+        {
+            ArtifactData data = new ArtifactData();
+            data.position = transform.position;
+            data.angle = transform.rotation.eulerAngles.y;
+
+            data.infoId = m_info.myid;
+            data.condition = condition;
+            data.upgraded = upgraded;
+            switch(status)
+            {
+                case Status.Design: data.status = (int)Status.Storage; break;
+                case Status.Transit: data.status = (int)Status.Exhibit; break;
+                default: data.status = (int)status; break;
+            }
+
+            return data;
+        }
 
     }
 }

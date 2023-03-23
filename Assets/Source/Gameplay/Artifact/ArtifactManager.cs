@@ -16,7 +16,7 @@ namespace Cyens.ReInherit
     public class ArtifactManager : Singleton<ArtifactManager>
     {
 
-        public List<ArtifactData> starterArtifacts;
+        public List<ArtifactInfo> starterArtifacts;
 
 
         // Input related
@@ -46,8 +46,8 @@ namespace Cyens.ReInherit
             groundPlane = new Plane(Vector3.up, Vector3.zero);
 
 
-            foreach ( var data in starterArtifacts)
-                AddArtifact(data);
+            foreach ( var info in starterArtifacts)
+                AddArtifact(info);
             
         }
 
@@ -85,19 +85,19 @@ namespace Cyens.ReInherit
             return Array.FindAll<Artifact>(allArtifacts, artifact => artifact.GetStatus() == status);
         }
 
-        public ArtifactData[] GetArtifactData()
+        public ArtifactInfo[] GetArtifactInfo()
         {
             // Grab the artifacts contained within and get their data
             // Collect their data in hashsets to remove duplicates
             Artifact[] artifacts = GetComponentsInChildren<Artifact>(true);
-            HashSet<ArtifactData> dataSet = new HashSet<ArtifactData>();
+            HashSet<ArtifactInfo> dataSet = new HashSet<ArtifactInfo>();
             foreach( var artifact in artifacts )
-                dataSet.Add(artifact.GetData());
+                dataSet.Add(artifact.GetInfo());
             
             // Convert the hashset to an array
-            ArtifactData[] artifactData = new ArtifactData[dataSet.Count];
-            dataSet.CopyTo(artifactData);
-            return artifactData;
+            ArtifactInfo[] artifactInfo = new ArtifactInfo[dataSet.Count];
+            dataSet.CopyTo(artifactInfo);
+            return artifactInfo;
         }
 
         public void PlaceArtifact(Artifact artifact)
@@ -129,7 +129,7 @@ namespace Cyens.ReInherit
         #endregion
 
 
-        public void AddArtifact(ArtifactData data)
+        public void AddArtifact(ArtifactInfo info)
         {
 
             // Step One: Create an empty child game object
@@ -137,8 +137,8 @@ namespace Cyens.ReInherit
             temp.transform.SetParent(transform);
 
             // Step Two: Add the 'Artifact' class to that object
-            Artifact artifact = Artifact.Create(temp, data );
-            temp.name = artifact.GetData().label;
+            Artifact artifact = Artifact.Create(temp, info );
+            temp.name = artifact.GetInfo().label;
 
         }
 
@@ -160,22 +160,22 @@ namespace Cyens.ReInherit
         {
 
             // Get All artifact data
-            var artifactData = GetArtifactData();
+            var artifactInfo = GetArtifactInfo();
 
             // Get artifacts that are on display, and their data
             var displayedArtifacts = GetArtifactsByStatus(Artifact.Status.Exhibit);
-            HashSet<ArtifactData> displayedArtifactData = new HashSet<ArtifactData>();
+            HashSet<ArtifactInfo> displayedArtifactData = new HashSet<ArtifactInfo>();
             foreach( var artifact in displayedArtifacts )
-                displayedArtifactData.Add(artifact.GetData());
+                displayedArtifactData.Add(artifact.GetInfo());
 
             // Get artifacts that are in the Conservation area
             var restorationArtifacts = GetArtifactsByStatus(Artifact.Status.Restoration);
-            HashSet<ArtifactData> restorationArtifactData = new HashSet<ArtifactData>();
+            HashSet<ArtifactInfo> restorationArtifactData = new HashSet<ArtifactInfo>();
             foreach (var artifact in restorationArtifacts)
-                restorationArtifactData.Add(artifact.GetData());
+                restorationArtifactData.Add(artifact.GetInfo());
 
             // Add / subtract points accordingly
-            foreach( var data in artifactData )
+            foreach( var data in artifactInfo )
             {
                 if (displayedArtifactData.Contains(data)) data.Novelty -= 0.1f;
                 else if (restorationArtifactData.Contains(data)) data.Novelty += 0.0f;

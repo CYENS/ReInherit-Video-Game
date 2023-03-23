@@ -23,6 +23,7 @@ namespace Cyens.ReInherit
         // Creates a new error message. If panel already showing, hide it and reshow the new one.
         public void CreateErrorMessage(string title, string text)
         {
+            Debug.Log("In Create ErrorMessage");
             if (m_panelShowing)
             {
                 StopCoroutine(m_coroutine);

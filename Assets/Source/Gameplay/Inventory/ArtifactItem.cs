@@ -9,7 +9,7 @@ namespace Cyens.ReInherit
     {
 
         public Artifact artifact;
-        protected ArtifactData data;
+        protected ArtifactInfo info;
 
         [Header("References")]
         public Image icon;
@@ -23,9 +23,9 @@ namespace Cyens.ReInherit
         public void SetArtifact(Artifact artifact)
         {
             this.artifact = artifact;
-            data = artifact.GetData();
+            info = artifact.GetInfo();
 
-            icon.sprite = data.icon;
+            icon.sprite = info.icon;
 
             Refresh();
 

@@ -4,50 +4,30 @@ using UnityEngine;
 
 namespace Cyens.ReInherit
 {
+
     /// <summary>
-    /// Stores all the information relevant to the specific artifact.
+    /// A serializable data object used to save data for a specific artifact.
     /// </summary>
-    
-    [CreateAssetMenu(fileName = "ArtifactData", menuName = "Data/Artifact", order = 1)]
-    public class ArtifactData : ScriptableObject
+    [System.Serializable]
+    public class ArtifactData
     {
-        [Header("General Information")]
-        public string label;
-        public Sprite icon;
-        public enum Type { Statue, Scroll, Document, Pottery  }
-        public Type type;
-        
-        public string description;
+        // Where the artifact exhibit case is located
+        public Vector3 position;
 
-        [Header("Runtime variables")]
-        [Tooltip("How novel the specific artifact is")]
-        [SerializeField]
-        private float novelty;
+        // How the artifact exhibit case is oriented (Y-axis rotation)
+        public float angle;
 
-        public float Novelty
-        {
-            get => novelty;
-            set => novelty = Mathf.Clamp(value,0.0f,1.0f);
-        }
+        // Reference if to the info object
+        public string infoId;
 
+        // The current status of the object
+        // (enum casted as int)
+        public int status;
 
-        [Header("Physical")]
+        // The upgrade status of the artifact exhibit case
+        public bool upgraded;
 
-        [Tooltip("The object containing the mesh filter and renderer")]
-        public GameObject artifactPrefab;
-
-        [Tooltip("The base version of the exhibit")]
-        public GameObject exhibitPrefab01;
-
-        [Tooltip("The upgraded version of the exhibit")]
-        public GameObject exhibitPrefab02;
-        
-        [Tooltip("How much it costs to upgrade the exhibit case")]
-        public int upgradePricing;
-
-        private void Awake()
-        {
-            novelty = 1.0f;
-        }
+        // The current condition of the artifact
+        public float condition;
     }
 }
