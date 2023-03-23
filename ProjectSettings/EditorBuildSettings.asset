@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: b9fc9b4be3c3dfe498158f24c5c74440
   - enabled: 1
-    path: Assets/Scenes/DevRoom_Christos_Dublicate.unity
-    guid: 081075c6a1951b74b81de8dac1d2421d
+    path: Assets/Scenes/Alpha.unity
+    guid: a4285d9e1167b8d43a3e3ccb2a939fdf
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 5e6123401c8f92a48a541eab3fe5b44c,
       type: 2}
