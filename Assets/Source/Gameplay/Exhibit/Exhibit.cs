@@ -9,7 +9,7 @@ namespace Cyens.ReInherit
     {
 
 
-        private ArtifactInfo info;
+        private ArtifactInfo m_info;
 
 
         private bool ghost = false;
@@ -72,7 +72,7 @@ namespace Cyens.ReInherit
             GameObject temp = GameObject.Instantiate(prefab, owner.transform);
             temp.transform.localPosition = Vector3.zero;
             Exhibit exhibit = temp.GetComponent<Exhibit>();
-            exhibit.info = info;
+            exhibit.m_info = info;
             return exhibit;
         }
 
@@ -82,49 +82,6 @@ namespace Cyens.ReInherit
         }
 
 
-        /// <summary>
-        /// Returns a value that represents the impression this exhibit gives to visitors.
-        /// 0 means no interest.
-        /// 0.5 means it is worth looking at
-        /// 1.0 means that it is a star attraction piece
-        /// </summary>
-        /// <returns></returns>
-        public float GetAttraction()
-        {
-            // TODO: Get inherent coolness value from the artifact data
-            float attraction = 1.0f;
-
-            // The condition of the artifact will negatively affect it
-            float condition = artifact.condition;
-            if (condition > 0.75f) attraction *= 1.0f;
-            else if (condition > 0.5f) attraction *= 0.9f;
-            else if (condition > 0.25f) attraction *= 0.7f;
-            else if (condition > float.Epsilon) attraction *= 0.5f;
-            else attraction *= 0.3f;
-
-            
-
-            // If the artifact is currently on display it will be more interesting for obvious reasons
-            switch (artifact.GetStatus())
-            {
-                case Artifact.Status.Exhibit:
-                    attraction *= 1.0f;
-                    break;
-                case Artifact.Status.Restoration:
-                    attraction *= 0.9f;
-                    break;
-                default:
-                    Debug.LogError("This shouldn't be called!");
-                    attraction *= 0.0f;
-                    break;
-            }
-
-            // Factor novelty into the equation
-            attraction *= Mathf.Lerp( 0.75f, 1.0f, artifact.Novelty );
-
-
-            return attraction;
-        }
 
 
         public void SetGhost( bool value, Color color )
@@ -160,13 +117,15 @@ namespace Cyens.ReInherit
         }
 
 
+
+
         public void Upgrade()
         {
             if (artifact.upgraded)
                 return;
 
             int funds = GameManager.Funds;
-            int price = info.upgradePricing;
+            int price = m_info.upgradePricing;
 
             if( funds < price )
             {
@@ -201,7 +160,7 @@ namespace Cyens.ReInherit
 
         private GameObject CreateProp()
         {
-            prop = GameObject.Instantiate(info.artifactPrefab, placeholder.transform.position, Quaternion.identity);
+            prop = GameObject.Instantiate(m_info.artifactPrefab, placeholder.transform.position, Quaternion.identity);
             prop.transform.SetParent(placeholder.transform.parent);
 
             // Remove the placeholder as it is not needed
@@ -210,7 +169,7 @@ namespace Cyens.ReInherit
             return prop;
         }
 
-        private void Awake()
+        private void Start()
         {
             animator = GetComponent<Animator>();
 

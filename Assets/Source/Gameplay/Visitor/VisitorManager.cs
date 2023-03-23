@@ -29,9 +29,11 @@ namespace Cyens.ReInherit
 
         [SerializeField] private Vector3 m_exitPosition;
 
-        private ArtifactVisitorHandler[] m_artifacts;
+        private Artifact[] m_artifacts;
+        private ArtifactVisitorHandler[] m_handlers;
 
-        public ArtifactVisitorHandler[] GetArtifacts(){ return m_artifacts; }
+        public Artifact[] GetArtifacts(){ return m_artifacts; }
+        public ArtifactVisitorHandler[] GetVisitorHandlers() { return m_handlers; }
 
         public Vector3 GetExitPosition() { return m_exitPosition; }
         
@@ -39,7 +41,6 @@ namespace Cyens.ReInherit
         {
             m_visitorCount = Random.Range(25, 40);
             m_exitPosition = GameObject.Find("Exit").transform.position;
-            Spawn();
         }
 
         // Find closer visitor in maxDistance
@@ -62,14 +63,16 @@ namespace Cyens.ReInherit
             return null;
         }
         
-        private ArtifactVisitorHandler[] TestingGetArtifacts()
+        private ArtifactVisitorHandler[] FindHandlers()
         {
-            Transform parent = GameObject.Find("Artifacts").transform;
-            ArtifactVisitorHandler[] artifacts = new ArtifactVisitorHandler[parent.childCount];
-            for (int i = 0; i < parent.childCount; i++) {
-                artifacts[i] = parent.GetChild(i).GetComponent<ArtifactVisitorHandler>();
-            }
-            return artifacts;
+            // TO-DO Get all artifacts
+
+            Artifact[] artifacts = ArtifactManager.Instance.GetArtifactsByStatus(Artifact.Status.Exhibit);
+            ArtifactVisitorHandler[] handlers = new ArtifactVisitorHandler[artifacts.Length];
+            for( int i=0; i<artifacts.Length; i++)
+                handlers[i] = artifacts[i].GetComponentInChildren<ArtifactVisitorHandler>(false);
+           
+            return handlers;
         }
         
         /// <summary>
@@ -78,14 +81,15 @@ namespace Cyens.ReInherit
         public void Spawn()
         {
             // Get a list of exhibits
-            m_artifacts = TestingGetArtifacts();
+            m_artifacts = ArtifactManager.Instance.GetArtifactsByStatus(Artifact.Status.Exhibit);
 
             int visitorID = 0;
             // Grab interest amount and store in a 1-to-1 array
             float sumAttraction = 0.0f;
             float[] probabilities = new float[m_artifacts.Length];
             for(int i = 0; i < m_artifacts.Length; i++ ) {
-                float attraction = UnityEngine.Random.Range(0.25f, 1f);
+                // TO-DO get artifact attraction
+                float attraction = m_artifacts[i].GetAttraction();
                 sumAttraction += attraction;
                 probabilities[i] = attraction;
             }
@@ -95,9 +99,14 @@ namespace Cyens.ReInherit
                 probabilities[i] /= sumAttraction;
 
             // Distribute visitors
+            m_handlers = new ArtifactVisitorHandler[m_artifacts.Length];
             for(int i = 0; i < m_artifacts.Length; i++)
             {
                 var artifact = m_artifacts[i];
+
+                var handler = artifact.GetVisitorHandler();
+                m_handlers[i] = handler;
+
                 int spectators = Mathf.Max( Mathf.RoundToInt(m_visitorCount * probabilities[i]), 0 );
 
                 for ( int v = 0; v < spectators; v++ )
@@ -112,9 +121,17 @@ namespace Cyens.ReInherit
                     visitor.InSpawnArtifact = true;
                     visitorID += 1;
 
-                    Vector3 freeSlot = artifact.GetFreeViewSpot();
-                    visitor.visitedArtifacts.Add(artifact);
-                    visitor.SetArtifact(artifact, (int)freeSlot.y);
+                    
+                    Vector3 freeSlot;
+                    if( ! handler.TryGetFreeSpot(out freeSlot) )
+                    {
+                        // Not enough free space
+                        Destroy(temp);
+                        break;
+                    }
+
+                    visitor.visitedArtifacts.Add(handler);
+                    visitor.SetArtifact(handler, (int)freeSlot.y);
                     visitor.transform.position = freeSlot;
                     
                     Vector3 targetPos = m_artifacts[i].transform.position;

@@ -139,7 +139,6 @@ namespace Cyens.ReInherit
             // Step Two: Add the 'Artifact' class to that object
             Artifact artifact = Artifact.Create(temp, info );
             temp.name = artifact.GetInfo().label;
-
         }
 
 

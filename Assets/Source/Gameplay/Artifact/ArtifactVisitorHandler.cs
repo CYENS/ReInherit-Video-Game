@@ -10,19 +10,25 @@ namespace Cyens.ReInherit
         public List<Vector3> m_viewPoints;
         public List<bool> m_viewPointReserved;
 
-        // Return a free spot around artifact. Y value represent spot ID;
-        public Vector3 GetFreeViewSpot()
+        [SerializeField] private LayerMask layerMask;
+
+
+        public bool TryGetFreeSpot( out Vector3 spot )
         {
-            for (int i = 0; i < m_viewPoints.Count; i++) {
-                if (m_viewPointReserved[i] == false) {
+            for (int i = 0; i < m_viewPoints.Count; i++)
+            {
+                if (m_viewPointReserved[i] == false)
+                {
                     m_viewPointReserved[i] = true;
-                    Vector3 ret = m_viewPoints[i];
-                    ret.y = i;
-                    return ret;
+                    spot = m_viewPoints[i];
+                    spot.y = i;
+                    return true;
                 }
             }
-            return Vector3.zero;
+            spot = Vector3.zero;
+            return false;
         }
+
 
         public void UnuseViewSpot(int id)
         {
@@ -34,18 +40,26 @@ namespace Cyens.ReInherit
         {
             m_viewPoints = new List<Vector3>(m_numberOfViewPoints);
             m_viewPointReserved = new List<bool>(m_numberOfViewPoints);
-            GenerateViewPoints();
+            
         }
 
-        private void GenerateViewPoints()
+   
+
+
+        public void GenerateViewPoints()
         {
-            // Only Ground Layer
-            int layerMask = 1 << 10;
-            
+            Debug.Log("Generate View Points");
+
+            m_viewPoints.Clear();
+            m_viewPointReserved.Clear();
+
             float angleStep = 360.0f / (float)m_numberOfViewPoints;
             float angle = 0f;
             for ( int i = 0; i < m_numberOfViewPoints; i++ )
             {
+
+                Debug.Log("..Index"+i);
+
                 Vector3 center = transform.position;
                 Vector3 offset = Vector3.forward * 2f;
                 offset = Quaternion.Euler(Vector3.up * angle) * offset;
@@ -56,6 +70,7 @@ namespace Cyens.ReInherit
                 Vector3 rayPos = center + (offset * 1.5f);
                 RaycastHit hit;
                 if (Physics.Raycast(rayPos - new Vector3(0f, 5f, 0f), transform.TransformDirection(Vector3.up), out hit, 10f, layerMask)) {
+                    Debug.Log("....Raycast hit. Add viewpoint");
                     m_viewPoints.Add(pos);
                     m_viewPointReserved.Add(false);
                 }

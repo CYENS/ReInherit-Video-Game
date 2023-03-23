@@ -65,18 +65,25 @@ namespace Cyens.ReInherit
         {
         }
         
+
+        private void GoToExit(Animator animator)
+        {
+            animator.SetBool("Exit", true);
+            m_visitor.VisitorBehavior = Visitor.Behavior.Exiting;
+        }
+
         // Finds next artifact to visit and get free slot around that artifact
         private Vector3 CalculateDestination(Animator animator)
         {
             VisitorManager visitorManager = VisitorManager.Instance;
             // Get artifacts and sort them based on distance
-            ArtifactVisitorHandler[] artifacts = visitorManager.GetArtifacts();
-            artifacts = artifacts.OrderBy((d) => (d.transform.position - animator.transform.position).sqrMagnitude).ToArray();
+            ArtifactVisitorHandler[] handlers = visitorManager.GetVisitorHandlers();
+
+            handlers = handlers.OrderBy((d) => (d.transform.position - animator.transform.position).sqrMagnitude).ToArray();
 
             // If agent visited all artifacts or boredome threshold reached, move to exit
-            if (artifacts.Length == m_visitor.visitedArtifacts.Count || m_visitor.Boredome >= 1) {
-                animator.SetBool("Exit", true);
-                m_visitor.VisitorBehavior = Visitor.Behavior.Exiting;
+            if (handlers.Length == m_visitor.visitedArtifacts.Count || m_visitor.Boredome >= 1) {
+                GoToExit(animator);
                 return visitorManager.GetExitPosition();
             }
 
@@ -85,11 +92,21 @@ namespace Cyens.ReInherit
             bool loop = true;
             ArtifactVisitorHandler nextArtifact;
             do {
-                nextArtifact = artifacts[index];
+
+                if( index >= handlers.Length )
+                {
+                    GoToExit(animator);
+                    return visitorManager.GetExitPosition();
+                }
+
+                nextArtifact = handlers[index];
                 if (m_visitor.visitedArtifacts.Contains(nextArtifact) == false) {
-                    freeSlot = nextArtifact.GetFreeViewSpot();
-                    if (freeSlot != Vector3.zero) 
+                    
+                    if( nextArtifact.TryGetFreeSpot(out freeSlot) )
+                    {
                         loop = false;
+                    }
+                        
                 }
                 index += 1;
             } while (loop);

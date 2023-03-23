@@ -57,6 +57,9 @@ namespace Cyens.ReInherit
             return upgraded ? _exhibit02 : _exhibit01;
         }
 
+        public ArtifactVisitorHandler GetVisitorHandler() => GetExhibit().GetComponent<ArtifactVisitorHandler>();
+        
+
         /// <summary>
         /// "Factory" function, to fascilitate with the creation of this specific class.
         /// Since the function is inside the Artifact class, we can set private data without having to
@@ -70,7 +73,8 @@ namespace Cyens.ReInherit
             var artifact = owner.AddComponent<Artifact>();
             artifact.m_info = info;
             artifact.status = Status.Storage;
-            artifact.condition = Random.Range(0.6f, 0.9f);
+            artifact.condition = Random.Range(0.6f, 0.9f);            
+
 
             // Generate the exhibit cases/tables
             artifact._exhibit01 = Exhibit.Create(owner, info.exhibitPrefab01, info);
@@ -78,7 +82,6 @@ namespace Cyens.ReInherit
 
             artifact._exhibit02 = Exhibit.Create(owner, info.exhibitPrefab02, info);
             artifact._exhibit02.gameObject.SetActive(false);
-
 
             return artifact;
         }
@@ -129,6 +132,50 @@ namespace Cyens.ReInherit
         }
 
 
+
+        /// <summary>
+        /// Returns a value that represents the impression this exhibit gives to visitors.
+        /// 0 means no interest.
+        /// 0.5 means it is worth looking at
+        /// 1.0 means that it is a star attraction piece
+        /// </summary>
+        /// <returns></returns>
+        public float GetAttraction()
+        {
+            // TODO: Get inherent coolness value from the artifact data
+            float attraction = 1.0f;
+
+            // The condition of the artifact will negatively affect it
+            if (condition > 0.75f) attraction *= 1.0f;
+            else if (condition > 0.5f) attraction *= 0.9f;
+            else if (condition > 0.25f) attraction *= 0.7f;
+            else if (condition > float.Epsilon) attraction *= 0.5f;
+            else attraction *= 0.3f;
+
+
+            // If the artifact is currently on display it will be more interesting for obvious reasons
+            switch (status)
+            {
+                case Artifact.Status.Exhibit:
+                    attraction *= 1.0f;
+                    break;
+                case Artifact.Status.Restoration:
+                    attraction *= 0.9f;
+                    break;
+                default:
+                    Debug.LogError("This shouldn't be called!");
+                    attraction *= 0.0f;
+                    break;
+            }
+
+            // Factor novelty into the equation
+            attraction *= Mathf.Lerp(0.75f, 1.0f, Novelty);
+
+
+            return attraction;
+        }
+
+
         /// <summary>
         /// Damages the artifact by a small amount
         /// </summary>
@@ -148,7 +195,7 @@ namespace Cyens.ReInherit
 
 
         public void Restore( float amount ) => condition = Mathf.Clamp(condition + amount, 0.0f, 1.0f);
-        
+
 
         public void Refresh(bool valid = true)
         {
@@ -176,21 +223,31 @@ namespace Cyens.ReInherit
             switch (status)
             {
                 case Status.Design:
-                    _exhibit01.SetGhost(true, valid? validGhost : invalidGhost );
+                    _exhibit01.SetGhost(true, valid ? validGhost : invalidGhost);
                     _exhibit02.SetGhost(true, valid ? validGhost : invalidGhost);
                     _exhibit01.navCollider.gameObject.SetActive(false);
                     _exhibit02.navCollider.gameObject.SetActive(false);
+                    CutNavmeshArea(false);
                     break;
                 case Status.Transit:
                     _exhibit01.SetGhost(true, validGhost);
                     _exhibit02.SetGhost(true, validGhost);
                     // Cut navmesh area around exhibit
+                    SetNavmeshAreaRadius(1.0f);
                     CutNavmeshArea(true);
                     break;
                 default:
                     _exhibit01.SetGhost(false, validGhost);
                     _exhibit02.SetGhost(false, validGhost);
+                    SetNavmeshAreaRadius(2.0f);
                     break;
+            }
+
+            // Step Three: Generate view points for exhibit
+            if (status == Status.Exhibit)
+            {
+                var handler = GetVisitorHandler();
+                handler.GenerateViewPoints();
             }
 
         }
@@ -198,15 +255,25 @@ namespace Cyens.ReInherit
         // Enable/Disable NavMeshCut component
         private void CutNavmeshArea(bool enable)
         {
+            NavmeshCut navCut = GetExhibit().GetComponent<NavmeshCut>();
             if (enable) {
-                NavmeshCut navCut = gameObject.AddComponent<NavmeshCut>();
-                navCut.circleRadius = 1f;
-                navCut.type = NavmeshCut.MeshType.Circle;
+                navCut.enabled = true;
             }
             else {
-                if(gameObject.GetComponent<NavmeshCut>() != null)
-                    Destroy(GetComponent<NavmeshCut>());
+                if(navCut != null)
+                    navCut.enabled = false;
             }
+        }
+
+        private void SetNavmeshAreaRadius( float newRadius )
+        {
+            NavmeshCut navCut = GetExhibit().GetComponent<NavmeshCut>();
+            float lastRadius = navCut.circleRadius;
+
+            navCut.circleRadius = newRadius;
+            
+            if (Mathf.Approximately(newRadius, lastRadius) == false)
+                navCut.ForceUpdate();
         }
 
 

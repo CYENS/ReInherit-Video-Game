@@ -552,10 +552,16 @@ namespace Cyens.ReInherit.Architect
                 return;
             }
 
+
             block1.Links[direction] = block2.room;
             block2.Links[direction.Opposite] = block1.room;
             block1.RefreshModel();
             block2.RefreshModel();
+
+            // Update Navmesh
+            block1.model.RecreateNavMesh();
+            block2.model.RecreateNavMesh();
+
         }
 
         public void Unlink(Index from, Index to)
@@ -574,6 +580,10 @@ namespace Cyens.ReInherit.Architect
 
             block1.RefreshModel();
             block2.RefreshModel();
+
+            // Update Navmesh
+            block1.model.RecreateNavMesh();
+            block2.model.RecreateNavMesh();
         }
 
         private class InnerRoom : Room
