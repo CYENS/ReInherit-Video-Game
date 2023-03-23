@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Gameplay.Management;
 using Pathfinding;
+using Pathfinding.RVO;
 using Random = UnityEngine.Random;
 
 namespace Cyens.ReInherit
@@ -227,19 +228,16 @@ namespace Cyens.ReInherit
                     _exhibit02.SetGhost(true, valid ? validGhost : invalidGhost);
                     _exhibit01.navCollider.gameObject.SetActive(false);
                     _exhibit02.navCollider.gameObject.SetActive(false);
-                    CutNavmeshArea(false);
                     break;
                 case Status.Transit:
                     _exhibit01.SetGhost(true, validGhost);
                     _exhibit02.SetGhost(true, validGhost);
                     // Cut navmesh area around exhibit
-                    SetNavmeshAreaRadius(1.0f);
-                    CutNavmeshArea(true);
                     break;
                 default:
                     _exhibit01.SetGhost(false, validGhost);
                     _exhibit02.SetGhost(false, validGhost);
-                    SetNavmeshAreaRadius(2.0f);
+                    StartCoroutine(SetNavmeshAreaRadius(2.0f, 3.2f, 3f));
                     break;
             }
 
@@ -252,28 +250,20 @@ namespace Cyens.ReInherit
 
         }
 
-        // Enable/Disable NavMeshCut component
-        private void CutNavmeshArea(bool enable)
+        private IEnumerator SetNavmeshAreaRadius(float newRadiusNav, float newRadiusRVO, float waitTime)
         {
-            NavmeshCut navCut = GetExhibit().GetComponent<NavmeshCut>();
-            if (enable) {
-                navCut.enabled = true;
-            }
-            else {
-                if(navCut != null)
-                    navCut.enabled = false;
-            }
-        }
-
-        private void SetNavmeshAreaRadius( float newRadius )
-        {
-            NavmeshCut navCut = GetExhibit().GetComponent<NavmeshCut>();
-            float lastRadius = navCut.circleRadius;
-
-            navCut.circleRadius = newRadius;
+            // Wait some time before expand cut to allow keeper to leave
+            yield return new WaitForSeconds(waitTime);
             
-            if (Mathf.Approximately(newRadius, lastRadius) == false)
+            NavmeshCut navCut = GetExhibit().GetComponent<NavmeshCut>();
+            float lastRadiusNav = navCut.circleRadius;
+            navCut.circleRadius = newRadiusNav;
+            if (Mathf.Approximately(newRadiusNav, lastRadiusNav) == false)
                 navCut.ForceUpdate();
+            
+            RVOCircleObstacle rvoObstacle = GetExhibit().GetComponent<RVOCircleObstacle>();
+            rvoObstacle.size.x = newRadiusRVO;
+            rvoObstacle.size.y = newRadiusRVO;
         }
 
 

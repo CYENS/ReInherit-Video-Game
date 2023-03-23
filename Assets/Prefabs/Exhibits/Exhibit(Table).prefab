@@ -48,6 +48,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mesh
       objectReference: {fileID: 0}
+    - target: {fileID: 6752822980851771253, guid: f922a04a9f302d34cafef71d35217b6e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6850161749282801457, guid: f922a04a9f302d34cafef71d35217b6e,
         type: 3}
       propertyPath: m_Size.y

@@ -1,3 +1,5 @@
+using System;
+using Cyens.ReInherit.Gameplay.Management;
 using Pathfinding;
 using UnityEngine;
 
@@ -12,7 +14,7 @@ namespace Cyens.ReInherit.Architect
 
         [SerializeField] private bool moveToIndex;
         [SerializeField] private Index startIndex;
-        
+
         public void Clear()
         {
             eastWall.Type = WallModel.WallType.None;   
@@ -42,6 +44,15 @@ namespace Cyens.ReInherit.Architect
                 DirectionId.South => southWall,
                 _ => null,
             };
+
+            // If this room is connected to stage, remove south walls to merge them
+            Vector2 entryRoom = GameManager.Instance.entryRoomCoordinates;
+            if (Mathf.Approximately(transform.position.x, entryRoom.x) 
+                && Mathf.Approximately(transform.position.z, entryRoom.y) 
+                && direction.Id == DirectionId.South) { 
+                model.Type = WallModel.WallType.None;
+                    return;
+            }
 
             if (model != null) {
                 model.Type = type;

@@ -14,6 +14,7 @@ namespace Cyens.ReInherit.Gameplay.Management
     /// </summary>
     public class GameManager : Singleton<GameManager>
     {
+        [Header("Building")] public Vector2 entryRoomCoordinates = new Vector2(4.5f, 4.5f);
 
         public enum MuseumState { Close = 0, Open = 1 }
 

@@ -32,7 +32,6 @@ namespace Cyens.ReInherit.Architect
             // parent.Graph.AddBlock(blockOut);
 
             blockOut.m_model.RecreateNavMesh();
-            
             return blockOut;
         }
 

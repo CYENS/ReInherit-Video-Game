@@ -249,7 +249,7 @@ namespace Cyens.ReInherit
                     else
                         validPlacement = false;
                 }
-                Debug.Log(targetArtifact.transform.GetComponentInChildren<colliding>().isColliding);
+                //Debug.Log(targetArtifact.transform.GetComponentInChildren<colliding>().isColliding);
                 // Check to see if placement is valid
                 //validPlacement = true;
                 //if (IsGrounded(ghost.position) == false) validPlacement = false;

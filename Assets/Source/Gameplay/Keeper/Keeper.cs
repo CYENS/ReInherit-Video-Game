@@ -13,10 +13,7 @@ namespace Cyens.ReInherit
         [SerializeField]
         private enum State {Idle, Ready, Carry, Work, Return }
         public enum Goal { PlaceExhibit=0, UpgradeExhibit=1 }
-
-
-
-
+        
         private KeeperManager m_keeperManager;
         private List<Renderer> m_renderers;
         private AIPath m_aiPath;
@@ -141,8 +138,6 @@ namespace Cyens.ReInherit
                 
                 //keeper places the exhibit
                 case State.Work:
-
-
                     // Look directly at the target object
                     m_aiPath.enableRotation = false;
                     LookAt(currentTask.position);
