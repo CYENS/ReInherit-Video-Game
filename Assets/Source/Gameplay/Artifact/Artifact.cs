@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Gameplay.Management;
 using Pathfinding;
+using Random = UnityEngine.Random;
 
 namespace Cyens.ReInherit
 {
@@ -118,9 +120,7 @@ namespace Cyens.ReInherit
         {
             validGhost = new Color(0, 1, 0, 0.5f);
             invalidGhost = new Color(1, 0, 0, 0.5f);
-
         }
-
 
         public void SetStatus( Status newStatus )
         {
