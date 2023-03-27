@@ -15,6 +15,7 @@ namespace Cyens.ReInherit
         [SerializeField] GameObject ClosePanel;
         [SerializeField] GameObject BGPanel;
         [SerializeField] GameObject BehindCanvas;
+        [SerializeField] GameObject OldMan;
 
         [SerializeField] Text QuestionTxt;
         [SerializeField] Text CloseTitle;
@@ -32,6 +33,7 @@ namespace Cyens.ReInherit
             ClosePanel.SetActive(false);
             BGPanel.SetActive(false);
             BehindCanvas.SetActive(false);
+            OldMan.SetActive(false);
         }
 
         private void GameOver()
