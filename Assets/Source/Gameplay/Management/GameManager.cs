@@ -40,7 +40,6 @@ namespace Cyens.ReInherit.Gameplay.Management
             set
             {
                 Instance.m_funds = Mathf.Max(value,0);
-                Instance.Refresh();
             }
         }
 
@@ -54,7 +53,6 @@ namespace Cyens.ReInherit.Gameplay.Management
             set
             {
                 Instance.m_rating = Mathf.Clamp(value, 0.0f, 5.0f);
-                Instance.Refresh();
             }
         }
 
@@ -71,7 +69,6 @@ namespace Cyens.ReInherit.Gameplay.Management
 
 
         [Header("References")]
-        public TMP_Text txtFunds;
         private EventSystem eventSys;
 
         [SerializeField]
@@ -116,12 +113,6 @@ namespace Cyens.ReInherit.Gameplay.Management
 
             // Spawn visitors
             VisitorManager.Instance.Spawn();
-        }
-
-
-        public void Refresh()
-        {
-            txtFunds.text = "€" + m_funds.ToString();
         }
 
         public override void Awake()
