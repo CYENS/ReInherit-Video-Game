@@ -21,6 +21,8 @@ namespace Cyens.ReInherit.Gameplay.Management
         [SerializeField]
         [Tooltip("Whether the museum is currently open or closed")]
         private MuseumState m_museumState = MuseumState.Close;
+        public static MuseumState GetMuseumState() => Instance.m_museumState;
+
         private ErrorMessage m_errorMessageManager; 
 
 
@@ -128,6 +130,16 @@ namespace Cyens.ReInherit.Gameplay.Management
         }
 
 
+        public void CloseMuseum()
+        {
+            m_museumState = MuseumState.Close;
+            VisitorManager.Instance.DeSpawn();
+            ArtifactManager.Instance.UpdateNovelty();
+            ArtifactManager.Instance.ApplyDamage();
+            ArtifactManager.Instance.FixArtifacts();
+            m_bufferTimer = 1.0f;
+        }
+
         private void MuseumOpenUpdate()
         {
             time -= Time.deltaTime;
@@ -135,12 +147,7 @@ namespace Cyens.ReInherit.Gameplay.Management
 
             if( time <= float.Epsilon )
             {
-                m_museumState = MuseumState.Close;
-                VisitorManager.Instance.DeSpawn();
-                ArtifactManager.Instance.UpdateNovelty();
-                ArtifactManager.Instance.ApplyDamage();
-                ArtifactManager.Instance.FixArtifacts();
-                m_bufferTimer = 1.0f;
+                CloseMuseum();
                 return;
             }
 
