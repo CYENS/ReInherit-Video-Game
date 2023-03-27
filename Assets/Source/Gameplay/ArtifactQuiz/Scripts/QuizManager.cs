@@ -42,7 +42,7 @@ namespace Cyens.ReInherit
 
         public void correct()
         {
-            CloseTitle.text = "You Won This Artifact";
+            CloseTitle.text = "You Earned This Artifact";
             CloseImage.GetComponent<Image>().sprite = QnA[currentQuestion].Answers[QnA[currentQuestion].CorrectAnswer - 1];
             QnA.RemoveAt(currentQuestion);
             generateQuestion();
@@ -50,7 +50,7 @@ namespace Cyens.ReInherit
 
         public void wrong()
         {
-            CloseTitle.text = "You Lost This Artifact";
+            CloseTitle.text = "You didn't Earn This Artifact";
             CloseImage.GetComponent<Image>().sprite = QnA[currentQuestion].Answers[QnA[currentQuestion].CorrectAnswer - 1];
             QnA.RemoveAt(currentQuestion);
             generateQuestion();

@@ -32,6 +32,8 @@ namespace Cyens.ReInherit.Gameplay.Management
         [Tooltip("The amount of available funds to buy items and services with")]
         private int m_funds = 1000;
 
+        [SerializeField] GameObject Quiz;
+
         public static int Funds
         {
             get => Instance.m_funds;
@@ -138,6 +140,8 @@ namespace Cyens.ReInherit.Gameplay.Management
             ArtifactManager.Instance.ApplyDamage();
             ArtifactManager.Instance.FixArtifacts();
             m_bufferTimer = 1.0f;
+
+            Quiz.SetActive(true);
         }
 
         private void MuseumOpenUpdate()

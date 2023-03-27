@@ -1620,7 +1620,7 @@ GameObject:
   - component: {fileID: 1270638461696671394}
   - component: {fileID: 1270638461696671397}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: QuizCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
