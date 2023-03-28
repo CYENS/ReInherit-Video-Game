@@ -35,11 +35,15 @@ namespace Cyens.ReInherit
         public Artifact[] GetArtifacts(){ return m_artifacts; }
         public ArtifactVisitorHandler[] GetVisitorHandlers() { return m_handlers; }
 
-        public Vector3 GetExitPosition() { return m_exitPosition; }
+        public Vector3 GetExitPosition()
+        {
+            Vector3 randomizeX = new Vector3(UnityEngine.Random.Range(-3f, 4f), 0f, 0f);
+            return m_exitPosition + randomizeX;
+        }
         
         private void Start()
         {
-            m_visitorCount = Random.Range(15, 30);
+            m_visitorCount = Random.Range(15, 20);
             m_exitPosition = GameObject.Find("Exit").transform.position;
         }
 

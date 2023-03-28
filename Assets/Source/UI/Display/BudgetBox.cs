@@ -34,7 +34,7 @@ namespace Cyens.ReInherit
             if (m_coinCollected) {
                 float val = Mathf.PingPong(m_scaleAnimSpeed * Time.time, 0.1f);
                 m_cashierImage.localScale = Vector3.one + (Vector3.one * val);
-                if (val <= 0.01f)
+                if (val <= 0.025f)
                     m_coinCollected = false;
             }
 

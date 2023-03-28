@@ -50,7 +50,8 @@ namespace Cyens.ReInherit.Architect
         private void OnRenderObject()
         {
             lineMaterial.SetPass(0);
-
+            GL.PushMatrix();
+            GL.modelview = Camera.main.worldToCameraMatrix;
             GL.Begin(GL.LINES);
             {
                 for (var x = Bounds.min.x; x < Bounds.max.x; ++x) {
@@ -67,6 +68,7 @@ namespace Cyens.ReInherit.Architect
                 }
             }
             GL.End();
+            GL.PopMatrix();
         }
 
         private void DrawLine(Vector2 from, Vector2 to)

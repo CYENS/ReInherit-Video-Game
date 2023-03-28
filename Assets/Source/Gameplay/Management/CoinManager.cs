@@ -31,6 +31,12 @@ namespace Cyens.ReInherit
             }
         }
 
+        public Vector3 GetCurrentCashierPosition()
+        {
+            Vector3 screenPoint = m_target.transform.position + new Vector3(0, 0, 8f);
+            return m_mainCamera.ScreenToWorldPoint(screenPoint) + new Vector3(-0.6f, -1f, 0);
+        }
+
         IEnumerator Animate (Vector3 coinStartPos, int amount)
         {
             for (int i = 0; i < amount; i++) {
@@ -41,10 +47,7 @@ namespace Cyens.ReInherit
                     coin.transform.position = coinStartPos;
                     coin.transform.rotation = Quaternion.LookRotation(m_mainCamera.transform.position) * Quaternion.Euler(90, 0, 0);
                     coin.SetActive(true);
-                    
-                    Vector3 screenPoint = m_target.transform.position + new Vector3(0, 0, 8f);
-                    Vector3 targetWorldPos = m_mainCamera.ScreenToWorldPoint(screenPoint) + new Vector3(-0.6f, -1f, 0);
-                    coin.GetComponent<Coin>().AnimateCoin(targetWorldPos);
+                    coin.GetComponent<Coin>().AnimateCoin();
                 }
                 yield return new WaitForSeconds(0.1f);
             }

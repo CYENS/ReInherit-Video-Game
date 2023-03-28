@@ -58,7 +58,7 @@ namespace Cyens.ReInherit
                     
                     // Give donation, at the time random for debugging
                     float random = UnityEngine.Random.Range(0f, 1f);
-                    if (!m_donationGiven && random <= 0.5f) {
+                    if (!m_donationGiven && random <= 0.25f) {
                         m_visitor.GiveCoins(UnityEngine.Random.Range(5, 7));
                         m_donationGiven = true;
                     }

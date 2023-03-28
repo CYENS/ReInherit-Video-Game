@@ -6,6 +6,7 @@ namespace Cyens.ReInherit
 {
     public class Coin : MonoBehaviour
     {
+        private CoinManager m_coinManager;
         private Vector3 m_startPos;
         private Vector3 m_middlePos;
         private Vector3 m_targetPos;
@@ -13,16 +14,17 @@ namespace Cyens.ReInherit
         private Vector3 m_targetScale;
         float count = 0.0f;
 
-        public void AnimateCoin(Vector3 target)
+        public void AnimateCoin()
         {
             m_startPos = transform.position;
             m_middlePos = m_startPos + (m_targetPos - m_startPos)/2 + Vector3.right * 20.0f;
-            m_targetPos = target;
+            m_targetPos = m_coinManager.GetCurrentCashierPosition();
         }
         
         // Start is called before the first frame update
         void Awake()
         {
+            m_coinManager = CoinManager.Instance;
             m_originalScale = transform.localScale;
             m_targetScale = new Vector3(0.5f, transform.localScale.y, 0.5f);
         }
@@ -33,6 +35,7 @@ namespace Cyens.ReInherit
             if (count < 1.0f) {
                 count += 0.75f * Time.deltaTime;
 
+                m_targetPos = m_coinManager.GetCurrentCashierPosition();
                 Vector3 m1 = Vector3.Lerp(m_startPos, m_middlePos, count);
                 Vector3 m2 = Vector3.Lerp(m_middlePos, m_targetPos, count);
                 transform.position = Vector3.Lerp(m1, m2, count);
