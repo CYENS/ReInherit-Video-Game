@@ -39,8 +39,6 @@ namespace Cyens.ReInherit
             public Vector3 position => target.transform.position;
         }
 
-
-
         // Start is called before the first frame update
         void Start()
         {
@@ -115,7 +113,7 @@ namespace Cyens.ReInherit
                     if (m_keeperManager.IsNewTaskAvailable() == false) return;
 
                     currentTask = m_keeperManager.GetNextTask(this);
-                    SetMovePosition(currentTask.target.GetStandPoint());
+                    SetMovePosition(currentTask.target.GetStandPoint(transform.position));
                     m_state = State.Carry;
                     EnableRenderers();
                     m_BoxDissolve = currentTask.target.GetExhibit().GetBoxDissolve();

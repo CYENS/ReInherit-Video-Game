@@ -48,9 +48,20 @@ namespace Cyens.ReInherit
 
 
 
-        public Vector3 GetStandPoint()
+        public Vector3 GetStandPoint(Vector3 currentPos)
         {
-            return upgraded ? _exhibit02.standPoint.position : _exhibit01.standPoint.position;
+            Transform pointsParent =  upgraded ? _exhibit02.standPointsParent : _exhibit01.standPointsParent;
+            pointsParent.transform.localPosition = new Vector3(0f, 0f, 0f);
+            Vector3 closerStandPoint = pointsParent.GetChild(0).transform.position;
+            float dis = 100000f;
+            foreach (Transform standPos in pointsParent) {
+                float temp = Vector3.Distance(currentPos, standPos.position);
+                if (temp < dis) {
+                    dis = temp;
+                    closerStandPoint = standPos.position;
+                }
+            }
+            return closerStandPoint;
         }
 
         public Exhibit GetExhibit()

@@ -9,6 +9,7 @@ namespace Cyens.ReInherit
     {
         private float m_timeCounter;
         private Visitor m_visitor;
+        private bool m_donationGiven = false;
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -54,6 +55,14 @@ namespace Cyens.ReInherit
                 // If timer is 0, return to release artifact slot and return to idle state
                 if (m_timeCounter <= 0) {
                     m_visitor.ReleaseArtifactSlot();
+                    
+                    // Give donation, at the time random for debugging
+                    float random = UnityEngine.Random.Range(0f, 1f);
+                    if (!m_donationGiven && random <= 0.5f) {
+                        m_visitor.GiveCoins(UnityEngine.Random.Range(5, 7));
+                        m_donationGiven = true;
+                    }
+
                     animator.SetBool("Idle", true);
                 }
             }

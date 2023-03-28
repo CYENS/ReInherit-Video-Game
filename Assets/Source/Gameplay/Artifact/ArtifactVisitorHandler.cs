@@ -48,8 +48,6 @@ namespace Cyens.ReInherit
 
         public void GenerateViewPoints()
         {
-            Debug.Log("Generate View Points");
-
             m_viewPoints.Clear();
             m_viewPointReserved.Clear();
 
@@ -57,9 +55,6 @@ namespace Cyens.ReInherit
             float angle = 0f;
             for ( int i = 0; i < m_numberOfViewPoints; i++ )
             {
-
-                Debug.Log("..Index"+i);
-
                 Vector3 center = transform.position;
                 Vector3 offset = Vector3.forward * 2f;
                 offset = Quaternion.Euler(Vector3.up * angle) * offset;
@@ -70,7 +65,6 @@ namespace Cyens.ReInherit
                 Vector3 rayPos = center + (offset * 1.5f);
                 RaycastHit hit;
                 if (Physics.Raycast(rayPos - new Vector3(0f, 5f, 0f), transform.TransformDirection(Vector3.up), out hit, 10f, layerMask)) {
-                    Debug.Log("....Raycast hit. Add viewpoint");
                     m_viewPoints.Add(pos);
                     m_viewPointReserved.Add(false);
                 }

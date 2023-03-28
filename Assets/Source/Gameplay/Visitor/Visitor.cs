@@ -44,7 +44,6 @@ namespace Cyens.ReInherit
         [SerializeField] private float m_boredom;
         [SerializeField] private float m_lookDuration;
         [SerializeField] private float m_talkDuration;
-        //[SerializeField] private Visitor m_talkTarget;
         public List<ArtifactVisitorHandler> visitedArtifacts;
         
         [Header("Move Animator Parameters")]
@@ -83,6 +82,11 @@ namespace Cyens.ReInherit
                 m_artifact = null;
                 m_viewSlotID = -1;
             }
+        }
+
+        public void GiveCoins(int numberOfCoins)
+        {
+            CoinManager.Instance.AddCoins(transform.position, numberOfCoins);
         }
 
         private void Awake()

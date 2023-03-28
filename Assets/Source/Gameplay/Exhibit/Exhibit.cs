@@ -48,7 +48,7 @@ namespace Cyens.ReInherit
 
 
         [Tooltip("Where people stand to look at the exhibit label")]
-        public Transform standPoint;
+        public Transform standPointsParent;
 
         private Ghostify[] ghosties;
         private Collider[] colliders;

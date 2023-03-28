@@ -39,7 +39,7 @@ namespace Cyens.ReInherit
         
         private void Start()
         {
-            m_visitorCount = Random.Range(25, 40);
+            m_visitorCount = Random.Range(15, 30);
             m_exitPosition = GameObject.Find("Exit").transform.position;
         }
 
@@ -49,7 +49,7 @@ namespace Cyens.ReInherit
             Visitor closerAgent = null;
             float dis = 100000f;
             foreach (var visitor in m_visitors) {
-                if (current != visitor) {
+                if (visitor != null && current != visitor) {
                     float temp = Vector3.Distance(current.transform.position, visitor.transform.position);
                     if (temp < dis) {
                         dis = temp;

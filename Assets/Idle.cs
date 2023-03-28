@@ -17,7 +17,7 @@ namespace Cyens.ReInherit
             float random = UnityEngine.Random.Range(0f, 1f);
             if(random <= 0.8f)
                 animator.SetBool("OpenToTalk", true);
-            
+
             animator.SetBool("Idle", false);
             
             animator.SetFloat("WatchTimer", 0f);
