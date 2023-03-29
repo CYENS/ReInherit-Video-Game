@@ -6,6 +6,7 @@ using Pathfinding;
 using Pathfinding.RVO;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
+using Cyens.ReInherit.Gameplay.Management;
 
 namespace Cyens.ReInherit
 {
@@ -87,6 +88,7 @@ namespace Cyens.ReInherit
         public void GiveCoins(int numberOfCoins)
         {
             CoinManager.Instance.AddCoins(transform.position, numberOfCoins);
+            GameManager.Funds += numberOfCoins;
         }
 
         private void Awake()

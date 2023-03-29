@@ -14,8 +14,12 @@ namespace Cyens.ReInherit
         private enum State {Idle, Ready, Carry, Work, Return }
         public enum Goal { PlaceExhibit=0, UpgradeExhibit=1 }
         
+
+
         private KeeperManager m_keeperManager;
-        private List<Renderer> m_renderers;
+        //private List<Renderer> m_renderers;
+        private Renderer[] m_renderers;
+
         private AIPath m_aiPath;
         [SerializeField] private Task currentTask;
         [SerializeField] private GameObject m_carryBox;
@@ -54,14 +58,16 @@ namespace Cyens.ReInherit
         /// </summary>
         private void FindRenderers()
         {
-            m_renderers = new List<Renderer>();
-            foreach (Transform child in transform) {
-                if (child.TryGetComponent(out Renderer r)) {
-                    //Do not add box carry Renderer also
-                    if(!GameObject.ReferenceEquals(m_carryBox, child.gameObject))
-                        m_renderers.Add(r);
-                }
-            }
+            m_renderers = GetComponentsInChildren<Renderer>();
+            // m_renderers = new List<Renderer>();
+            // foreach (Transform child in transform) {
+            //     if (child.TryGetComponent(out Renderer r)) {
+            //         Debug.Log("Renderer: "+r);
+            //         //Do not add box carry Renderer also
+            //         if(!GameObject.ReferenceEquals(m_carryBox, child.gameObject))
+            //             m_renderers.Add(r);
+            //     }
+            // }
         }
 
         /// <summary>
@@ -107,6 +113,7 @@ namespace Cyens.ReInherit
         /// </summary>
         private void ExecuteKeeperLogic()
         {
+
             switch (m_state) {
                 //Keeper is ready to carry next exhibit; check for new task
                 case State.Ready:
