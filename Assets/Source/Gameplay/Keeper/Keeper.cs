@@ -120,7 +120,7 @@ namespace Cyens.ReInherit
                     if (m_keeperManager.IsNewTaskAvailable() == false) return;
 
                     currentTask = m_keeperManager.GetNextTask(this);
-                    SetMovePosition(currentTask.target.GetStandPoint(transform.position));
+                    SetMovePosition(currentTask.target.GetStandPoint(transform.position), true, 3f, 10);
                     m_state = State.Carry;
                     EnableRenderers();
                     m_BoxDissolve = currentTask.target.GetExhibit().GetBoxDissolve();
@@ -168,7 +168,7 @@ namespace Cyens.ReInherit
                     }
                     // Set destination back to the elevator
                     Vector3 basePoint = m_keeperManager.GetBasePosition();
-                    SetMovePosition(basePoint);
+                    SetMovePosition(basePoint, true, 1.5f, 15);
                     m_state = State.Return;
                     
                     break;
@@ -209,10 +209,41 @@ namespace Cyens.ReInherit
         }
 
 
-        private void SetMovePosition(Vector3 position)
+        private void SetMovePosition(Vector3 position, bool teleport, float teleportTimer, int appearIndex)
         {
             m_aiPath.destination = position;
             m_aiPath.SearchPath();
+            if (teleport)
+                StartCoroutine(Teleport(teleportTimer, appearIndex));
+        }
+
+        IEnumerator Teleport(float delay, int appearIndex)
+        {
+            //Wait delay seconds and then teleport the keeper
+            yield return new WaitForSeconds(delay);
+
+            // Get remaining points in path
+            var buffer = new List<Vector3>();
+            m_aiPath.GetRemainingPath(buffer, out bool stale);
+            // If path is still long enough, teleport
+            if (buffer.Count >= 20) {
+                // Prevent keeper form moving to play disappear animation
+                m_aiPath.canMove = false;
+                
+                // Enter below code to play disappear animation
+                //....
+                //....
+                //yield return new WaitForSeconds("ENTER DISAPPEAR ANIMATION DURATION TIME");
+                
+                Vector3 teleportPos = buffer[buffer.Count - appearIndex];
+                m_aiPath.Teleport(teleportPos);
+                
+                // Enter below code to play appear animation
+                //....
+                //....
+                //yield return new WaitForSeconds("ENTER APPEAR ANIMATION DURATION TIME");
+                m_aiPath.canMove = true;
+            }
         }
 
         private void HideDissolveBox()
