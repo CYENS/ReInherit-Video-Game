@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cyens.ReInherit.Gameplay.Management;
+using Cyens.ReInherit.Managers;
 using UnityEngine;
 using Pathfinding;
 using UnityEngine.Animations.Rigging;

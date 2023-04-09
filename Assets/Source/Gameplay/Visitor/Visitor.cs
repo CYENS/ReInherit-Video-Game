@@ -6,7 +6,7 @@ using Pathfinding;
 using Pathfinding.RVO;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
-using Cyens.ReInherit.Gameplay.Management;
+using Cyens.ReInherit.Managers;
 
 namespace Cyens.ReInherit
 {

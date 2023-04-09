@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cyens.ReInherit.Patterns;
-using Cyens.ReInherit.Gameplay.Management;
+using Cyens.ReInherit.Managers;
 
 using Pathfinding;
 
@@ -72,9 +72,9 @@ namespace Cyens.ReInherit
         /// <summary>
         /// Returns an array of exhibits that are currently on display
         /// </summary>
-        public Exhibit[] GetExhibits()
+        public zdelExhibit[] GetExhibits()
         {
-            Exhibit[] exhibits = GetComponentsInChildren<Exhibit>(false);
+            zdelExhibit[] exhibits = GetComponentsInChildren<zdelExhibit>(false);
             return exhibits;
         }
 

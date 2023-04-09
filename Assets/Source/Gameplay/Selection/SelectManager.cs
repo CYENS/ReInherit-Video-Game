@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.Serialization;
-using Cyens.ReInherit.Gameplay.Management;
+using Cyens.ReInherit.Managers;
 
 namespace Cyens.ReInherit
 {

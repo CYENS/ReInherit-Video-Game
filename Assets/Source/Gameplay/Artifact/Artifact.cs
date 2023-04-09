@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cyens.ReInherit.Gameplay.Management;
+using Cyens.ReInherit.Managers;
 using Pathfinding;
 using Pathfinding.RVO;
 using Random = UnityEngine.Random;
@@ -39,8 +39,8 @@ namespace Cyens.ReInherit
 
         [Header("References")]
 
-        private Exhibit _exhibit01;
-        private Exhibit _exhibit02;
+        private zdelExhibit _exhibit01;
+        private zdelExhibit _exhibit02;
 
 
         private Color validGhost;
@@ -64,7 +64,7 @@ namespace Cyens.ReInherit
             return closerStandPoint;
         }
 
-        public Exhibit GetExhibit()
+        public zdelExhibit GetExhibit()
         {
             return upgraded ? _exhibit02 : _exhibit01;
         }
@@ -89,10 +89,10 @@ namespace Cyens.ReInherit
 
 
             // Generate the exhibit cases/tables
-            artifact._exhibit01 = Exhibit.Create(owner, info.exhibitPrefab01, info);
+            artifact._exhibit01 = zdelExhibit.Create(owner, info.exhibitPrefab01, info);
             artifact._exhibit01.gameObject.SetActive(false);
 
-            artifact._exhibit02 = Exhibit.Create(owner, info.exhibitPrefab02, info);
+            artifact._exhibit02 = zdelExhibit.Create(owner, info.exhibitPrefab02, info);
             artifact._exhibit02.gameObject.SetActive(false);
 
             return artifact;
@@ -122,10 +122,10 @@ namespace Cyens.ReInherit
             artifact.condition = saveData.condition;
             
             // Generate the exhibit cases/tables
-            artifact._exhibit01 = Exhibit.Create(owner, info.exhibitPrefab01, info);
+            artifact._exhibit01 = zdelExhibit.Create(owner, info.exhibitPrefab01, info);
             artifact._exhibit01.gameObject.SetActive(false);
 
-            artifact._exhibit02 = Exhibit.Create(owner, info.exhibitPrefab02, info);
+            artifact._exhibit02 = zdelExhibit.Create(owner, info.exhibitPrefab02, info);
             artifact._exhibit02.gameObject.SetActive(false);
 
             return artifact;
@@ -193,7 +193,7 @@ namespace Cyens.ReInherit
         /// </summary>
         public void Damage(float amount)
         {
-            Exhibit exhibit = GetExhibit();
+            zdelExhibit exhibit = GetExhibit();
             float protection = exhibit.Protection;
 
             // Damage is reduced when placed in a protective case

@@ -1,5 +1,5 @@
 using System;
-using Cyens.ReInherit.Gameplay.Management;
+using Cyens.ReInherit.Managers;
 using Pathfinding;
 using UnityEngine;
 
