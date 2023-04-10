@@ -37,7 +37,7 @@ namespace Cyens.ReInherit
         [System.Serializable]
         public class Task
         {
-            public Artifact target;
+            public zdelArtifact target;
             public Goal goal;
 
             public Vector3 position => target.transform.position;
@@ -159,7 +159,7 @@ namespace Cyens.ReInherit
                     switch (currentTask.goal)
                     {
                         case Goal.PlaceExhibit:
-                            currentTask.target.SetStatus(Artifact.Status.Exhibit);
+                            currentTask.target.SetStatus(zdelArtifact.Status.Exhibit);
                             break;
                         case Goal.UpgradeExhibit:
                             currentTask.target.FinalizeUpgrade();

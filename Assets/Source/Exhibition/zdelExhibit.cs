@@ -32,7 +32,7 @@ namespace Cyens.ReInherit
         private Animator animator;
         private GameObject prop;
         private Selectable selectable;
-        private Artifact artifact;
+        private zdelArtifact artifact;
 
 
         [SerializeField]
@@ -56,7 +56,7 @@ namespace Cyens.ReInherit
 
         public GameObject GetBoxDissolve() => m_BoxDissolve;
 
-        public Artifact GetArtifact() => artifact;
+        public zdelArtifact GetArtifact() => artifact;
 
         /// <summary>
         /// "Factory" function that generates exhibit cases based on a prefab,
@@ -154,7 +154,7 @@ namespace Cyens.ReInherit
             }
 
             GameManager.Funds -= price;
-            artifact.SetStatus(Artifact.Status.Restoration);
+            artifact.SetStatus(zdelArtifact.Status.Restoration);
         }
 
         private GameObject CreateProp()
@@ -176,14 +176,14 @@ namespace Cyens.ReInherit
             if(prop == null )
                 prop = CreateProp();
 
-            artifact = GetComponentInParent<Artifact>();
+            artifact = GetComponentInParent<zdelArtifact>();
         }
 
 
         private void Update()
         {
             // Make artifact in display case invisible if it is in restoration room.
-            bool inRestoration = (artifact.GetStatus() == Artifact.Status.Restoration);
+            bool inRestoration = (artifact.GetStatus() == zdelArtifact.Status.Restoration);
             prop.SetActive(!inRestoration);
 
 

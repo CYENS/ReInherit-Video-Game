@@ -12,10 +12,10 @@ namespace Cyens.ReInherit
     {
 
         [SerializeField]
-        private List<Artifact> storedArtifacts;
+        private List<zdelArtifact> storedArtifacts;
         
         [SerializeField]
-        private List<Artifact> borrowedArtifacts;
+        private List<zdelArtifact> borrowedArtifacts;
 
         
         

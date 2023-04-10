@@ -9,7 +9,7 @@ namespace Cyens.ReInherit
 
         public GameObject itemPrefab;
 
-        protected Artifact[] artifacts;
+        protected zdelArtifact[] artifacts;
         private ArtifactManager manager;
 
 
@@ -28,9 +28,9 @@ namespace Cyens.ReInherit
             foreach(Transform child in container)
                 GameObject.Destroy(child.gameObject);
 
-            artifacts = ArtifactManager.Instance.GetComponentsInChildren<Artifact>(true);
+            artifacts = ArtifactManager.Instance.GetComponentsInChildren<zdelArtifact>(true);
 
-            foreach ( Artifact artifact in artifacts )
+            foreach ( zdelArtifact artifact in artifacts )
             {
                 GameObject temp = GameObject.Instantiate(itemPrefab, container);
                 temp.name = artifact.GetLabel();

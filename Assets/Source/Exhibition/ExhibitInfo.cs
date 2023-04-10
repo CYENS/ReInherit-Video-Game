@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Cyens.ReInherit.Exhibition
 {
     /// <summary>
@@ -12,26 +13,39 @@ namespace Cyens.ReInherit.Exhibition
     public class ExhibitInfo : ScriptableObject 
     {
         
-        [System.Serializable]
-        public struct Case 
-        {
-            public UnityEngine.Object prefab;
-            public float price;
-        }
-
-
-        [Header("Prefabs")]
-        [Tooltip("Contains the upgrades of the exhibit cases (In ascending order)")]
-        public UnityEngine.Object[] m_cases;
+        [Header("Artifact")]
 
         [Tooltip("The model of the artifact that will be placed in the exhibit case")]
-        public UnityEngine.Object m_artifact;
+        public GameObject m_artifact;
+
+        [Tooltip("Artifact thumbnail")]
+        public Sprite m_thumb;
 
 
         [Header("Gameplay")]
 
         public float test;
 
+
+        #if UNITY_EDITOR
+        private void OnValidate() 
+        {
+
+            if( m_artifact == null )
+            {
+                Debug.LogWarning("Exhibit info "+this+" does not have an artifact model reference");
+                return;
+            }
+            
+            var artifact = m_artifact.GetComponent<Artifact>();
+            if( artifact == null )
+            {
+                Debug.LogWarning("Given game object "+m_artifact+" does not have an Artifact script");
+                m_artifact = null;
+                return;
+            }
+        }
+        #endif
 
     }
 

@@ -32,7 +32,7 @@ namespace Cyens.ReInherit.Managers
             return m_idleDelay;
         }
         
-        public void AddNewTask(Artifact target, Keeper.Goal goal )
+        public void AddNewTask(zdelArtifact target, Keeper.Goal goal )
         {
             var task = new Keeper.Task();
             task.target = target;
@@ -42,8 +42,8 @@ namespace Cyens.ReInherit.Managers
             m_tasksLeft += 1;
         }
 
-        public void AddPlaceTask(Artifact target) => AddNewTask(target, Keeper.Goal.PlaceExhibit);
-        public void AddUpgradeTask(Artifact target) => AddNewTask(target, Keeper.Goal.UpgradeExhibit);
+        public void AddPlaceTask(zdelArtifact target) => AddNewTask(target, Keeper.Goal.PlaceExhibit);
+        public void AddUpgradeTask(zdelArtifact target) => AddNewTask(target, Keeper.Goal.UpgradeExhibit);
 
 
         public bool IsNewTaskAvailable()

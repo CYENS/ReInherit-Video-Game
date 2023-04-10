@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95df648d0114dcc4297496348b73f0b7, type: 3}
+  m_Name: ServantBoy
+  m_EditorClassIdentifier: 
+  m_artifact: {fileID: 7012283354349878552, guid: bb619e53f0f83bc4a9202f1d627b7cca,
+    type: 3}
+  m_thumb: {fileID: 21300000, guid: 68c72603885b79548b0b907e44133f38, type: 3}
+  test: 0

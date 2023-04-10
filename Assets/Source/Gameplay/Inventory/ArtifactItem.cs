@@ -8,7 +8,7 @@ namespace Cyens.ReInherit
     public class ArtifactItem : MonoBehaviour
     {
 
-        public Artifact artifact;
+        public zdelArtifact artifact;
         protected ArtifactInfo info;
 
         [Header("References")]
@@ -20,7 +20,7 @@ namespace Cyens.ReInherit
         private ArtifactInventory inventory;
         private ArtifactManager manager;
             
-        public void SetArtifact(Artifact artifact)
+        public void SetArtifact(zdelArtifact artifact)
         {
             this.artifact = artifact;
             info = artifact.GetInfo();
@@ -46,8 +46,8 @@ namespace Cyens.ReInherit
 
         private void Update()
         {
-            bool inStorage = artifact.GetStatus() == Artifact.Status.Storage;
-            bool inConservation = artifact.GetStatus() == Artifact.Status.Restoration;
+            bool inStorage = artifact.GetStatus() == zdelArtifact.Status.Storage;
+            bool inConservation = artifact.GetStatus() == zdelArtifact.Status.Restoration;
             bool inExhibition = !inStorage && !inConservation;
 
             icon.color = inStorage ? Color.white : Color.gray;
@@ -63,20 +63,20 @@ namespace Cyens.ReInherit
 
             switch ( artifact.GetStatus() )
             {
-                case Artifact.Status.Storage:
+                case zdelArtifact.Status.Storage:
                     manager.PlaceArtifact(artifact);
                     break;
 
-                case Artifact.Status.Transit:
-                case Artifact.Status.Exhibit:
-                case Artifact.Status.Design:
+                case zdelArtifact.Status.Transit:
+                case zdelArtifact.Status.Exhibit:
+                case zdelArtifact.Status.Design:
                     // TODO: Move the camera to the spot where the artifact is placed.
                     Camera camera = Camera.main;
                     camera.transform.position = artifact.transform.position + Vector3.up * 5 + Vector3.forward * 3 + Vector3.left * 3;
                     camera.transform.LookAt(artifact.transform);
                     break;
 
-                case Artifact.Status.Restoration:
+                case zdelArtifact.Status.Restoration:
                     // TODO: Take players to the Conservation tab and highlight the artifact
                     break;
                     

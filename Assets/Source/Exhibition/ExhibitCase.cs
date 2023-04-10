@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 using Cyens.ReInherit.Managers;
 
-namespace Cyens.ReInherit
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+namespace Cyens.ReInherit.Exhibition
 {
     /// <summary>
     /// Represents the case that holds the artifact.
@@ -44,6 +49,9 @@ namespace Cyens.ReInherit
         [Tooltip("An object that will be used as a placement reference for the artifact")]
         private Transform placement;
 
+
+        private Artifact artifact;
+
         private void Start() 
         {
             
@@ -62,6 +70,31 @@ namespace Cyens.ReInherit
             GameManager.Instance.whenRoundEnds -= OnRoundEnd;
         }
 
+
+
+        public void AddArtifact( GameObject prefab, bool asPrefab = false )
+        {
+            #if UNITY_EDITOR
+            if(asPrefab)
+            {
+                GameObject temp = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                temp.transform.SetParent(placement);
+                temp.transform.localPosition = Vector3.zero;
+                artifact = temp.GetComponent<Artifact>();
+            }
+            #else 
+            if(!asPrefab)
+            {
+                var temp = Instantiate(prefab, placement );
+                temp.transform.localPosition = Vector3.zero;
+                artifact = temp.GetComponent<Artifact>();
+            }
+            #endif
+        }
+  
+
+
+
         /// <summary>
         /// Performs a set of action when the round ends.
         /// </summary>
@@ -72,6 +105,9 @@ namespace Cyens.ReInherit
             float delta = random - dirtProof;
             dirt = Mathf.Clamp( dirt + delta, 0.0f, 1.0f );
         }
+
+
+
 
     }
 }
