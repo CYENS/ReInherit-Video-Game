@@ -3,7 +3,27 @@ guid: faa8a1bc1388ae347b6fb04dee158016
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Handles
+    second: {fileID: 2100000, guid: 567978b34305ab64bb941bee1d7b0cdb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: aae4a021cbf66fd4dba9fd581a9bd7e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Red
+    second: {fileID: 2100000, guid: bfb40d65e028d654d8e045ecb8acc54e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tire
+    second: {fileID: 2100000, guid: 567978b34305ab64bb941bee1d7b0cdb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

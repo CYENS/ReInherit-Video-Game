@@ -32,6 +32,12 @@ namespace Cyens.ReInherit
         private Rig m_WeightRigHand;
         private float changeTimeDissolve = 1f; // time it takes to change the value
         private float valueDissolve = 0f; // the value to change
+        [SerializeField] private Material characterMaterial;
+        [SerializeField] private Material trolleyMaterial1;
+        [SerializeField] private Material trolleyMaterial2;
+        [SerializeField] private Material trolleyMaterial3;
+        private float changeTimeOpacity = 0.5f;
+        private float valueOpacity = 1;
 
 
         [System.Serializable]
@@ -229,18 +235,25 @@ namespace Cyens.ReInherit
             if (buffer.Count >= 20) {
                 // Prevent keeper form moving to play disappear animation
                 m_aiPath.canMove = false;
-                
+
                 // Enter below code to play disappear animation
-                //....
-                //....
-                //yield return new WaitForSeconds("ENTER DISAPPEAR ANIMATION DURATION TIME");
-                
+                StartCoroutine(ChangeCharacterOpacity(characterMaterial, 1f, 0f));
+                StartCoroutine(ChangeCharacterOpacity(m_carryBox.GetComponent<MeshRenderer>().material, 1f, 0f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial1, 1f, 0f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial2, 1f, 0f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial3, 1f, 0f));
+                yield return new WaitForSeconds(changeTimeOpacity+.5f);
+
                 Vector3 teleportPos = buffer[buffer.Count - appearIndex];
                 m_aiPath.Teleport(teleportPos);
-                
+
                 // Enter below code to play appear animation
-                //....
-                //....
+                StartCoroutine(ChangeCharacterOpacity(characterMaterial, 0f, 1f));
+                StartCoroutine(ChangeCharacterOpacity(m_carryBox.GetComponent<MeshRenderer>().material, 0f, 1f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial1, 0f, 1f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial2, 0f, 1f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial3, 0f, 1f));
+                yield return new WaitForSeconds(changeTimeOpacity+.5f);
                 //yield return new WaitForSeconds("ENTER APPEAR ANIMATION DURATION TIME");
                 m_aiPath.canMove = true;
             }
@@ -261,6 +274,19 @@ namespace Cyens.ReInherit
                 m_BoxDissolve.GetComponent<MeshRenderer>().material.SetFloat("_Dissolve_Amount", valueDissolve);
                 yield return null;
             }
+        }
+
+        IEnumerator ChangeCharacterOpacity(Material materialToChange, float startOpacity, float endOpacity)
+        {
+            float timer = 0f;
+            while (timer < changeTimeOpacity)
+            {
+                timer += Time.deltaTime;
+                valueOpacity = Mathf.Lerp(startOpacity, endOpacity, timer / changeTimeOpacity);
+                materialToChange.SetFloat("_Opacity", valueOpacity);
+                yield return null;
+            }
+            
         }
     }
 }
