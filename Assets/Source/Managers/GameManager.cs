@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Cyens.ReInherit.Patterns;
 using UnityEngine;
 using TMPro;
-using UnityEngine.EventSystems;
+
 
 namespace Cyens.ReInherit.Managers
 {
@@ -27,6 +27,8 @@ namespace Cyens.ReInherit.Managers
         [Tooltip("Whether the museum is currently open or closed")]
         private MuseumState m_museumState = MuseumState.Close;
         public static MuseumState GetMuseumState() => Instance.m_museumState;
+
+        public static bool IsMuseumOpen => Instance.m_museumState == MuseumState.Open;
 
         private ErrorMessage m_errorMessageManager; 
 
@@ -74,18 +76,7 @@ namespace Cyens.ReInherit.Managers
         // -----------------------
         private float m_bufferTimer;
 
-        private bool m_pointerOverUIElement;
-        public bool isPointerOverUIElement => m_pointerOverUIElement; 
 
-
-        [Header("References")]
-        private EventSystem eventSys;
-
-        [SerializeField]
-        private GameObject closedMuseumUI;
-
-        [SerializeField]
-        private GameObject openMuseumUI;
 
         [SerializeField]
         private TMP_Text txtTime;
@@ -133,7 +124,6 @@ namespace Cyens.ReInherit.Managers
         public override void Awake()
         {
             base.Awake();
-            eventSys = GetComponentInChildren<EventSystem>();
             m_errorMessageManager = ErrorMessage.Instance;
         }
 
@@ -190,12 +180,7 @@ namespace Cyens.ReInherit.Managers
         private void Update()
         {
             m_bufferTimer = Mathf.Clamp(m_bufferTimer - Time.deltaTime, 0.0f, 1.0f);
-
-            m_pointerOverUIElement = eventSys.IsPointerOverGameObject();
-
-            closedMuseumUI.SetActive(m_museumState == MuseumState.Close);
-            openMuseumUI.SetActive(m_museumState == MuseumState.Open);
-
+            
             if (m_museumState == MuseumState.Open) MuseumOpenUpdate();
         }
 
