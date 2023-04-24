@@ -236,7 +236,7 @@ namespace Cyens.ReInherit
 
 
                 Ray dropRay = new Ray(targetArtifact.transform.position + Vector3.up * 100.0f, Vector3.down);
-
+                
                 // TODO: Check for obstacles, or if there is floor
                 if (Physics.Raycast(dropRay, out hit, 1000f, ~raycastIgnoreLayer))
                 {
