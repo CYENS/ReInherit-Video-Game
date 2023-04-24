@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Patterns;
 
-namespace Cyens.ReInherit.Placement
-{
+namespace Cyens.ReInherit.Managers
+{   
     public class PlacementManager : Singleton<PlacementManager>
     {
-        
+
         public enum Status {
             Inactive = 0,
-            Artifact = 1
+            Exhibit = 1
         }
 
         [SerializeField]
@@ -25,6 +25,11 @@ namespace Cyens.ReInherit.Placement
 
         [SerializeField]
         protected Material m_modelMat;
+
+        [SerializeField]
+        [Tooltip("A reference to the mesh filter, so that we can switch the model at will")]
+        protected MeshFilter m_meshFilter;
+
 
         [SerializeField]
         protected Material m_markerMat;
@@ -60,6 +65,9 @@ namespace Cyens.ReInherit.Placement
         // The ground plane
         protected Plane m_ground;
 
+        
+        protected GameObject m_notifyTarget;
+
 
         // Start is called before the first frame update
         void Start()
@@ -67,6 +75,20 @@ namespace Cyens.ReInherit.Placement
             // Ground plane to help with ray intersection calculations
             m_ground = new Plane(Vector3.up, Vector3.zero);
         }
+
+
+        public static void PlaceExhibit( GameObject notifyTarget, Mesh mesh ) 
+        {
+            Instance.m_notifyTarget = notifyTarget;
+            Instance.m_status = Status.Exhibit;
+            Instance.m_meshFilter.sharedMesh = mesh;
+        }
+
+        public static void Cancel() 
+        {
+            Instance.m_status = Status.Inactive;
+        }
+
 
         /// <summary>
         /// Utility function that gives us the the position which the mouse cursor points to
@@ -134,6 +156,12 @@ namespace Cyens.ReInherit.Placement
         /// <returns></returns>
         protected bool CheckAvailability(Vector3 point)
         {
+            
+            if( GameUI.Instance.isPointerOverUIElement )
+            {
+                return false;
+            }
+
             // A ray that drops down
             Ray dropRay = new Ray(point + Vector3.up * 100.0f, Vector3.down);
             RaycastHit hit;
@@ -174,6 +202,16 @@ namespace Cyens.ReInherit.Placement
             // Change color based on placement validity.
             m_markerMat.SetColor( m_colorName, valid ? m_validCol : m_invalidCol );
             m_modelMat.SetColor(  m_colorName, valid ? m_validCol : m_invalidCol );
+
+
+            // On Click
+            if( Input.GetMouseButtonDown(0) && valid )
+            {
+                if(m_notifyTarget != null )
+                {
+                    m_notifyTarget.SendMessage("Place", m_marker.position );
+                }
+            }
         }
 
         
@@ -184,7 +222,7 @@ namespace Cyens.ReInherit.Placement
             
             switch(m_status)
             {
-                case Status.Artifact:
+                case Status.Exhibit:
                     UpdatePlacement();
                 break;
             }

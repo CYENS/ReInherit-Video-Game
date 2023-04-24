@@ -18,9 +18,12 @@ namespace Cyens.ReInherit.Exhibition
         [Tooltip("The model of the artifact that will be placed in the exhibit case")]
         public GameObject m_artifact;
 
-        [Tooltip("Artifact thumbnail")]
+        [Tooltip("Artifact thumbnail / icon")]
         public Sprite m_thumb;
 
+
+        [Tooltip("A mesh used for visualization purposes")]
+        public Mesh m_mesh;
 
         [Header("Gameplay")]
 

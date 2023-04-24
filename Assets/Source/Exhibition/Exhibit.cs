@@ -33,7 +33,7 @@ namespace Cyens.ReInherit.Exhibition
 
         [SerializeField]
         [Tooltip("In what state is the exhibit currently in")]
-        private State m_state = State.Storage;
+        public State m_state = State.Storage;
 
 
         [SerializeField]
@@ -51,6 +51,10 @@ namespace Cyens.ReInherit.Exhibition
         [Tooltip("The selected exhibit case")]
         private ExhibitCase m_exCase;
 
+
+        [SerializeField]
+        [Tooltip("Metadata attached to the object")]
+        private MetaData m_metaData;
 
         #if UNITY_EDITOR
 
@@ -81,6 +85,9 @@ namespace Cyens.ReInherit.Exhibition
                 return;
             }
 
+
+
+
             m_exCases = GetComponentsInChildren<ExhibitCase>(true);
             
             // Ensure that the upgrade index does not exceed number of exhibit cases
@@ -103,12 +110,27 @@ namespace Cyens.ReInherit.Exhibition
                 m_exCases[i].enabled = (i==m_upgrade);
             }
 
+            if( m_metaData == null )
+            {
+                m_metaData = gameObject.AddComponent<MetaData>();
+            }
 
             if( m_info == null )
             {
                 Debug.LogError("Exhibit "+this+" lacks an info object");
                 return;
             }
+            else 
+            {
+                m_metaData.icon = m_info.m_thumb;
+                m_metaData.label = m_info.name;
+                m_metaData.mesh = m_info.m_mesh;
+
+            }
+
+   
+            
+
 
             m_isPrefab = PrefabUtility.IsPartOfAnyPrefab(this);
             m_instancePrefabStatus = PrefabUtility.GetPrefabInstanceStatus(gameObject);
@@ -163,8 +185,10 @@ namespace Cyens.ReInherit.Exhibition
             PrefabUtility.ApplyPrefabInstance(gameObject,InteractionMode.UserAction);
             yield return new WaitForSeconds(0.1f);
         }
-        
+
         #endif
+
+        
 
 
     }
