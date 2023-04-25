@@ -51,6 +51,7 @@ MonoBehaviour:
   m_exCases:
   - {fileID: 1301282541307232763}
   m_exCase: {fileID: 1301282541307232763}
+  m_metaData: {fileID: 0}
   m_fixModel: 0
 --- !u!1001 &2958578988048599641
 PrefabInstance:

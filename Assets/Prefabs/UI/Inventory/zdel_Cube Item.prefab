@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4699223156323024700}
   - component: {fileID: 4699223156323024701}
   m_Layer: 0
-  m_Name: Cube Item
+  m_Name: zdel_Cube Item
   m_TagString: drag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

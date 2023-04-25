@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3020036666146268388}
   - component: {fileID: 3020036666146268390}
   m_Layer: 0
-  m_Name: InventoryManager
+  m_Name: zdel_InventoryManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

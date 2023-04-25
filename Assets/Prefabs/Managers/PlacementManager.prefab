@@ -133,6 +133,7 @@ MonoBehaviour:
   m_status: 0
   m_marker: {fileID: 8975874645610040157}
   m_modelMat: {fileID: 2100000, guid: 251ee8cf077b040409d215182d140446, type: 2}
+  m_meshFilter: {fileID: 8975874646953871575}
   m_markerMat: {fileID: 2100000, guid: ee6f3e872f1d56f4f982f047f1bfe80c, type: 2}
   m_gridSize: 5
   m_layers:
