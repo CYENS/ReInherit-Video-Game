@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
-using Pathfinding.RVO;
+//using Pathfinding;
+//using Pathfinding.RVO;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using Cyens.ReInherit.Managers;
@@ -22,8 +22,7 @@ namespace Cyens.ReInherit
 
         [SerializeField] private int m_id;
         private bool m_inSpawnArtifact;
-        private IAstarAI m_agentAstar;
-        private RVOController m_rvoController;
+        private NavMeshAgent m_navAgent;
         private Animator m_animator;
         private VisitorChat m_chat;
         
@@ -53,11 +52,10 @@ namespace Cyens.ReInherit
         [Tooltip("An adjustment value in case movement speed parameter isn't a value from 0 to 1")]
         [SerializeField] private float m_motionMult = 3.0f;
         private Quaternion m_lookDirection;
-        private List<GraphNode> m_standingNodes;
 
         public int ID { get => m_id; set => m_id = value; }
         public bool InSpawnArtifact { get => m_inSpawnArtifact; set => m_inSpawnArtifact = value; }
-        public IAstarAI NavAgent { get => m_agentAstar; }
+        public NavMeshAgent NavAgent { get => m_navAgent; }
         public Animator Animator { get => m_animator; }
         public float Impression { get => m_impression; set => m_impression = value; }
         public State VisitorState { get => m_state; set => m_state = value; }
@@ -94,14 +92,12 @@ namespace Cyens.ReInherit
         private void Awake()
         {
             m_animator = GetComponent<Animator>();
-            m_rvoController = GetComponent<RVOController>();
-            m_agentAstar = GetComponent<IAstarAI>();
+            m_navAgent = GetComponent<NavMeshAgent>();
             visitedArtifacts = new List<ArtifactVisitorHandler>();
             m_ghosties = GetComponentsInChildren<Ghostify>(true);
             m_lookDuration = UnityEngine.Random.Range(7.5f, 12f);
             m_talkDuration = 10f;
             m_chat = transform.Find("VisitorsChat").GetChild(0).GetComponent<VisitorChat>();
-            m_standingNodes = new List<GraphNode>();
         }
 
         void Start()
@@ -143,16 +139,16 @@ namespace Cyens.ReInherit
         {
             m_animator.SetFloat(m_motionSpeedParam, 1.0f);
             Vector3 velocity = NavAgent.velocity;
-            float maxSpeed = NavAgent.maxSpeed;
+            float maxSpeed = NavAgent.speed;
             // This will make the character walk/run based on the animator speed
             moveSpeed = velocity.magnitude / maxSpeed;
             m_animator.SetFloat(m_motionParam, moveSpeed * m_motionMult);
             
             // Increase priority of rvo when visitor trying to arrive at its slot.
-            if (m_agentAstar.remainingDistance < 3f && moveSpeed > 0)
-                m_rvoController.priority = 1f;
+            if (m_navAgent.remainingDistance < 3f && moveSpeed > 0)
+                m_navAgent.avoidancePriority = 1;
             else
-                m_rvoController.priority = 0.1f;
+                m_navAgent.avoidancePriority= 50;
         }
 
         // Smoothly rotate visitor towards look direction
@@ -165,7 +161,7 @@ namespace Cyens.ReInherit
         }
 
         // Sets high penalty on navmesh around visitor
-        public void SetCurrentStandingNodePenalty(uint penalty)
+        /*public void SetCurrentStandingNodePenalty(uint penalty)
         {
             if (penalty > 1) {
                 foreach (var n in m_standingNodes) {
@@ -185,7 +181,7 @@ namespace Cyens.ReInherit
                     node.Penalty = penalty;
                 }
             }
-        }
+        }*/
         
         // Update is called once per frame
         void Update()

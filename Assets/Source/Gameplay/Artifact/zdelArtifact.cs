@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Managers;
-using Pathfinding;
-using Pathfinding.RVO;
+using UnityEngine.AI;
+//using Pathfinding;
+//using Pathfinding.RVO;
 using Random = UnityEngine.Random;
 
 namespace Cyens.ReInherit
@@ -248,7 +249,7 @@ namespace Cyens.ReInherit
                 default:
                     _exhibit01.SetGhost(false, validGhost);
                     _exhibit02.SetGhost(false, validGhost);
-                    StartCoroutine(SetNavmeshAreaRadius(2.0f, 3.2f, 3f));
+                    StartCoroutine(SetNavmeshAreaRadius(1.0f, 3f));
                     break;
             }
 
@@ -261,20 +262,14 @@ namespace Cyens.ReInherit
 
         }
 
-        private IEnumerator SetNavmeshAreaRadius(float newRadiusNav, float newRadiusRVO, float waitTime)
+        // Replace that with unity navmesh
+        private IEnumerator SetNavmeshAreaRadius(float newRadiusNav, float waitTime)
         {
             // Wait some time before expand cut to allow keeper to leave
             yield return new WaitForSeconds(waitTime);
             
-            NavmeshCut navCut = GetExhibit().GetComponent<NavmeshCut>();
-            float lastRadiusNav = navCut.circleRadius;
-            navCut.circleRadius = newRadiusNav;
-            if (Mathf.Approximately(newRadiusNav, lastRadiusNav) == false)
-                navCut.ForceUpdate();
-            
-            RVOCircleObstacle rvoObstacle = GetExhibit().GetComponent<RVOCircleObstacle>();
-            rvoObstacle.size.x = newRadiusRVO;
-            rvoObstacle.size.y = newRadiusRVO;
+            NavMeshObstacle navObstacle = GetExhibit().GetComponent<NavMeshObstacle>();
+            navObstacle.radius = newRadiusNav;
         }
 
 

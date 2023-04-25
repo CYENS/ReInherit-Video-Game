@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cyens.ReInherit.Managers;
 using UnityEngine;
-using Pathfinding;
+using UnityEngine.AI;
+//using Pathfinding;
 using UnityEngine.Animations.Rigging;
 
 namespace Cyens.ReInherit
@@ -20,7 +22,8 @@ namespace Cyens.ReInherit
         //private List<Renderer> m_renderers;
         private Renderer[] m_renderers;
 
-        private AIPath m_aiPath;
+        private NavMeshAgent m_navAgent;
+        private float m_navAngluarSpeed;
         [SerializeField] private Task currentTask;
         [SerializeField] private GameObject m_carryBox;
         [SerializeField] private State m_state = State.Ready;
@@ -53,7 +56,8 @@ namespace Cyens.ReInherit
         void Start()
         {
             m_keeperManager = KeeperManager.Instance; 
-            m_aiPath = GetComponent<AIPath>();
+            m_navAgent = GetComponent<NavMeshAgent>();
+            m_navAngluarSpeed = m_navAgent.angularSpeed;
             FindRenderers();
             EnableDisableRenderers(false);
             m_WeightRigHand = m_RigHands.GetComponent<Rig>();
@@ -138,8 +142,8 @@ namespace Cyens.ReInherit
                 
                 //Keeper is carrying a crate; check if arrived at place
                 case State.Carry:
-                    if (m_aiPath.remainingDistance >= 0.1f) return;
-                    if (m_aiPath.pathPending) return;
+                    if (m_navAgent.remainingDistance >= 0.1f) return;
+                    if (m_navAgent.pathPending) return;
 
                     // TODO: Play an animation depending on the current goal/job
                     m_state = State.Work;
@@ -150,7 +154,7 @@ namespace Cyens.ReInherit
                 //keeper places the exhibit
                 case State.Work:
                     // Look directly at the target object
-                    m_aiPath.enableRotation = false;
+                    m_navAgent.angularSpeed = 0f;
                     LookAt(currentTask.position);
 
                     if (m_timer >= float.Epsilon) return;
@@ -181,13 +185,13 @@ namespace Cyens.ReInherit
 
                 //Keeper is returning to base; check if arrived
                 case State.Return:
-                    m_aiPath.enableRotation = true;
+                    m_navAgent.angularSpeed = m_navAngluarSpeed;
 
                     // Signal the keeper manager that there the task is complete
                     m_keeperManager.DoneWorking(this);
 
-                    if (m_aiPath.remainingDistance >= 0.5f) return;
-                    if (m_aiPath.pathPending) return;
+                    if (m_navAgent.remainingDistance >= 0.5f) return;
+                    if (m_navAgent.pathPending) return;
                     
                     m_state = State.Idle;
                     m_timer = m_keeperManager.GetIdleDelay();
@@ -217,8 +221,7 @@ namespace Cyens.ReInherit
 
         private void SetMovePosition(Vector3 position, bool teleport, float teleportTimer, int appearIndex)
         {
-            m_aiPath.destination = position;
-            m_aiPath.SearchPath();
+            m_navAgent.SetDestination(position);
             if (teleport)
                 StartCoroutine(Teleport(teleportTimer, appearIndex));
         }
@@ -230,11 +233,11 @@ namespace Cyens.ReInherit
 
             // Get remaining points in path
             var buffer = new List<Vector3>();
-            m_aiPath.GetRemainingPath(buffer, out bool stale);
+            buffer = m_navAgent.path.corners.ToList();
             // If path is still long enough, teleport
             if (buffer.Count >= 20) {
                 // Prevent keeper form moving to play disappear animation
-                m_aiPath.canMove = false;
+                m_navAgent.isStopped = true;
 
                 // Enter below code to play disappear animation
                 StartCoroutine(ChangeCharacterOpacity(characterMaterial, 1f, 0f));
@@ -245,7 +248,7 @@ namespace Cyens.ReInherit
                 yield return new WaitForSeconds(changeTimeOpacity+.5f);
 
                 Vector3 teleportPos = buffer[buffer.Count - appearIndex];
-                m_aiPath.Teleport(teleportPos);
+                m_navAgent.Warp(teleportPos);
 
                 // Enter below code to play appear animation
                 StartCoroutine(ChangeCharacterOpacity(characterMaterial, 0f, 1f));
@@ -255,7 +258,7 @@ namespace Cyens.ReInherit
                 StartCoroutine(ChangeCharacterOpacity(trolleyMaterial3, 0f, 1f));
                 yield return new WaitForSeconds(changeTimeOpacity+.5f);
                 //yield return new WaitForSeconds("ENTER APPEAR ANIMATION DURATION TIME");
-                m_aiPath.canMove = true;
+                m_navAgent.isStopped = false;
             }
         }
 

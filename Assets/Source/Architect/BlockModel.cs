@@ -1,6 +1,6 @@
 using System;
 using Cyens.ReInherit.Managers;
-using Pathfinding;
+//using Pathfinding;
 using UnityEngine;
 
 namespace Cyens.ReInherit.Architect
@@ -92,16 +92,17 @@ namespace Cyens.ReInherit.Architect
             myTransform.position = position;
         }
 
+        // PathFinding - Replace them with unity navmesh
         public void DisableFloorAndRemoveNavMesh()
         {
-            transform.Find("Floor").GetComponent<Collider>().enabled = false;
-            GetComponent<GraphUpdateScene>().Apply();
+            //transform.Find("Floor").GetComponent<Collider>().enabled = false;
+            //GetComponent<GraphUpdateScene>().Apply();
         }
 
         public void RecreateNavMesh()
         {
-            transform.Find("Floor").GetComponent<Collider>().enabled = true;
-            GetComponent<GraphUpdateScene>().Apply();
+            //transform.Find("Floor").GetComponent<Collider>().enabled = true;
+            //GetComponent<GraphUpdateScene>().Apply();
         }
 
         private void OnValidate()

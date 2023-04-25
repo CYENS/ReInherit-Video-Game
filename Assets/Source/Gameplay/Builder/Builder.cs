@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Cyens.ReInherit.Managers;
 using UnityEngine;
-using Pathfinding;
-using Pathfinding.RVO;
+//using Pathfinding;
+//using Pathfinding.RVO;
 using Unity.VisualScripting;
+using UnityEngine.AI;
 
 namespace Cyens.ReInherit
 {
@@ -16,7 +17,7 @@ namespace Cyens.ReInherit
 
         private BuilderManager m_builderManager;
         private List<Renderer> m_renderers;
-        private AIPath m_aiPath;
+        private NavMeshAgent m_navAgent;
         [SerializeField] private int m_builderIndex;
         [SerializeField] private Task m_currentTask;
         [SerializeField] private bool m_isMainBuilder;
@@ -26,10 +27,9 @@ namespace Cyens.ReInherit
         [SerializeField] private BuilderType m_builderType;
         [SerializeField] private float m_buildingTimer = 0f;
         [SerializeField] private float m_idleTimer = 0;
-        private RVOController m_rvo;
 
         public enum Goal { BuildNewRoom = 0  }
-
+        public NavMeshAgent NavAgent { get => m_navAgent; }
         public Vector3 GetRoomPoint(int builderIndex)
         {
             return m_currentTask.roomPoints[builderIndex];
@@ -55,11 +55,8 @@ namespace Cyens.ReInherit
         // Start is called before the first frame update
         void Start()
         {
-            m_rvo = GetComponent<RVOController>();
-            if (m_isMainBuilder)
-                m_rvo.enabled = true;
             m_builderManager = BuilderManager.Instance; 
-            m_aiPath = GetComponent<AIPath>();
+            m_navAgent = GetComponent<NavMeshAgent>();
             FindRenderers();
             EnableDisableRenderers(false);
         }
@@ -114,7 +111,6 @@ namespace Cyens.ReInherit
                     
                     m_currentTask = m_builderManager.GetNextTask();
                     SetMovePosition(m_currentTask.room);
-                    m_rvo.enabled = true;
                     m_state = State.MovingToRoom;
                     EnableRenderers();
 
@@ -122,7 +118,7 @@ namespace Cyens.ReInherit
                 }
                 //Builder moving towards room; check if arrived at place
                 case State.MovingToRoom: {
-                    if (m_aiPath.remainingDistance < 2f && m_aiPath.pathPending == false) {
+                    if (m_navAgent.remainingDistance < 2f && m_navAgent.pathPending == false) {
                         m_builderManager.SetLastQueue();
                         SetMovePosition(GetRoomPoint(m_builderIndex));
                         m_state = State.MovingToRoomPoint;
@@ -131,7 +127,7 @@ namespace Cyens.ReInherit
                 }
                 //Builder moving specific point in room; check if arrived at place
                 case State.MovingToRoomPoint: {
-                    if (m_aiPath.remainingDistance < 0.5f && m_aiPath.pathPending == false) {
+                    if (m_navAgent.remainingDistance < 0.5f && m_navAgent.pathPending == false) {
                         m_state = State.Building;
                         m_buildingTimer = 0f;
                     }
@@ -148,7 +144,7 @@ namespace Cyens.ReInherit
                 }
                 //Builder taking its place in queue to return
                 case State.FormingQueue: {
-                    if (m_aiPath.remainingDistance < 0.1f && m_aiPath.pathPending == false) {
+                    if (m_navAgent.remainingDistance < 0.1f && m_navAgent.pathPending == false) {
                         if(m_builderManager.CheckAllBuildersRemainingDistance(0.2f)){
                             SetMovePosition(m_builderManager.GetBasePosition());
                             m_state = State.Returning;
@@ -158,7 +154,7 @@ namespace Cyens.ReInherit
                 }
                 //Builder is returning to base; check if arrived
                 case State.Returning: {
-                    if (m_aiPath.remainingDistance < 0.2f && m_aiPath.pathPending == false) {
+                    if (m_navAgent.remainingDistance < 0.2f && m_navAgent.pathPending == false) {
                         m_state = State.Idle;
                         m_idleTimer = 0f;
                     }
@@ -167,7 +163,6 @@ namespace Cyens.ReInherit
                 //Builder is idling; check if timer passed for becoming ready
                 case State.Idle: {
                     DisableRenderers();
-                    m_rvo.enabled = false;
                     if (m_idleTimer >= m_builderManager.GetIdleDelay()) {
                         m_state = State.Ready;
                     }
@@ -190,7 +185,6 @@ namespace Cyens.ReInherit
                     float disToFront = Vector3.Distance(transform.position, m_forntBuilder.transform.position);
                     if (disToFront > 1f) {
                         EnableRenderers();
-                        m_rvo.enabled = true;
                         SetMovePosition(m_forntBuilder.transform.position);
                     }
 
@@ -214,7 +208,6 @@ namespace Cyens.ReInherit
                 case State.Returning: {
                     if (Vector3.Distance(transform.position, m_builderManager.GetBasePosition()) < 2.75f) {
                         m_state = State.Ready;
-                        m_rvo.enabled = false;
                         return;
                     }
                     SetMovePosition(m_forntBuilder.transform.position);
@@ -252,8 +245,7 @@ namespace Cyens.ReInherit
 
         private void SetMovePosition(Vector3 position)
         {
-            m_aiPath.destination = position;
-            m_aiPath.SearchPath();
+            m_navAgent.SetDestination(position);
         }
     }
 }

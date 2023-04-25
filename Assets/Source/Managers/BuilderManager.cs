@@ -5,7 +5,7 @@ using System.Linq;
 using Cyens.ReInherit.Patterns;
 using UnityEditor;
 using UnityEngine;
-using Pathfinding;
+//using Pathfinding;
 
 namespace Cyens.ReInherit.Managers
 {
@@ -46,7 +46,7 @@ namespace Cyens.ReInherit.Managers
         public bool CheckAllBuildersRemainingDistance(float threshold)
         {
             foreach (var builder in m_builders) {
-                if (builder.GetComponent<AIPath>().remainingDistance > threshold)
+                if (builder.NavAgent.remainingDistance > threshold)
                     return false;
             }
             return true;

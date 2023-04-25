@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Pathfinding;
+//using Pathfinding;
 
 namespace Cyens.ReInherit
 {
@@ -11,8 +11,6 @@ namespace Cyens.ReInherit
         public bool isAstar;
         protected Animator animator;
         protected NavMeshAgent agent;
-        protected IAstarAI agentAstar;
-
 
         [Header("Animator Parameters")]
         [SerializeField] private string motionSpeedParam = "MotionSpeed";
@@ -25,10 +23,7 @@ namespace Cyens.ReInherit
         void Start()
         {
             animator = GetComponent<Animator>();
-            if (gameObject.TryGetComponent(out NavMeshAgent navAgent))
-                agent = navAgent;
-            if (gameObject.TryGetComponent(out IAstarAI navAgentAstar))
-                agentAstar = navAgentAstar;
+            agent = GetComponent<NavMeshAgent>();
         }
 
         // Update is called once per frame
@@ -38,15 +33,10 @@ namespace Cyens.ReInherit
             Vector3 velocity;
             float maxSpeed;
             
-            if (isAstar) {
-                velocity = agentAstar.velocity;
-                maxSpeed = agentAstar.maxSpeed;
-            }
-            else {
-                velocity = agent.velocity;
-                maxSpeed = agent.speed;
-            }
-                // This will make the character walk/run based on the animator speed
+            velocity = agent.velocity;
+            maxSpeed = agent.speed;
+            
+            // This will make the character walk/run based on the animator speed
             float moveSpeed = velocity.magnitude / maxSpeed;
             animator.SetFloat(motionParam, moveSpeed*motionMult);
         }

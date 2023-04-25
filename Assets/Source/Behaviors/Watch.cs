@@ -33,7 +33,6 @@ namespace Cyens.ReInherit
                 }
                 else {
                     m_visitor.NavAgent.destination = CalculateDestination(animator);
-                    m_visitor.NavAgent.SearchPath();
                     animator.SetBool("Walk", true);
                 }
             }
