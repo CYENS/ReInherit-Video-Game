@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39579920491387787}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.25, y: 0.832, z: 0.465}
+  m_LocalPosition: {x: 0.346, y: 0.832, z: 0.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1264741620879363987}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.25, y: 0.832, z: 0.465}
+  m_LocalPosition: {x: -0.353, y: 0.832, z: 0.219}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1698,6 +1698,7 @@ GameObject:
   - component: {fileID: 2788677414933681779}
   - component: {fileID: 7718262621752851161}
   - component: {fileID: 6598788219260771724}
+  - component: {fileID: 8396184921494648035}
   m_Layer: 8
   m_Name: Keeper
   m_TagString: Untagged
@@ -1805,7 +1806,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 3
+  maxSpeed: 6
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -1923,7 +1924,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3927213525005316473}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
   m_Name: 
@@ -1932,6 +1933,19 @@ MonoBehaviour:
   - m_Rig: {fileID: 3316565842412338689}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &8396184921494648035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3927213525005316473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc68ad9595cfa604fb23a167214ea786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_note: Rig builder has issues with Burst compiler! I'm disabling it for now.
 --- !u!1 &3927213525032347849
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,6 +2423,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4937390856020792190}
   - {fileID: 3927213525557642839}
   - {fileID: 6493352263272527287}
   m_Father: {fileID: 3927213525005316454}
@@ -2708,7 +2723,7 @@ Transform:
   - {fileID: 3927213525841825296}
   - {fileID: 3927213525649500583}
   m_Father: {fileID: 3927213525497577454}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3927213525587107259
 GameObject:
@@ -3155,15 +3170,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6319258596343346467}
-  m_LocalRotation: {x: 0.00000008146022, y: -0.0017162334, z: 1.3980496e-10, w: -0.99999857}
-  m_LocalPosition: {x: -7.6327124, y: 0, z: 10.876264}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4317245933588537159}
   - {fileID: 2141281411464580530}
   m_Father: {fileID: 3927213525497577454}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3316565842412338689
 MonoBehaviour:
@@ -3244,3 +3259,78 @@ MonoBehaviour:
     m_HintWeight: 1
     m_MaintainTargetPositionOffset: 0
     m_MaintainTargetRotationOffset: 0
+--- !u!1001 &4832252103342486677
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3927213525497577454}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.003
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.86
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00000009735359
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: faa8a1bc1388ae347b6fb04dee158016,
+        type: 3}
+      propertyPath: m_Name
+      value: Trolley
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: faa8a1bc1388ae347b6fb04dee158016, type: 3}
+--- !u!4 &4937390856020792190 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: faa8a1bc1388ae347b6fb04dee158016,
+    type: 3}
+  m_PrefabInstance: {fileID: 4832252103342486677}
+  m_PrefabAsset: {fileID: 0}

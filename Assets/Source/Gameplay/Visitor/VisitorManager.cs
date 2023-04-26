@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Patterns;
-using Cyens.ReInherit.Gameplay.Management;
+using Cyens.ReInherit.Managers;
 using Random = UnityEngine.Random;
 
 namespace Cyens.ReInherit
@@ -29,10 +29,10 @@ namespace Cyens.ReInherit
 
         [SerializeField] private Vector3 m_exitPosition;
 
-        private Artifact[] m_artifacts;
+        private zdelArtifact[] m_artifacts;
         private ArtifactVisitorHandler[] m_handlers;
 
-        public Artifact[] GetArtifacts(){ return m_artifacts; }
+        public zdelArtifact[] GetArtifacts(){ return m_artifacts; }
         public ArtifactVisitorHandler[] GetVisitorHandlers() { return m_handlers; }
 
         public Vector3 GetExitPosition()
@@ -71,7 +71,7 @@ namespace Cyens.ReInherit
         {
             // TO-DO Get all artifacts
 
-            Artifact[] artifacts = ArtifactManager.Instance.GetArtifactsByStatus(Artifact.Status.Exhibit);
+            zdelArtifact[] artifacts = ArtifactManager.Instance.GetArtifactsByStatus(zdelArtifact.Status.Exhibit);
             ArtifactVisitorHandler[] handlers = new ArtifactVisitorHandler[artifacts.Length];
             for( int i=0; i<artifacts.Length; i++)
                 handlers[i] = artifacts[i].GetComponentInChildren<ArtifactVisitorHandler>(false);
@@ -85,7 +85,7 @@ namespace Cyens.ReInherit
         public void Spawn()
         {
             // Get a list of exhibits
-            m_artifacts = ArtifactManager.Instance.GetArtifactsByStatus(Artifact.Status.Exhibit);
+            m_artifacts = ArtifactManager.Instance.GetArtifactsByStatus(zdelArtifact.Status.Exhibit);
 
             int visitorID = 0;
             // Grab interest amount and store in a 1-to-1 array

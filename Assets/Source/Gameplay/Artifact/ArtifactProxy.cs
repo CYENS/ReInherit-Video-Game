@@ -11,12 +11,12 @@ namespace Cyens.ReInherit
     public class ArtifactProxy : MonoBehaviour
     {
 
-        private Artifact m_artifact;
+        private zdelArtifact m_artifact;
 
         // Start is called before the first frame update
         void Awake()
         {
-            m_artifact = GetComponentInParent<Artifact>();
+            m_artifact = GetComponentInParent<zdelArtifact>();
         }
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cyens.ReInherit.Gameplay.Management;
+using Cyens.ReInherit.Managers;
 using UnityEngine;
 using Pathfinding;
 using UnityEngine.Animations.Rigging;
@@ -14,8 +14,12 @@ namespace Cyens.ReInherit
         private enum State {Idle, Ready, Carry, Work, Return }
         public enum Goal { PlaceExhibit=0, UpgradeExhibit=1 }
         
+
+
         private KeeperManager m_keeperManager;
-        private List<Renderer> m_renderers;
+        //private List<Renderer> m_renderers;
+        private Renderer[] m_renderers;
+
         private AIPath m_aiPath;
         [SerializeField] private Task currentTask;
         [SerializeField] private GameObject m_carryBox;
@@ -28,12 +32,18 @@ namespace Cyens.ReInherit
         private Rig m_WeightRigHand;
         private float changeTimeDissolve = 1f; // time it takes to change the value
         private float valueDissolve = 0f; // the value to change
+        [SerializeField] private Material characterMaterial;
+        [SerializeField] private Material trolleyMaterial1;
+        [SerializeField] private Material trolleyMaterial2;
+        [SerializeField] private Material trolleyMaterial3;
+        private float changeTimeOpacity = 0.5f;
+        private float valueOpacity = 1;
 
 
         [System.Serializable]
         public class Task
         {
-            public Artifact target;
+            public zdelArtifact target;
             public Goal goal;
 
             public Vector3 position => target.transform.position;
@@ -54,14 +64,16 @@ namespace Cyens.ReInherit
         /// </summary>
         private void FindRenderers()
         {
-            m_renderers = new List<Renderer>();
-            foreach (Transform child in transform) {
-                if (child.TryGetComponent(out Renderer r)) {
-                    //Do not add box carry Renderer also
-                    if(!GameObject.ReferenceEquals(m_carryBox, child.gameObject))
-                        m_renderers.Add(r);
-                }
-            }
+            m_renderers = GetComponentsInChildren<Renderer>();
+            // m_renderers = new List<Renderer>();
+            // foreach (Transform child in transform) {
+            //     if (child.TryGetComponent(out Renderer r)) {
+            //         Debug.Log("Renderer: "+r);
+            //         //Do not add box carry Renderer also
+            //         if(!GameObject.ReferenceEquals(m_carryBox, child.gameObject))
+            //             m_renderers.Add(r);
+            //     }
+            // }
         }
 
         /// <summary>
@@ -107,13 +119,14 @@ namespace Cyens.ReInherit
         /// </summary>
         private void ExecuteKeeperLogic()
         {
+
             switch (m_state) {
                 //Keeper is ready to carry next exhibit; check for new task
                 case State.Ready:
                     if (m_keeperManager.IsNewTaskAvailable() == false) return;
 
                     currentTask = m_keeperManager.GetNextTask(this);
-                    SetMovePosition(currentTask.target.GetStandPoint(transform.position));
+                    SetMovePosition(currentTask.target.GetStandPoint(transform.position), true, 3f, 10);
                     m_state = State.Carry;
                     EnableRenderers();
                     m_BoxDissolve = currentTask.target.GetExhibit().GetBoxDissolve();
@@ -152,7 +165,7 @@ namespace Cyens.ReInherit
                     switch (currentTask.goal)
                     {
                         case Goal.PlaceExhibit:
-                            currentTask.target.SetStatus(Artifact.Status.Exhibit);
+                            currentTask.target.SetStatus(zdelArtifact.Status.Exhibit);
                             break;
                         case Goal.UpgradeExhibit:
                             currentTask.target.FinalizeUpgrade();
@@ -161,7 +174,7 @@ namespace Cyens.ReInherit
                     }
                     // Set destination back to the elevator
                     Vector3 basePoint = m_keeperManager.GetBasePosition();
-                    SetMovePosition(basePoint);
+                    SetMovePosition(basePoint, true, 1.5f, 15);
                     m_state = State.Return;
                     
                     break;
@@ -202,10 +215,48 @@ namespace Cyens.ReInherit
         }
 
 
-        private void SetMovePosition(Vector3 position)
+        private void SetMovePosition(Vector3 position, bool teleport, float teleportTimer, int appearIndex)
         {
             m_aiPath.destination = position;
             m_aiPath.SearchPath();
+            if (teleport)
+                StartCoroutine(Teleport(teleportTimer, appearIndex));
+        }
+
+        IEnumerator Teleport(float delay, int appearIndex)
+        {
+            //Wait delay seconds and then teleport the keeper
+            yield return new WaitForSeconds(delay);
+
+            // Get remaining points in path
+            var buffer = new List<Vector3>();
+            m_aiPath.GetRemainingPath(buffer, out bool stale);
+            // If path is still long enough, teleport
+            if (buffer.Count >= 20) {
+                // Prevent keeper form moving to play disappear animation
+                m_aiPath.canMove = false;
+
+                // Enter below code to play disappear animation
+                StartCoroutine(ChangeCharacterOpacity(characterMaterial, 1f, 0f));
+                StartCoroutine(ChangeCharacterOpacity(m_carryBox.GetComponent<MeshRenderer>().material, 1f, 0f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial1, 1f, 0f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial2, 1f, 0f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial3, 1f, 0f));
+                yield return new WaitForSeconds(changeTimeOpacity+.5f);
+
+                Vector3 teleportPos = buffer[buffer.Count - appearIndex];
+                m_aiPath.Teleport(teleportPos);
+
+                // Enter below code to play appear animation
+                StartCoroutine(ChangeCharacterOpacity(characterMaterial, 0f, 1f));
+                StartCoroutine(ChangeCharacterOpacity(m_carryBox.GetComponent<MeshRenderer>().material, 0f, 1f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial1, 0f, 1f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial2, 0f, 1f));
+                StartCoroutine(ChangeCharacterOpacity(trolleyMaterial3, 0f, 1f));
+                yield return new WaitForSeconds(changeTimeOpacity+.5f);
+                //yield return new WaitForSeconds("ENTER APPEAR ANIMATION DURATION TIME");
+                m_aiPath.canMove = true;
+            }
         }
 
         private void HideDissolveBox()
@@ -223,6 +274,19 @@ namespace Cyens.ReInherit
                 m_BoxDissolve.GetComponent<MeshRenderer>().material.SetFloat("_Dissolve_Amount", valueDissolve);
                 yield return null;
             }
+        }
+
+        IEnumerator ChangeCharacterOpacity(Material materialToChange, float startOpacity, float endOpacity)
+        {
+            float timer = 0f;
+            while (timer < changeTimeOpacity)
+            {
+                timer += Time.deltaTime;
+                valueOpacity = Mathf.Lerp(startOpacity, endOpacity, timer / changeTimeOpacity);
+                materialToChange.SetFloat("_Opacity", valueOpacity);
+                yield return null;
+            }
+            
         }
     }
 }

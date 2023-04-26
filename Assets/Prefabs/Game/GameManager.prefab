@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e9f1be9556ddd4e9aee5f7150095cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_persistent: 0
   m_visitorPrefab: {fileID: 1106620458242135120, guid: be16054f5c5827a4f8400f1bfb2f1685,
     type: 3}
   m_impression: 0
@@ -95,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4ac3211a572f34eae0a7fe3647f1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_persistent: 0
   m_tasksLeft: 0
   m_basePosition: {fileID: 0}
   m_ExhibitTestPoints: {fileID: 677025509181453833}
@@ -520,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2cb60d4fd58f1e4995e66add0d8ba62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_persistent: 0
   m_coinPrefab: {fileID: 4344260150635102631, guid: bda98236d6ad0b148873ae8f56e580cd,
     type: 3}
   m_target: {fileID: 848681505618616802}
@@ -579,6 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb6da267ba6c6e4e89ba827cdbc61a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_persistent: 0
   entryRoomCoordinates: {x: 4.5, y: 4.5}
   m_museumState: 0
   m_funds: 1000
@@ -2409,7 +2413,7 @@ PrefabInstance:
     - target: {fileID: 7525857923540112403, guid: 682b3e052f8e4da43bbc2375faf655d2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -197.85823
+      value: -103.85823
       objectReference: {fileID: 0}
     - target: {fileID: 7525857923540112403, guid: 682b3e052f8e4da43bbc2375faf655d2,
         type: 3}
@@ -2419,7 +2423,7 @@ PrefabInstance:
     - target: {fileID: 7525857923540112403, guid: 682b3e052f8e4da43bbc2375faf655d2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -18.656975
+      value: -16.656975
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1021566118684102198, guid: 682b3e052f8e4da43bbc2375faf655d2, type: 3}

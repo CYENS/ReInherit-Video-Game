@@ -2,20 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cyens.ReInherit.Managers;
 
 namespace Cyens.ReInherit
 {
+
+    /// <summary>
+    /// Objects that react to being selected.
+    /// </summary>
     [DefaultExecutionOrder(1000)]
     public class Selectable : MonoBehaviour
     {
-        private SelectManager m_manager;
-
         private LayerMask m_layerMask;
 
-
+        [SerializeField]
+        [Tooltip("Whether this object is selected or not")]
         private bool m_selected;
         
-        
+        private bool m_prevSelected;
+
+
         public bool isSelected => m_selected;
 
 
@@ -26,6 +32,48 @@ namespace Cyens.ReInherit
         [SerializeField]
         private GameObject uiContent;
         
+
+
+        private void OnDisable() => DeSelect();
+        
+        private void OnDestroy() => DeSelect();
+        
+
+    
+        void Awake()
+        {
+            m_layerMask = SelectManager.Layers;
+            
+            // Automatically pick a layer that will be visible to the 
+            // selection system
+            PickValidLayer();
+
+            // Deselect by default on start
+            DeSelect();
+        }
+
+        /// <summary>
+        /// Forces the object to be de-selected
+        /// </summary>
+        private void DeSelect() 
+        {
+            if(SelectManager.Selected == gameObject)
+            {
+                SelectManager.Clear();
+            }
+
+            m_prevSelected = false;
+            m_selected = false;
+
+            Refresh();
+        }
+
+        /// <summary>
+        /// Checks to see if the object's layer matches
+        /// the internal layer mask (obtained by SelectManager)
+        /// </summary>
+        /// <param name="layer"></param>
+        /// <returns></returns>
         private bool IsLayerValid( int layer )
         {
             // Only 32 layers are allowed in Unity
@@ -38,43 +86,10 @@ namespace Cyens.ReInherit
         }
 
 
-        private void OnDisable() => DeSelect();
-        
-        private void OnDestroy() => DeSelect();
-        
-
-        public void Select()
-        {
-            m_highlightControllers = GetComponentsInChildren<HighlightController>(true);
-            m_selected = true;
-            foreach (var highlightController in m_highlightControllers)
-            {
-                if (highlightController == null) continue;
-                highlightController.Select();
-            }
-
-            if (uiContent != null)
-                uiContent.SetActive(true);
-
-        }
-
-        public void DeSelect()
-        {
-            m_selected = false;
-            if (m_highlightControllers == null) return;
-            foreach (var highlightController in m_highlightControllers)
-            {
-                if (highlightController == null) continue;
-                highlightController.DeSelect();
-            }
-
-
-            if (uiContent != null)
-                uiContent.SetActive(false);
-
-        }
-        
-        
+        /// <summary>
+        /// Ensures that the object is on a layer that the 
+        /// SelectManager will be able to detect
+        /// </summary>
         private void PickValidLayer()
         {
             // Current layer is already valid
@@ -91,17 +106,45 @@ namespace Cyens.ReInherit
             // No valid layer!
         }
 
-        void Awake()
+        /// <summary>
+        /// Refreshes all the UI elements and effects based on the selection state
+        /// of the object.
+        /// </summary>
+        private void Refresh() 
         {
-            m_manager = SelectManager.singleton;
-            m_layerMask = m_manager.layerMask;
-            
-            // Automatically pick a layer that will be visible to the 
-            // selection system
-            PickValidLayer();
+            // Refresh highlight controllers
+            m_highlightControllers = GetComponentsInChildren<HighlightController>(true);
+            foreach (var highlightController in m_highlightControllers)
+            {
+                if (highlightController == null) continue;
+                if( m_selected )
+                {
+                    highlightController.Select();
+                }
+                else 
+                {
+                    highlightController.DeSelect();
+                }
+            }
 
-            if(uiContent != null)
-                uiContent.SetActive(false);
+            // Refresh visibility of UI element
+            if (uiContent != null)
+            {
+                uiContent.SetActive(m_selected);
+            }
+        }
+
+
+        private void Update() 
+        {
+            m_selected = (SelectManager.Selected == gameObject);
+
+            // Detect changes
+            if( m_prevSelected != m_selected )
+            {
+                m_prevSelected = m_selected;
+                Refresh();
+            }
         }
         
     }

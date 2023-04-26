@@ -17,7 +17,7 @@ namespace Cyens.ReInherit.Architect
         [JsonProperty] public int x;
         [JsonProperty] public int y;
 
-        public const float UnitsPerIndex = 9;
+        public const float UnitsPerIndex = 5;
 
         public Index(int x, int y)
         {

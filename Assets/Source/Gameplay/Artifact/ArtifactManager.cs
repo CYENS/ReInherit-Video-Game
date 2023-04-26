@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cyens.ReInherit.Patterns;
-using Cyens.ReInherit.Gameplay.Management;
+using Cyens.ReInherit.Managers;
 
 using Pathfinding;
 
@@ -27,7 +27,7 @@ namespace Cyens.ReInherit
         // Placement related
         private bool validPlacement;
         protected Plane groundPlane;
-        protected Artifact targetArtifact;
+        protected zdelArtifact targetArtifact;
         [SerializeField] LayerMask raycastIgnoreLayer;
         private colliding collidingScript;
 
@@ -72,24 +72,24 @@ namespace Cyens.ReInherit
         /// <summary>
         /// Returns an array of exhibits that are currently on display
         /// </summary>
-        public Exhibit[] GetExhibits()
+        public zdelExhibit[] GetExhibits()
         {
-            Exhibit[] exhibits = GetComponentsInChildren<Exhibit>(false);
+            zdelExhibit[] exhibits = GetComponentsInChildren<zdelExhibit>(false);
             return exhibits;
         }
 
 
-        public Artifact[] GetArtifactsByStatus( Artifact.Status status )
+        public zdelArtifact[] GetArtifactsByStatus( zdelArtifact.Status status )
         {
-            Artifact[] allArtifacts = GetComponentsInChildren<Artifact>(true);
-            return Array.FindAll<Artifact>(allArtifacts, artifact => artifact.GetStatus() == status);
+            zdelArtifact[] allArtifacts = GetComponentsInChildren<zdelArtifact>(true);
+            return Array.FindAll<zdelArtifact>(allArtifacts, artifact => artifact.GetStatus() == status);
         }
 
         public ArtifactInfo[] GetArtifactInfo()
         {
             // Grab the artifacts contained within and get their data
             // Collect their data in hashsets to remove duplicates
-            Artifact[] artifacts = GetComponentsInChildren<Artifact>(true);
+            zdelArtifact[] artifacts = GetComponentsInChildren<zdelArtifact>(true);
             HashSet<ArtifactInfo> dataSet = new HashSet<ArtifactInfo>();
             foreach( var artifact in artifacts )
                 dataSet.Add(artifact.GetInfo());
@@ -100,10 +100,10 @@ namespace Cyens.ReInherit
             return artifactInfo;
         }
 
-        public void PlaceArtifact(Artifact artifact)
+        public void PlaceArtifact(zdelArtifact artifact)
         {
             mode = Mode.Placement;
-            artifact.SetStatus(Artifact.Status.Design);
+            artifact.SetStatus(zdelArtifact.Status.Design);
             targetArtifact = artifact;
 
         }
@@ -137,7 +137,7 @@ namespace Cyens.ReInherit
             temp.transform.SetParent(transform);
 
             // Step Two: Add the 'Artifact' class to that object
-            Artifact artifact = Artifact.Create(temp, info );
+            zdelArtifact artifact = zdelArtifact.Create(temp, info );
             temp.name = artifact.GetInfo().label;
         }
 
@@ -162,13 +162,13 @@ namespace Cyens.ReInherit
             var artifactInfo = GetArtifactInfo();
 
             // Get artifacts that are on display, and their data
-            var displayedArtifacts = GetArtifactsByStatus(Artifact.Status.Exhibit);
+            var displayedArtifacts = GetArtifactsByStatus(zdelArtifact.Status.Exhibit);
             HashSet<ArtifactInfo> displayedArtifactData = new HashSet<ArtifactInfo>();
             foreach( var artifact in displayedArtifacts )
                 displayedArtifactData.Add(artifact.GetInfo());
 
             // Get artifacts that are in the Conservation area
-            var restorationArtifacts = GetArtifactsByStatus(Artifact.Status.Restoration);
+            var restorationArtifacts = GetArtifactsByStatus(zdelArtifact.Status.Restoration);
             HashSet<ArtifactInfo> restorationArtifactData = new HashSet<ArtifactInfo>();
             foreach (var artifact in restorationArtifacts)
                 restorationArtifactData.Add(artifact.GetInfo());
@@ -189,7 +189,7 @@ namespace Cyens.ReInherit
         /// </summary>
         public void ApplyDamage()
         {
-            var artifacts = GetArtifactsByStatus(Artifact.Status.Exhibit);
+            var artifacts = GetArtifactsByStatus(zdelArtifact.Status.Exhibit);
             foreach( var artifact in artifacts )
                 artifact.Damage(0.1f);
         }
@@ -200,13 +200,13 @@ namespace Cyens.ReInherit
         /// </summary>
         public void FixArtifacts()
         {
-            var artifacts = GetArtifactsByStatus(Artifact.Status.Restoration);
+            var artifacts = GetArtifactsByStatus(zdelArtifact.Status.Restoration);
             foreach( var artifact in artifacts )
             {
                 artifact.Restore(0.3f);
                 if (artifact.condition >= 1.0f - float.Epsilon)
                 {
-                    artifact.SetStatus(Artifact.Status.Exhibit);
+                    artifact.SetStatus(zdelArtifact.Status.Exhibit);
                     Debug.Log("" + gameObject + " artifact is fully restored!");
                 }
             }
@@ -236,7 +236,7 @@ namespace Cyens.ReInherit
 
 
                 Ray dropRay = new Ray(targetArtifact.transform.position + Vector3.up * 100.0f, Vector3.down);
-
+                
                 // TODO: Check for obstacles, or if there is floor
                 if (Physics.Raycast(dropRay, out hit, 1000f, ~raycastIgnoreLayer))
                 {
@@ -264,7 +264,7 @@ namespace Cyens.ReInherit
             if (validPlacement == false) return;
 
             mode = Mode.None;
-            targetArtifact.SetStatus(Artifact.Status.Transit);
+            targetArtifact.SetStatus(zdelArtifact.Status.Transit);
 
             // Rebake the navmesh
             //AstarPath.active.Scan();

@@ -13,6 +13,12 @@ namespace Cyens.ReInherit.Patterns
     public class Singleton<T> : MonoBehaviour where T : Component
     {
         private static T instance;
+
+        [Header("Singleton")]
+        [SerializeField]
+        [Tooltip("When persistent, the object won't be destroyed on scene deload")]
+        private bool m_persistent = false;
+
         public static T Instance {
             get {
                 if (instance == null) {
@@ -31,7 +37,11 @@ namespace Cyens.ReInherit.Patterns
         {
             if (instance == null) {
                 instance = this as T;
-                DontDestroyOnLoad (this.gameObject);
+                if(m_persistent)
+                {
+                    // Ensures that this object won't be destroyed when the scene changes
+                    DontDestroyOnLoad (this.gameObject);
+                }
             } else {
                 Destroy (gameObject);
             }
