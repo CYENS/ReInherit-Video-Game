@@ -1,4 +1,3 @@
-using System;
 using Cyens.ReInherit.Managers;
 using Pathfinding;
 using UnityEngine;
@@ -7,80 +6,77 @@ namespace Cyens.ReInherit.Architect
 {
     public class BlockModel : MonoBehaviour
     {
-        [SerializeField] private WallModel eastWall;
-        [SerializeField] private WallModel westWall;
-        [SerializeField] private WallModel northWall;
-        [SerializeField] private WallModel southWall;
+        [SerializeField] private DirectionList<WallModel> wallModels;
+
+        [SerializeField] private PillarModel northEastPillar;
+        [SerializeField] private PillarModel northWestPillar;
+        [SerializeField] private PillarModel southEastPillar;
+        [SerializeField] private PillarModel southWestPillar;
 
         [SerializeField] private bool moveToIndex;
         [SerializeField] private Index startIndex;
 
         public void Clear()
         {
-            eastWall.Type = WallModel.WallType.None;   
-            westWall.Type = WallModel.WallType.None;   
-            northWall.Type = WallModel.WallType.None;   
-            southWall.Type = WallModel.WallType.None;   
-        }
-        
-        public WallModel.WallType GetModelType(Direction direction)
-        {
-            return direction.Id switch {
-                DirectionId.East => EastType,
-                DirectionId.West => WestType,
-                DirectionId.North => NorthType,
-                DirectionId.South => SouthType,
-                _ => WallModel.WallType.None,
-            };
-        }
-        
-        public void SetModelType(Direction direction, WallModel.WallType type)
-        {
-            // TODO use DirectionList
-            var model = direction.Id switch {
-                DirectionId.East => eastWall,
-                DirectionId.West => westWall,
-                DirectionId.North => northWall,
-                DirectionId.South => southWall,
-                _ => null,
-            };
-
-            // If this room is connected to stage, remove south walls to merge them
-            Vector2 entryRoom = GameManager.Instance.entryRoomCoordinates;
-            if (Mathf.Approximately(transform.position.x, entryRoom.x) 
-                && Mathf.Approximately(transform.position.z, entryRoom.y) 
-                && direction.Id == DirectionId.South) { 
-                model.Type = WallModel.WallType.None;
-                    return;
+            foreach (var dir in Direction.Values) {
+                wallModels[dir].Type = WallModel.WallType.None;
             }
 
+            northEastPillar.Clear();
+            northWestPillar.Clear();
+            southEastPillar.Clear();
+            southWestPillar.Clear();
+        }
+
+        public WallModel.WallType GetModelType(Direction direction)
+        {
+            return wallModels[direction].Type;
+        }
+
+        public void SetModelType(Direction direction, WallModel.WallType type)
+        {
+
+            // If this room is connected to stage, remove south walls to merge them
+            var entryRoom = GameManager.Instance.entryRoomCoordinates;
+            if (Mathf.Approximately(transform.position.x, entryRoom.x)
+                && Mathf.Approximately(transform.position.z, entryRoom.y)
+                && direction.Id == DirectionId.South) {
+                type = WallModel.WallType.None;
+            }
+
+            var model = wallModels[direction];
             if (model != null) {
                 model.Type = type;
             }
+            
+            northEastPillar.NotifyWallTypeChanged(direction, type);
+            northWestPillar.NotifyWallTypeChanged(direction, type);
+            southEastPillar.NotifyWallTypeChanged(direction, type);
+            southWestPillar.NotifyWallTypeChanged(direction, type);
         }
 
-        public WallModel.WallType EastType 
+        public WallModel.WallType EastType
         {
-            get => eastWall.Type;
-            set => eastWall.Type = value;
+            get => wallModels[Direction.East].Type;
+            set => wallModels[Direction.East].Type = value;
         }
 
         public WallModel.WallType WestType
         {
-            get => westWall.Type;
-            set => westWall.Type = value;
+            get => wallModels[Direction.West].Type;
+            set => wallModels[Direction.West].Type = value;
         }
 
         public WallModel.WallType NorthType
         {
-            get => northWall.Type;
-            set => northWall.Type = value;
+            get => wallModels[Direction.North].Type;
+            set => wallModels[Direction.North].Type = value;
         }
 
         public WallModel.WallType SouthType
         {
-            get => southWall.Type;
-            set => southWall.Type = value;
+            get => wallModels[Direction.South].Type;
+            set => wallModels[Direction.South].Type = value;
         }
 
         private void MoveToIndex(Index index)
@@ -94,14 +90,16 @@ namespace Cyens.ReInherit.Architect
 
         public void DisableFloorAndRemoveNavMesh()
         {
+            // TODO: Fix this
             transform.Find("Floor").GetComponent<Collider>().enabled = false;
-            GetComponent<GraphUpdateScene>().Apply();
+            // GetComponent<GraphUpdateScene>().Apply();
         }
 
         public void RecreateNavMesh()
         {
+            // TODO: Fix this
             transform.Find("Floor").GetComponent<Collider>().enabled = true;
-            GetComponent<GraphUpdateScene>().Apply();
+            // GetComponent<GraphUpdateScene>().Apply();
         }
 
         private void OnValidate()

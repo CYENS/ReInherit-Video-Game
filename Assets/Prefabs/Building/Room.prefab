@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6157524662956448806}
   - component: {fileID: 8527813548601061670}
   - component: {fileID: 3600823412894307109}
+  - component: {fileID: 6559658278927202495}
   m_Layer: 0
   m_Name: NorthEast
   m_TagString: Untagged
@@ -84,6 +85,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6559658278927202495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494834245726857962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca61b5134894410cb49a16f40f972e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir1:
+    value: 3
+  dir2:
+    value: 1
 --- !u!1 &1603081496926695383
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,10 +151,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7cfc0919ef087643828e9ffa6a7d3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eastWall: {fileID: 5412461545540427224}
-  westWall: {fileID: 3771025053198821963}
-  northWall: {fileID: 3617106153583328595}
-  southWall: {fileID: 1969035609456428196}
+  wallModels:
+    data:
+    - {fileID: 5412461545540427224}
+    - {fileID: 3771025053198821963}
+    - {fileID: 3617106153583328595}
+    - {fileID: 1969035609456428196}
+  northEastPillar: {fileID: 6559658278927202495}
+  northWestPillar: {fileID: 9145195797673135173}
+  southEastPillar: {fileID: 1709598157393854753}
+  southWestPillar: {fileID: 9204012246200325399}
   moveToIndex: 0
   startIndex:
     x: 0
@@ -250,6 +273,7 @@ GameObject:
   - component: {fileID: 9022808100984454670}
   - component: {fileID: 8446889102538428691}
   - component: {fileID: 8535971905553162979}
+  - component: {fileID: 9145195797673135173}
   m_Layer: 0
   m_Name: NorthWest
   m_TagString: Untagged
@@ -323,6 +347,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &9145195797673135173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4234170724743060856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca61b5134894410cb49a16f40f972e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir1:
+    value: 3
+  dir2:
+    value: 2
 --- !u!1 &6310022874165884320
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +374,7 @@ GameObject:
   - component: {fileID: 6510058292248628751}
   - component: {fileID: 3673173741708320196}
   - component: {fileID: 1183821318225888131}
+  - component: {fileID: 1709598157393854753}
   m_Layer: 0
   m_Name: SouthEast
   m_TagString: Untagged
@@ -407,6 +448,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1709598157393854753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310022874165884320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca61b5134894410cb49a16f40f972e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir1:
+    value: 4
+  dir2:
+    value: 1
 --- !u!1 &8748635590476081926
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,6 +510,7 @@ GameObject:
   - component: {fileID: 8690871439935384584}
   - component: {fileID: 1117446963205519616}
   - component: {fileID: 2944732608236010571}
+  - component: {fileID: 9204012246200325399}
   m_Layer: 0
   m_Name: SouthWest
   m_TagString: Untagged
@@ -526,6 +584,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &9204012246200325399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8927867680658471868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca61b5134894410cb49a16f40f972e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dir1:
+    value: 4
+  dir2:
+    value: 2
 --- !u!1001 &267784884748783141
 PrefabInstance:
   m_ObjectHideFlags: 0
