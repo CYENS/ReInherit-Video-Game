@@ -18,14 +18,10 @@ namespace Cyens.ReInherit
         public void Place(Vector3 point) 
         {
             Debug.Log("Placing object");
+            
             MetaData metaData = m_selected.m_metaData;
-            GameObject temp = metaData.gameObject;
-            temp.transform.position = point;
-            Exhibit exhibit = temp.GetComponent<Exhibit>();
-            if( exhibit != null )
-            {
-                exhibit.m_state = Exhibit.State.Display;
-            }
+            int exhibitIndex = metaData.siblingIndex;
+            ExhibitManager.Place(exhibitIndex, point );
 
             m_selected = null;
             OnDeselect();

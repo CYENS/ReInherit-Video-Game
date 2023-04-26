@@ -50,11 +50,20 @@ namespace Cyens.ReInherit.Exhibition
         private Transform placement;
 
 
+        [SerializeField]
+        [Tooltip("Points that people can stand around this exhibit case")]
+        private Transform[] standPoints;
+
+        [SerializeField]
+        [Tooltip("Reference to the dissolving crate effect")]
+        private Dissolver m_dissolver;
+
         private Artifact artifact;
 
         private void Start() 
         {
-            
+            m_dissolver = GetComponentInChildren<Dissolver>(true);
+
         }
 
         private void OnEnable() 
@@ -70,7 +79,22 @@ namespace Cyens.ReInherit.Exhibition
             GameManager.Instance.whenRoundEnds -= OnRoundEnd;
         }
 
-
+        public Vector3 ClosestStandPoint(Vector3 point)
+        {
+            float minDistance = float.MaxValue;
+            Vector3 closest = point;
+            foreach( Transform standPoint in standPoints )
+            {
+                Vector3 position = standPoint.position;
+                float distance = Vector3.Distance(point,position);
+                if( distance < minDistance )
+                {
+                    minDistance = distance;
+                    closest = position;
+                }
+            }
+            return closest;
+        }
 
         public void AddArtifact( GameObject prefab, bool asPrefab = false )
         {
@@ -93,6 +117,14 @@ namespace Cyens.ReInherit.Exhibition
         }
   
 
+        public void BeginDissolveEffect()
+        {
+            if(m_dissolver == null )
+            {
+                return;
+            }
+            m_dissolver.gameObject.SetActive(true);
+        }
 
 
         /// <summary>

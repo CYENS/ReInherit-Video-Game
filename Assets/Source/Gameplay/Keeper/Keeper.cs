@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Cyens.ReInherit.Managers;
 using UnityEngine;
+using UnityEngine.AI;
+
 using Pathfinding;
 using UnityEngine.Animations.Rigging;
+using Cyens.ReInherit.Exhibition;
 
 namespace Cyens.ReInherit
 {
@@ -40,10 +43,13 @@ namespace Cyens.ReInherit
         private float valueOpacity = 1;
 
 
+        private NavMeshAgent m_agent;
+
+
         [System.Serializable]
         public class Task
         {
-            public zdelArtifact target;
+            public Exhibit target;
             public Goal goal;
 
             public Vector3 position => target.transform.position;
@@ -52,7 +58,10 @@ namespace Cyens.ReInherit
         // Start is called before the first frame update
         void Start()
         {
-            m_keeperManager = KeeperManager.Instance; 
+            m_keeperManager = KeeperManager.Instance;
+
+            m_agent = GetComponent<NavMeshAgent>();
+
             m_aiPath = GetComponent<AIPath>();
             FindRenderers();
             EnableDisableRenderers(false);
@@ -115,90 +124,137 @@ namespace Cyens.ReInherit
         }
 
         /// <summary>
+        /// Keeper is ready to carry next exhibit; check for new task
+        /// </summary>
+        private void ReadyLogic() 
+        {
+            // Wait for next task to be available
+            if (m_keeperManager.IsNewTaskAvailable() == false) 
+            {
+                return;
+            }
+
+            // Get Next task
+            currentTask = m_keeperManager.GetNextTask(this);
+
+            Exhibit exhibit = currentTask.target;
+            Vector3 standPoint = exhibit.ClosestStandPoint(transform.position);
+            SetMovePosition(standPoint, true, 3f, 10);
+            m_state = State.Carry;
+            EnableRenderers();
+
+            //m_BoxDissolve = currentTask.target.GetExhibit().GetBoxDissolve();
+
+            //m_carryBox.transform.localScale = m_BoxDissolve.transform.localScale;
+            //m_carryBox.transform.position = new Vector3(m_carryBox.transform.position.x, m_BoxDissolve.transform.position.y, m_carryBox.transform.position.z);
+            //m_carryBox.SetActive(true);
+            //m_WeightRigHand.weight = 1;
+            
+        }
+
+        private void CarryLogic() 
+        {
+            if( m_agent.remainingDistance >= 0.1f ) return;
+            if( m_agent.pathPending ) return;
+            //if (m_aiPath.remainingDistance >= 0.1f) return;
+            //if (m_aiPath.pathPending) return;
+
+            // TODO: Play an animation depending on the current goal/job
+            m_state = State.Work;
+            m_timer = m_keeperManager.GetPlacingDelay();
+        }
+
+        private void WorkLogic()
+        {
+            Exhibit exhibit = currentTask.target;
+
+            // Look directly at the target object
+            //m_aiPath.enableRotation = false;
+            LookAt(currentTask.position);
+
+            if (m_timer >= float.Epsilon) return;
+
+            // m_BoxDissolve = currentTask.target.GetExhibit().GetBoxDissolve();
+            //m_BoxDissolve.SetActive(true);
+
+            exhibit.BeginDissolveEffect();
+            m_carryBox.SetActive(false);
+
+
+            // Finalize task depending on the task goal
+            switch (currentTask.goal)
+            {
+                case Goal.PlaceExhibit:
+                    exhibit.SetState(Exhibit.State.Display);
+                    break;
+                case Goal.UpgradeExhibit:
+                    //exhibit.FinalizeUpgrade();
+                    break;
+
+            }
+            // Set destination back to the elevator
+            Vector3 basePoint = m_keeperManager.GetBasePosition();
+            SetMovePosition(basePoint, true, 1.5f, 15);
+            m_state = State.Return;
+        }
+
+        private void ReturnLogic()
+        {
+            //m_aiPath.enableRotation = true;
+
+            // Signal the keeper manager that there the task is complete
+            m_keeperManager.DoneWorking(this);
+
+
+            if( m_agent.remainingDistance >= 0.1f ) return;
+            if( m_agent.pathPending ) return;
+
+            //if (m_aiPath.remainingDistance >= 0.5f) return;
+            //if (m_aiPath.pathPending) return;
+            
+            m_state = State.Idle;
+            m_timer = m_keeperManager.GetIdleDelay();
+            DisableRenderers();
+        }
+
+        private void IdleLogic() 
+        {
+            if (m_timer >= float.Epsilon) return;
+            m_state = State.Ready;
+        }
+
+        /// <summary>
         /// Execute keeper logic
         /// </summary>
-        private void ExecuteKeeperLogic()
+        private void KeeperLogic()
         {
+            
 
             switch (m_state) {
-                //Keeper is ready to carry next exhibit; check for new task
-                case State.Ready:
-                    if (m_keeperManager.IsNewTaskAvailable() == false) return;
 
-                    currentTask = m_keeperManager.GetNextTask(this);
-                    SetMovePosition(currentTask.target.GetStandPoint(transform.position), true, 3f, 10);
-                    m_state = State.Carry;
-                    EnableRenderers();
-                    m_BoxDissolve = currentTask.target.GetExhibit().GetBoxDissolve();
-                    m_carryBox.transform.localScale = m_BoxDissolve.transform.localScale;
-                    m_carryBox.transform.position = new Vector3(m_carryBox.transform.position.x, m_BoxDissolve.transform.position.y, m_carryBox.transform.position.z);
-                    m_carryBox.SetActive(true);
-                    m_WeightRigHand.weight = 1;
+                // Keeper is ready to carry next exhibit; check for new task
+                case State.Ready:
+                    ReadyLogic();
                     break;
                 
                 //Keeper is carrying a crate; check if arrived at place
                 case State.Carry:
-                    if (m_aiPath.remainingDistance >= 0.1f) return;
-                    if (m_aiPath.pathPending) return;
-
-                    // TODO: Play an animation depending on the current goal/job
-                    m_state = State.Work;
-                    m_timer = m_keeperManager.GetPlacingDelay();
-                    
+                    CarryLogic();
                     break;
                 
                 //keeper places the exhibit
                 case State.Work:
-                    // Look directly at the target object
-                    m_aiPath.enableRotation = false;
-                    LookAt(currentTask.position);
-
-                    if (m_timer >= float.Epsilon) return;
-
-                    m_BoxDissolve = currentTask.target.GetExhibit().GetBoxDissolve();
-                    m_BoxDissolve.SetActive(true);
-                    m_carryBox.SetActive(false);
-                    StartCoroutine(ChangeValueDissolve());
-                    Invoke("HideDissolveBox", 2f);
-
-                    // Finalize task depending on the task goal
-                    switch (currentTask.goal)
-                    {
-                        case Goal.PlaceExhibit:
-                            currentTask.target.SetStatus(zdelArtifact.Status.Exhibit);
-                            break;
-                        case Goal.UpgradeExhibit:
-                            currentTask.target.FinalizeUpgrade();
-                            break;
-
-                    }
-                    // Set destination back to the elevator
-                    Vector3 basePoint = m_keeperManager.GetBasePosition();
-                    SetMovePosition(basePoint, true, 1.5f, 15);
-                    m_state = State.Return;
-                    
+                    WorkLogic();
                     break;
 
                 //Keeper is returning to base; check if arrived
                 case State.Return:
-                    m_aiPath.enableRotation = true;
-
-                    // Signal the keeper manager that there the task is complete
-                    m_keeperManager.DoneWorking(this);
-
-                    if (m_aiPath.remainingDistance >= 0.5f) return;
-                    if (m_aiPath.pathPending) return;
-                    
-                    m_state = State.Idle;
-                    m_timer = m_keeperManager.GetIdleDelay();
-                    DisableRenderers();
+                    ReturnLogic();
                     break;
                 
                 //Keeper is idling; check if timer passed for becoming ready
                 case State.Idle:
-                    if (m_timer >= float.Epsilon) return;
-
-                    m_state = State.Ready;
+                    IdleLogic();
                     break;
                 
             }
@@ -211,14 +267,16 @@ namespace Cyens.ReInherit
             m_timer = Mathf.Max(m_timer - Time.deltaTime, 0.0f);
 
             // Update Keeper Logic
-            ExecuteKeeperLogic();
+            KeeperLogic();
         }
 
 
         private void SetMovePosition(Vector3 position, bool teleport, float teleportTimer, int appearIndex)
         {
-            m_aiPath.destination = position;
-            m_aiPath.SearchPath();
+            m_agent.SetDestination(position);
+
+            // m_aiPath.destination = position;
+            // m_aiPath.SearchPath();
             if (teleport)
                 StartCoroutine(Teleport(teleportTimer, appearIndex));
         }
@@ -230,7 +288,10 @@ namespace Cyens.ReInherit
 
             // Get remaining points in path
             var buffer = new List<Vector3>();
+            
             m_aiPath.GetRemainingPath(buffer, out bool stale);
+
+
             // If path is still long enough, teleport
             if (buffer.Count >= 20) {
                 // Prevent keeper form moving to play disappear animation
@@ -259,22 +320,22 @@ namespace Cyens.ReInherit
             }
         }
 
-        private void HideDissolveBox()
-        {
-            m_BoxDissolve.SetActive(false);
-        }
+        // private void HideDissolveBox()
+        // {
+        //     m_BoxDissolve.SetActive(false);
+        // }
 
-        IEnumerator ChangeValueDissolve()
-        {
-            float t = 0f;
-            while (t < changeTimeDissolve)
-            {
-                t += Time.deltaTime;
-                valueDissolve = Mathf.Lerp(0f, 1f, t / changeTimeDissolve);
-                m_BoxDissolve.GetComponent<MeshRenderer>().material.SetFloat("_Dissolve_Amount", valueDissolve);
-                yield return null;
-            }
-        }
+        // IEnumerator ChangeValueDissolve()
+        // {
+        //     float t = 0f;
+        //     while (t < changeTimeDissolve)
+        //     {
+        //         t += Time.deltaTime;
+        //         valueDissolve = Mathf.Lerp(0f, 1f, t / changeTimeDissolve);
+        //         m_BoxDissolve.GetComponent<MeshRenderer>().material.SetFloat("_Dissolve_Amount", valueDissolve);
+        //         yield return null;
+        //     }
+        // }
 
         IEnumerator ChangeCharacterOpacity(Material materialToChange, float startOpacity, float endOpacity)
         {

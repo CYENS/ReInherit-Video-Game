@@ -18,5 +18,8 @@ namespace Cyens.ReInherit
         public string description;
         
         public Mesh mesh;
+
+        public int siblingIndex => transform.GetSiblingIndex();
+        
     }
 }

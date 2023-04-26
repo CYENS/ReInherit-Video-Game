@@ -299,7 +299,7 @@ namespace Cyens.ReInherit
 
 
             // Send keeper to upgrade the exhibit display case
-            KeeperManager.Instance.AddUpgradeTask(this);
+            //KeeperManager.Instance.AddUpgradeTask(this);
 
 
             Refresh(true);

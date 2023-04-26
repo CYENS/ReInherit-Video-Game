@@ -80,8 +80,8 @@ namespace Cyens.ReInherit
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if(Application.isPlaying)
-                SetColor(color);
+            //if(Application.isPlaying)
+            //   SetColor(color);
         }
 #endif
 

@@ -20,18 +20,16 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Crate Dissolve
-  m_Shader: {fileID: -6465566751694194690, guid: d0f3ff0fd4b75f84cb4b239905d60dd9,
+  m_Name: Crate
+  m_Shader: {fileID: -6465566751694194690, guid: a8cfa7e289a70834083cd87e8f07ff0f,
     type: 3}
-  m_ValidKeywords:
-  - _ALPHATEST_ON
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
-  stringTagMap:
-    RenderType: TransparentCutout
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -64,6 +62,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: e697cfd5794ed134cb552f186d5a2eb9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MainTexture:
+        m_Texture: {fileID: 2800000, guid: 1c050cdeafb04594c9932db69958c208, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -76,7 +78,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_63ed9d1157384b838005a58122a9e724_Texture_1:
+    - _SampleTexture2D_9b6b52350fb140639cf74b1e89459b6b_Texture_1:
         m_Texture: {fileID: 2800000, guid: e697cfd5794ed134cb552f186d5a2eb9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -108,7 +110,6 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Dissolve_Amount: 0
     - _DstBlend: 0
     - _Edge_Width: 0.01
     - _EnvironmentReflections: 1
@@ -118,6 +119,7 @@ Material:
     - _Metallic: 0
     - _Noise_Scale: 30
     - _OcclusionStrength: 1
+    - _Opacity: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0

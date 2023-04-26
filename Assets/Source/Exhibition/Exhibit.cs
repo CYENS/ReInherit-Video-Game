@@ -56,6 +56,8 @@ namespace Cyens.ReInherit.Exhibition
         [Tooltip("Metadata attached to the object")]
         private MetaData m_metaData;
 
+
+
         #if UNITY_EDITOR
 
         /// <summary>
@@ -189,6 +191,24 @@ namespace Cyens.ReInherit.Exhibition
         #endif
 
         
+        public void BeginDissolveEffect()
+        {
+            var exhibitCase = m_exCase;
+            exhibitCase.BeginDissolveEffect();
+        }
+
+        public Vector3 ClosestStandPoint(Vector3 point)
+        {
+            // Get Current Exhibit Case
+            var exhibitCase = m_exCase;
+            return exhibitCase.ClosestStandPoint(point);
+        }
+
+        public void SetState( State state )
+        {
+            this.m_state = state;
+
+        }
 
 
     }

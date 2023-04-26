@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Patterns;
+using Cyens.ReInherit.Managers;
 
 namespace Cyens.ReInherit.Exhibition
 {
@@ -14,6 +15,23 @@ namespace Cyens.ReInherit.Exhibition
     public class ExhibitManager : CollectionManager<ExhibitManager,Exhibit>
     {
         
+        protected Exhibit[] m_exhibits;
+
+
+        protected new void Start() 
+        {
+            base.Start();
+            m_exhibits = m_collection.Get<Exhibit>();
+        }
+        
+
+        public static void Place( int index, Vector3 point )
+        {
+            Exhibit exhibit = Instance.m_exhibits[index];
+            exhibit.transform.position = point;
+            exhibit.SetState( Exhibit.State.Transit );
+            KeeperManager.Instance.AddPlaceTask( exhibit );
+        }
         
     }
 }
