@@ -35,20 +35,21 @@ namespace Cyens.ReInherit.Architect
 
         public void SetModelType(Direction direction, WallModel.WallType type)
         {
+            if (direction.Id == DirectionId.South) {
+                var index = Index.FromWorld(transform.position);
+                var entranceIndex1 = new Index(Index.MaxSizeX / 2, 0);
+                var entranceIndex2 = entranceIndex1.East;
 
-            // If this room is connected to stage, remove south walls to merge them
-            var entryRoom = GameManager.Instance.entryRoomCoordinates;
-            if (Mathf.Approximately(transform.position.x, entryRoom.x)
-                && Mathf.Approximately(transform.position.z, entryRoom.y)
-                && direction.Id == DirectionId.South) {
-                type = WallModel.WallType.None;
+                if (index == entranceIndex1 || index == entranceIndex2) {
+                    type = WallModel.WallType.None;
+                }
             }
 
             var model = wallModels[direction];
             if (model != null) {
                 model.Type = type;
             }
-            
+
             northEastPillar.NotifyWallTypeChanged(direction, type);
             northWestPillar.NotifyWallTypeChanged(direction, type);
             southEastPillar.NotifyWallTypeChanged(direction, type);
