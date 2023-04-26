@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Cyens.ReInherit.Architect
@@ -15,6 +16,7 @@ namespace Cyens.ReInherit.Architect
     }
 
     [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public struct Direction
     {
         private static readonly Index[] Indices;
@@ -24,7 +26,7 @@ namespace Cyens.ReInherit.Architect
 
         // We're using an enum for its underlying type, even though an int would be better.
         // This is so the inspector will treat its value as an enum.
-        [SerializeField] private DirectionId value;
+        [SerializeField] [JsonProperty] private DirectionId value;
 
         // We expose the enum value for use with switch statements 
         public DirectionId Id => value;
@@ -80,7 +82,7 @@ namespace Cyens.ReInherit.Architect
             StringValues[North.Ordinal] = "North";
             StringValues[South.Ordinal] = "South";
         }
-        
+
         public static Direction FromIndices(Index from, Index to)
         {
             return FromIndexNormalized(to - from);

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using Cyens.ReInherit.Extensions;
 using Cyens.ReInherit.Pooling;
+using Cyens.ReInherit.Serialization;
 using UnityEngine;
 
 namespace Cyens.ReInherit.Architect
 {
-    public partial class RoomGraph : MonoBehaviour
+    public partial class RoomGraph : MonoBehaviour, IJsonDataObject<RoomGraphJsonData>
     {
         private readonly GridData<Block> m_blocks = new();
 
@@ -137,7 +138,7 @@ namespace Cyens.ReInherit.Architect
             var newRoom = InnerRoom.Create(this);
             foreach (var tile in strayIndicesBuffer) {
                 newRoom.tiles.Add(tile);
-                
+
                 var block = m_blocks[tile];
                 block.state = VisitState.None;
                 block.RemapRoomAndLinks(newRoom);
@@ -195,7 +196,7 @@ namespace Cyens.ReInherit.Architect
                         continue;
                     }
 
-                    block.Links[direction.Opposite] = null;
+                    block.Links[direction.Opposite] = false;
                     block.RefreshModel();
                 }
             }
@@ -332,7 +333,15 @@ namespace Cyens.ReInherit.Architect
         /// Get the room the index connects towards a given direction
         public Room GetConnection(Index index, Direction direction)
         {
-            return m_blocks.TryGet(index, out var block) ? block.Links[direction] : null;
+            if (!m_blocks.TryGet(index, out var block)) {
+                return null;
+            }
+
+            if (block.Links[direction]) {
+                return m_blocks[index.Towards(direction)].room;
+            }
+
+            return null;
         }
 
         /// Get if the index is accessible from the adjacent index at the specified direction.
@@ -342,7 +351,7 @@ namespace Cyens.ReInherit.Architect
         {
             if (m_blocks.TryGet(index, out var block)) {
                 if (m_blocks.TryGet(index.Towards(direction), out var blockTowards)) {
-                    if (block.room == blockTowards.room || block.Links[direction] != null) {
+                    if (block.room == blockTowards.room || block.Links[direction]) {
                         return true;
                     }
                 }
@@ -360,9 +369,9 @@ namespace Cyens.ReInherit.Architect
             [SerializeField] public BlockModel model;
             [SerializeField] public VisitState state;
             [SerializeField] private Index index;
-            [SerializeField] private DirectionList<Room> links;
+            [SerializeField] private DirectionList<bool> links;
 
-            public DirectionList<Room> Links => links;
+            public DirectionList<bool> Links => links;
 
             public Block(Index index)
             {
@@ -411,7 +420,7 @@ namespace Cyens.ReInherit.Architect
                     WallModel.WallType wallType;
                     if (other.room == room) {
                         wallType = WallModel.WallType.None;
-                    } else if (other.room == null || link != other.room || other.Links[direction.Opposite] != room) {
+                    } else if (other.room == null || !link || !other.Links[direction.Opposite]) {
                         wallType = WallModel.WallType.Wall;
                     } else {
                         wallType = WallModel.WallType.Door;
@@ -419,7 +428,7 @@ namespace Cyens.ReInherit.Architect
 
                 #if UNITY_EDITOR
                     if (wallType != WallModel.WallType.Door) {
-                        if (Links[direction] != null && other.Links[direction.Opposite] != null) {
+                        if (Links[direction] && other.Links[direction.Opposite]) {
                             Debug.LogError("Invalid link detected between blocks");
                         }
                     }
@@ -468,7 +477,7 @@ namespace Cyens.ReInherit.Architect
 
                 foreach (var dir in Direction.Values) {
                     var link = Links[dir];
-                    if (link == null) {
+                    if (!link) {
                         continue;
                     }
 
@@ -477,10 +486,10 @@ namespace Cyens.ReInherit.Architect
 
                     if (blockTowards.room == newRoom) {
                         // Remove link
-                        Links[dir] = blockTowards.Links[dir.Opposite] = null;
-                    } else if (link == blockTowards.room && blockTowards.Links[dir.Opposite] == room) {
+                        Links[dir] = blockTowards.Links[dir.Opposite] = false;
+                    } else if (blockTowards.Links[dir.Opposite]) {
                         // Remap connection
-                        blockTowards.Links[dir.Opposite] = newRoom;
+                        blockTowards.Links[dir.Opposite] = true;
                     }
                 }
 
@@ -561,7 +570,6 @@ namespace Cyens.ReInherit.Architect
             // Update Navmesh
             block1.model.RecreateNavMesh();
             block2.model.RecreateNavMesh();
-
         }
 
         public void Unlink(Index from, Index to)
@@ -575,8 +583,8 @@ namespace Cyens.ReInherit.Architect
             var block1 = m_blocks[from];
             var block2 = m_blocks[to];
 
-            block1.Links[direction] = null;
-            block2.Links[direction.Opposite] = null;
+            block1.Links[direction] = false;
+            block2.Links[direction.Opposite] = false;
 
             block1.RefreshModel();
             block2.RefreshModel();
@@ -586,7 +594,7 @@ namespace Cyens.ReInherit.Architect
             block2.model.RecreateNavMesh();
         }
 
-        private class InnerRoom : Room
+        private class InnerRoom : Room, IJsonDataObject<RoomJsonData>
         {
             [SerializeField] private RoomGraph graph;
 
@@ -650,6 +658,46 @@ namespace Cyens.ReInherit.Architect
 
                     block.ClearBlockAndGatherModel();
                     graph.RefreshAroundIndex(tile);
+                }
+            }
+
+
+            public RoomJsonData WriteJsonData()
+            {
+                var data = new RoomJsonData();
+
+                foreach (var tile in tiles) {
+                    data.blocks.Add(tile);
+                    var block = graph.m_blocks[tile];
+                    foreach (var direction in Direction.Values) {
+                        if (block.Links[direction]) {
+                            data.connections.Add(new KeyValuePair<Index, Direction>(tile, direction));
+                        }
+                    }
+                }
+
+                return data;
+            }
+
+            public void LoadJsonData(RoomJsonData data)
+            {
+                tiles.Clear();
+                foreach (var tile in data.blocks) {
+                    tiles.Add(tile);
+                    graph.m_blocks[tile] = new Block(tile) {
+                        room = this,
+                    };
+                }
+
+                foreach (var connection in data.connections) {
+                    graph.m_blocks[connection.Key].Links[connection.Value] = true;
+                }
+            }
+
+            public void RefreshAll()
+            {
+                foreach (var tile in tiles) {
+                    graph.m_blocks[tile].RefreshModel();
                 }
             }
         }

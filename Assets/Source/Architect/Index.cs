@@ -1,19 +1,21 @@
 ﻿using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Cyens.ReInherit.Architect
 {
     [Serializable]
+    [JsonObject(MemberSerialization.OptIn)]
     public struct Index
     {
         public const int MaxSizeX = 48;
         public const int MaxSizeY = 32;
 
         private const int OffsetX = MaxSizeX / 2;
-        private const int OffsetY = 0;
+        private const int OffsetY = 0x0;
 
-        public int x;
-        public int y;
+        [JsonProperty] public int x;
+        [JsonProperty] public int y;
 
         public const float UnitsPerIndex = 9;
 
