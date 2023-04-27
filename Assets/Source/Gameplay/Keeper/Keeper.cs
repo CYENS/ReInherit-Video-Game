@@ -62,7 +62,7 @@ namespace Cyens.ReInherit
 
             m_agent = GetComponent<NavMeshAgent>();
 
-            m_aiPath = GetComponent<AIPath>();
+            //m_aiPath = GetComponent<AIPath>();
             FindRenderers();
             EnableDisableRenderers(false);
             m_WeightRigHand = m_RigHands.GetComponent<Rig>();
@@ -162,24 +162,17 @@ namespace Cyens.ReInherit
             // TODO: Play an animation depending on the current goal/job
             m_state = State.Work;
             m_timer = m_keeperManager.GetPlacingDelay();
+
+            Exhibit exhibit = currentTask.target;
+            exhibit.BeginDissolveEffect();
+            m_carryBox.SetActive(false);
         }
 
         private void WorkLogic()
         {
             Exhibit exhibit = currentTask.target;
-
-            // Look directly at the target object
-            //m_aiPath.enableRotation = false;
             LookAt(currentTask.position);
-
             if (m_timer >= float.Epsilon) return;
-
-            // m_BoxDissolve = currentTask.target.GetExhibit().GetBoxDissolve();
-            //m_BoxDissolve.SetActive(true);
-
-            exhibit.BeginDissolveEffect();
-            m_carryBox.SetActive(false);
-
 
             // Finalize task depending on the task goal
             switch (currentTask.goal)
@@ -277,8 +270,9 @@ namespace Cyens.ReInherit
 
             // m_aiPath.destination = position;
             // m_aiPath.SearchPath();
-            if (teleport)
-                StartCoroutine(Teleport(teleportTimer, appearIndex));
+
+            //if (teleport)
+            //    StartCoroutine(Teleport(teleportTimer, appearIndex));
         }
 
         IEnumerator Teleport(float delay, int appearIndex)

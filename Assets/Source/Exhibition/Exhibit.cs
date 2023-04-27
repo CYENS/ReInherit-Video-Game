@@ -201,7 +201,8 @@ namespace Cyens.ReInherit.Exhibition
         {
             // Get Current Exhibit Case
             var exhibitCase = m_exCase;
-            return exhibitCase.ClosestStandPoint(point);
+            Vector3 closestPoint = exhibitCase.ClosestStandPoint(point);
+            return closestPoint;
         }
 
         public void SetState( State state )

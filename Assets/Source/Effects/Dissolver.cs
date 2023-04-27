@@ -43,7 +43,7 @@ namespace Cyens.ReInherit
 
         private void OnEnable() 
         {
-            m_dissolve = 1.0f;
+            m_dissolve = -1.0f;
             Refresh();
         }
 
@@ -58,13 +58,13 @@ namespace Cyens.ReInherit
         // Update is called once per frame
         void Update()
         {
-            m_dissolve -= Time.deltaTime * m_dissolveSpeed;
-            m_dissolve = Mathf.Max( m_dissolve, 0.0f );
+            m_dissolve += Time.deltaTime * m_dissolveSpeed;
+            m_dissolve = Mathf.Min( m_dissolve, 1.0f );
             Refresh();
 
-            if( m_dissolve < float.Epsilon )
+            if( m_dissolve > 1.0f - float.Epsilon )
             {
-                m_dissolve = 0.0f;
+                m_dissolve = 1.0f;
                 Refresh();
                 gameObject.SetActive(false);
             }

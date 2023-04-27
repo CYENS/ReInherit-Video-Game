@@ -18,7 +18,8 @@ namespace Cyens.ReInherit.Managers
         private int m_tasksLeft = 0;
         [SerializeField] private Transform m_basePosition;
         [SerializeField] private Transform m_ExhibitTestPoints;
-        [SerializeField] [Tooltip("Seconds to wait for placing exhibit.")]
+        [SerializeField] 
+        [Tooltip("Seconds to wait for placing exhibit.")]
         private float m_placingDelay;
         [SerializeField] [Tooltip("Seconds to wait/idling until next task.")]
         private float m_idleDelay;

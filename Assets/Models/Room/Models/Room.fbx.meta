@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Marble
+    second: {fileID: 2100000, guid: 63936783c0cefe742826e02311ac95ea, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Parquet
     second: {fileID: 2100000, guid: 437d7165f045b9248bdff1178a50eaea, type: 2}
   - first:
