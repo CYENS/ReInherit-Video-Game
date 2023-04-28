@@ -57,6 +57,8 @@ namespace Cyens.ReInherit.Exhibition
         [SerializeField]
         [Tooltip("Reference to the dissolving crate effect")]
         private Dissolver m_dissolver;
+        public GameObject dissolveBox => m_dissolver.gameObject;
+
 
         private Artifact artifact;
 
@@ -116,16 +118,7 @@ namespace Cyens.ReInherit.Exhibition
             #endif
         }
   
-
-        public void BeginDissolveEffect()
-        {
-            if(m_dissolver == null )
-            {
-                return;
-            }
-            m_dissolver.gameObject.SetActive(true);
-        }
-
+        
 
         /// <summary>
         /// Performs a set of action when the round ends.

@@ -33,7 +33,7 @@ namespace Cyens.ReInherit.Exhibition
 
         [SerializeField]
         [Tooltip("In what state is the exhibit currently in")]
-        public State m_state = State.Storage;
+        internal State m_state = State.Storage;
 
 
         [SerializeField]
@@ -50,11 +50,15 @@ namespace Cyens.ReInherit.Exhibition
         [SerializeField]
         [Tooltip("The selected exhibit case")]
         private ExhibitCase m_exCase;
+        public GameObject dissolveBox => m_exCase.dissolveBox;
 
 
         [SerializeField]
         [Tooltip("Metadata attached to the object")]
         private MetaData m_metaData;
+
+
+        private Ghostify[] ghostifies;
 
 
 
@@ -190,12 +194,25 @@ namespace Cyens.ReInherit.Exhibition
 
         #endif
 
-        
-        public void BeginDissolveEffect()
+
+        protected void Start() 
         {
-            var exhibitCase = m_exCase;
-            exhibitCase.BeginDissolveEffect();
+            ghostifies = GetComponentsInChildren<Ghostify>(true);
+
+            SetState(m_state);
         }
+        
+        public State GetState() => m_state;
+
+        protected void SetGhostState( bool value )
+        {
+            foreach( var ghost in ghostifies )
+            {
+                ghost.enabled = value;
+            }
+        }
+
+        
 
         public Vector3 ClosestStandPoint(Vector3 point)
         {
@@ -205,10 +222,31 @@ namespace Cyens.ReInherit.Exhibition
             return closestPoint;
         }
 
+        public void Install() => SetState( State.Display );
+
         public void SetState( State state )
         {
             this.m_state = state;
+            switch(state)
+            {
+                case State.Display:
+                    gameObject.SetActive(true);
 
+                    SetGhostState(false);
+                break;
+
+                case State.Transit:
+                    gameObject.SetActive(true);
+
+                    SetGhostState(true);
+                break;
+
+                case State.Storage:
+                    gameObject.SetActive(false);
+
+                break;
+
+            }
         }
 
 

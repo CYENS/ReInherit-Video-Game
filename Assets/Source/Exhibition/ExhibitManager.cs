@@ -24,14 +24,30 @@ namespace Cyens.ReInherit.Exhibition
             m_exhibits = m_collection.Get<Exhibit>();
         }
         
+        public Exhibit GetExhibit(int index)
+        {
+            if( m_exhibits == null || m_exhibits.Length == 0 )
+            {
+                return null;
+            }
+
+            index = Mathf.Clamp(index,0,m_exhibits.Length-1);
+            return m_exhibits[index];
+        }
 
         public static void Place( int index, Vector3 point )
         {
-            Exhibit exhibit = Instance.m_exhibits[index];
+            Exhibit exhibit = Instance.GetExhibit(index);
             exhibit.transform.position = point;
             exhibit.SetState( Exhibit.State.Transit );
             KeeperManager.Instance.AddPlaceTask( exhibit );
         }
         
+        public static Exhibit.State GetState( int index )
+        {
+            Exhibit exhibit = Instance.GetExhibit(index);
+            return exhibit.GetState();
+        }
+
     }
 }

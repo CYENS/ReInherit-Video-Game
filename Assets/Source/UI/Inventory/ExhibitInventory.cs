@@ -32,6 +32,17 @@ namespace Cyens.ReInherit
             MetaData metaData = m_selected.m_metaData;
             Mesh mesh = metaData.mesh;
 
+            // Ensure that you exhibit is available to place
+            int exhibitIndex = metaData.siblingIndex;
+            var state = ExhibitManager.GetState(exhibitIndex);
+
+            if( state != Exhibit.State.Storage )
+            {
+                m_selected = null;
+                return;
+            }
+
+
             PlacementManager.PlaceExhibit( gameObject, mesh);
 
         }

@@ -1751,18 +1751,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0935e694d007dfb49b32bb673709d741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTask:
-    target: {fileID: 0}
-    goal: 0
-  m_carryBox: {fileID: 3927213524764541234}
-  m_state: 1
   m_timer: 0
+  currentTask:
+    type: 0
+    threshold: 0
+    speed: 0
+    delay: 0
+    point: {x: 0, y: 0, z: 0}
+    message: 
+    transform: {fileID: 0}
+    gameObject: {fileID: 0}
   m_showcasePrefab: {fileID: 0}
   m_RigHands: {fileID: 6319258596343346467}
   characterMaterial: {fileID: 0}
   trolleyMaterial1: {fileID: 0}
   trolleyMaterial2: {fileID: 0}
   trolleyMaterial3: {fileID: 0}
+  m_carryBox: {fileID: 3927213524764541234}
 --- !u!95 &2788677414933681779
 Animator:
   serializedVersion: 4
@@ -1790,12 +1795,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3927213525005316473}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eafdd8251c0ba1d4883773a74531cd1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAstar: 1
+  isAstar: 0
   motionSpeedParam: MotionSpeed
   motionParam: Speed
   motionMult: 3
