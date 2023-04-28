@@ -150,8 +150,18 @@ namespace Cyens.ReInherit
 
             // Move back to base and deactivate
             AddMoveTask( basePoint, 0.8f, 0.5f );
-            AddDeactivateTask(gameObject);
+            AddMessageTask( gameObject, "Done" );
 
+        }
+
+        /// <summary>
+        /// Done with all tasks.
+        /// Notify keeper manager and deactivate.
+        /// </summary>
+        public void Done() 
+        {
+            m_keeperManager.DoneWorking( this );
+            gameObject.SetActive(false);
         }
 
 

@@ -68,18 +68,17 @@ namespace Cyens.ReInherit.Managers
             }
         }
 
+        [Header("Variables")]
+        [SerializeField] 
+        private float m_time;
 
-        public float time;
-
+        public float remainingTime => m_time;
 
 
         // -----------------------
         private float m_bufferTimer;
 
 
-
-        [SerializeField]
-        private TMP_Text txtTime;
 
 
 
@@ -115,7 +114,7 @@ namespace Cyens.ReInherit.Managers
             m_museumState = MuseumState.Open;
             
             // TODO: Decide the amount of time for the museum to be open
-            time = 30.0f;
+            m_time = 30.0f;
 
             // Spawn visitors
             VisitorManager.Instance.Spawn();
@@ -160,20 +159,15 @@ namespace Cyens.ReInherit.Managers
 
         private void MuseumOpenUpdate()
         {
-            time -= Time.deltaTime;
+            m_time -= Time.deltaTime;
 
 
-            if( time <= float.Epsilon )
+            if( m_time <= float.Epsilon )
             {
                 CloseMuseum();
                 return;
             }
-
-
-            // Update UI with the time remaining text
-            int minutes = Mathf.FloorToInt(time / 60.0f);
-            int seconds = Mathf.FloorToInt(Mathf.Repeat(time, 60.0f));
-            txtTime.text = String.Format("{0:00}:{1:00}", minutes, seconds);
+            
         }
 
 
@@ -181,7 +175,10 @@ namespace Cyens.ReInherit.Managers
         {
             m_bufferTimer = Mathf.Clamp(m_bufferTimer - Time.deltaTime, 0.0f, 1.0f);
             
-            if (m_museumState == MuseumState.Open) MuseumOpenUpdate();
+            if (m_museumState == MuseumState.Open) 
+            {
+                MuseumOpenUpdate();
+            }
         }
 
        
