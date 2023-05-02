@@ -1,0 +1,239 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1919267067459022737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1919267067459022738}
+  - component: {fileID: 1919267067459022739}
+  - component: {fileID: 4512914484458508526}
+  m_Layer: 0
+  m_Name: TraditionalChairChurch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1919267067459022738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919267067459022737}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2660098901058993646}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1919267067459022739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919267067459022737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af2b34fba18e1a4892f89fb561d7c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_info: {fileID: 11400000, guid: c83fedc13509cac4b82c9b4444d18b00, type: 2}
+  m_state: 0
+  m_upgrade: 0
+  m_exCases:
+  - {fileID: 2567610812784375327}
+  m_exCase: {fileID: 2567610812784375327}
+  m_metaData: {fileID: 4512914484458508526}
+  m_fixModel: 0
+--- !u!114 &4512914484458508526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919267067459022737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26822c98c79ed2b4e9acfbf5ba81c5f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 5da996e7e4200404b8c250fd4077ad0f, type: 3}
+  label: TraditionalChairChurch
+  description: 
+  mesh: {fileID: 4440196125037674620, guid: 65d6818db0eed9a40b457de8805645dd, type: 3}
+--- !u!1001 &343415063882674610
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4347472612806493368}
+    m_Modifications:
+    - target: {fileID: 7012283354349878552, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_Name
+      value: TraditionalChairChurch
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.00000009735359
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452032114840469786, guid: e9facda745396d34e9086aa1fd8bde8d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e9facda745396d34e9086aa1fd8bde8d, type: 3}
+--- !u!1001 &5021562830212807331
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1919267067459022738}
+    m_Modifications:
+    - target: {fileID: 222475666088077631, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208715, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_Name
+      value: NoCase
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d30e579dbf59c04498433213620cf53e, type: 3}
+--- !u!114 &2567610812784375327 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7354889085797092540, guid: d30e579dbf59c04498433213620cf53e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5021562830212807331}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8eb932acda979458698ccd283483cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2660098901058993646 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7015127257696208717, guid: d30e579dbf59c04498433213620cf53e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5021562830212807331}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4347472612806493368 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8783566867616874011, guid: d30e579dbf59c04498433213620cf53e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5021562830212807331}
+  m_PrefabAsset: {fileID: 0}
