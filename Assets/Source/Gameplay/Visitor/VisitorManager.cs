@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Cyens.ReInherit.Exhibition;
 using UnityEngine;
 using Cyens.ReInherit.Patterns;
 using Cyens.ReInherit.Managers;
+using Cyens.ReInherit.Exhibition;
 using Random = UnityEngine.Random;
 
 namespace Cyens.ReInherit
@@ -14,30 +17,33 @@ namespace Cyens.ReInherit
         [Tooltip("Visitor prefab to spawn")]
         private GameObject m_visitorPrefab;
 
+        [SerializeField] private Transform m_visitorsParent;
+        
         private List<Visitor> m_visitors = new List<Visitor>();
-
+        
         [SerializeField] 
         [Tooltip("The overall impression that visitors got from the museum")]
         private float m_impression;
-
+        
         [SerializeField][Tooltip("The number of visitors that will visit your museum on the next round")]
         private int m_visitorCount;
-
+        
         [SerializeField][Tooltip("Hard limit to prevent the game from crashing!")]
         [Range(10,1000)]
         private int m_maxVisitorCount = 100;
-
+        
         [SerializeField] private Vector3 m_exitPosition;
+        
+        private Exhibit[] m_displayExhibits;
+        
+        private ExhibitVisitorHandler[] m_handlers;
 
-        private zdelArtifact[] m_artifacts;
-        private ArtifactVisitorHandler[] m_handlers;
-
-        public zdelArtifact[] GetArtifacts(){ return m_artifacts; }
-        public ArtifactVisitorHandler[] GetVisitorHandlers() { return m_handlers; }
+        public Exhibit[] GetDisplayExhibits() { return m_displayExhibits; }
+        public ExhibitVisitorHandler[] GetVisitorHandlers() { return m_handlers; }
 
         public Vector3 GetExitPosition()
         {
-            Vector3 randomizeX = new Vector3(UnityEngine.Random.Range(-3f, 4f), 0f, 0f);
+            Vector3 randomizeX = new Vector3(UnityEngine.Random.Range(-3f, 3f), 0f, 0f);
             return m_exitPosition + randomizeX;
         }
         
@@ -66,34 +72,22 @@ namespace Cyens.ReInherit
                 return closerAgent;
             return null;
         }
-        
-        private ArtifactVisitorHandler[] FindHandlers()
-        {
-            // TO-DO Get all artifacts
 
-            zdelArtifact[] artifacts = ArtifactManager.Instance.GetArtifactsByStatus(zdelArtifact.Status.Exhibit);
-            ArtifactVisitorHandler[] handlers = new ArtifactVisitorHandler[artifacts.Length];
-            for( int i=0; i<artifacts.Length; i++)
-                handlers[i] = artifacts[i].GetComponentInChildren<ArtifactVisitorHandler>(false);
-           
-            return handlers;
-        }
-        
         /// <summary>
         /// Spawn visitors around the exhibits
         /// </summary>
         public void Spawn()
         {
             // Get a list of exhibits
-            m_artifacts = ArtifactManager.Instance.GetArtifactsByStatus(zdelArtifact.Status.Exhibit);
+            m_displayExhibits = ExhibitManager.Instance.GetExhibitsByState(Exhibit.State.Display);
 
             int visitorID = 0;
             // Grab interest amount and store in a 1-to-1 array
             float sumAttraction = 0.0f;
-            float[] probabilities = new float[m_artifacts.Length];
-            for(int i = 0; i < m_artifacts.Length; i++ ) {
-                // TO-DO get artifact attraction
-                float attraction = m_artifacts[i].GetAttraction();
+            float[] probabilities = new float[m_displayExhibits.Length];
+            for(int i = 0; i < m_displayExhibits.Length; i++ ) {
+                // TO-DO get exhibit attraction
+                float attraction = 1f;
                 sumAttraction += attraction;
                 probabilities[i] = attraction;
             }
@@ -103,19 +97,19 @@ namespace Cyens.ReInherit
                 probabilities[i] /= sumAttraction;
 
             // Distribute visitors
-            m_handlers = new ArtifactVisitorHandler[m_artifacts.Length];
-            for(int i = 0; i < m_artifacts.Length; i++)
+            m_handlers = new ExhibitVisitorHandler[m_displayExhibits.Length];
+            for(int i = 0; i < m_displayExhibits.Length; i++)
             {
-                var artifact = m_artifacts[i];
+                var exhibit = m_displayExhibits[i];
 
-                var handler = artifact.GetVisitorHandler();
+                var handler = exhibit.GetVisitorHandler();
                 m_handlers[i] = handler;
 
                 int spectators = Mathf.Max( Mathf.RoundToInt(m_visitorCount * probabilities[i]), 0 );
 
                 for ( int v = 0; v < spectators; v++ )
                 {
-                    GameObject temp = GameObject.Instantiate(m_visitorPrefab, transform);
+                    GameObject temp = GameObject.Instantiate(m_visitorPrefab, m_visitorsParent);
                     temp.name = "Visitor";
 
                     Visitor visitor = temp.GetComponent<Visitor>();
@@ -134,11 +128,11 @@ namespace Cyens.ReInherit
                         break;
                     }
 
-                    visitor.visitedArtifacts.Add(handler);
-                    visitor.SetArtifact(handler, (int)freeSlot.y);
+                    visitor.visitedExhibits.Add(handler);
+                    visitor.SetExhibit(handler, (int)freeSlot.y);
                     visitor.transform.position = freeSlot;
                     
-                    Vector3 targetPos = m_artifacts[i].transform.position;
+                    Vector3 targetPos = m_displayExhibits[i].transform.position;
                     Vector3 lookDir = targetPos - visitor.transform.position;
                     lookDir.y = 0.0f;
                     visitor.transform.rotation = Quaternion.LookRotation(lookDir);
@@ -146,7 +140,7 @@ namespace Cyens.ReInherit
                     m_visitors.Add(visitor);
                 }
             }
-            float meanAttraction = (m_artifacts.Length > 0) ? sumAttraction / m_artifacts.Length  : 0.0f;
+            float meanAttraction = (m_displayExhibits.Length > 0) ? sumAttraction / m_displayExhibits.Length  : 0.0f;
  
             // Calculate base impression based on how well the museum is setup;
             // TODO: Consider how this impression may be affected while the museum is open

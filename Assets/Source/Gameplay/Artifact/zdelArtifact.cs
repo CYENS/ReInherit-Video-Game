@@ -69,7 +69,7 @@ namespace Cyens.ReInherit
             return upgraded ? _exhibit02 : _exhibit01;
         }
 
-        public ArtifactVisitorHandler GetVisitorHandler() => GetExhibit().GetComponent<ArtifactVisitorHandler>();
+        //public ArtifactVisitorHandler GetVisitorHandler() => GetExhibit().GetComponent<ArtifactVisitorHandler>();
         
 
         /// <summary>
@@ -255,8 +255,8 @@ namespace Cyens.ReInherit
             // Step Three: Generate view points for exhibit
             if (status == Status.Exhibit)
             {
-                var handler = GetVisitorHandler();
-                handler.GenerateViewPoints();
+                //var handler = GetVisitorHandler();
+                //handler.GenerateViewPoints();
             }
 
         }
