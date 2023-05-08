@@ -47,12 +47,15 @@ namespace Cyens.ReInherit.Exhibition
 
         [SerializeField]
         [Tooltip("An object that will be used as a placement reference for the artifact")]
-        private Transform placement;
+        private Transform m_placement;
+
+        public Vector3 Placement => m_placement.position;
+
 
 
         [SerializeField]
         [Tooltip("Points that people can stand around this exhibit case")]
-        private Transform[] standPoints;
+        private Transform[] m_standPoints;
 
         [SerializeField]
         [Tooltip("Reference to the dissolving crate effect")]
@@ -85,7 +88,7 @@ namespace Cyens.ReInherit.Exhibition
         {
             float minDistance = float.MaxValue;
             Vector3 closest = point;
-            foreach( Transform standPoint in standPoints )
+            foreach( Transform standPoint in m_standPoints )
             {
                 Vector3 position = standPoint.position;
                 float distance = Vector3.Distance(point,position);
@@ -104,7 +107,7 @@ namespace Cyens.ReInherit.Exhibition
             if(asPrefab)
             {
                 GameObject temp = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
-                temp.transform.SetParent(placement);
+                temp.transform.SetParent(m_placement);
                 temp.transform.localPosition = Vector3.zero;
                 artifact = temp.GetComponent<Artifact>();
             }

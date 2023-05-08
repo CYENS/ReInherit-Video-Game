@@ -45,7 +45,7 @@ namespace Cyens.ReInherit
             // Everything else should work the same
             base.Update();
             
-            pos = Camera.main.ViewportToWorldPoint(transform.position);
+            //pos = Camera.main.ViewportToWorldPoint(transform.position);
         }
     }
 }
