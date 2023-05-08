@@ -59,9 +59,10 @@ namespace Cyens.ReInherit.Exhibition
 
 
         private Ghostify[] ghostifies;
+        private ExhibitVisitorHandler m_visitorHandler;
 
-
-
+        public ExhibitVisitorHandler GetVisitorHandler() { return m_visitorHandler; }
+        
         #if UNITY_EDITOR
 
         /// <summary>
@@ -197,8 +198,10 @@ namespace Cyens.ReInherit.Exhibition
 
         protected void Start() 
         {
+            if(TryGetComponent<ExhibitVisitorHandler>(out ExhibitVisitorHandler evh)) {
+                m_visitorHandler = evh;
+            }
             ghostifies = GetComponentsInChildren<Ghostify>(true);
-
             SetState(m_state);
         }
         
@@ -231,7 +234,7 @@ namespace Cyens.ReInherit.Exhibition
             {
                 case State.Display:
                     gameObject.SetActive(true);
-
+                    m_visitorHandler.GenerateViewPoints();
                     SetGhostState(false);
                 break;
 

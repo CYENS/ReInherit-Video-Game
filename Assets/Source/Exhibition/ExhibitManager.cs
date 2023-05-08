@@ -23,6 +23,17 @@ namespace Cyens.ReInherit.Exhibition
             base.Start();
             m_exhibits = m_collection.Get<Exhibit>();
         }
+
+        public Exhibit[] GetExhibitsByState(Exhibit.State state)
+        {
+            List<Exhibit> outList = new List<Exhibit>();
+            
+            foreach (var e in m_exhibits) {
+                if(e.m_state == state)
+                    outList.Add(e);
+            }
+            return outList.ToArray();
+        }
         
         public Exhibit GetExhibit(int index)
         {
