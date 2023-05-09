@@ -16,7 +16,8 @@ namespace Cyens.ReInherit.Architect
         {
             m_buffer.Clear();
             var area = data.indicator.InclusiveBounds;
-            if (!IndexBounds.FullBounds.Contains(area)) {
+            
+            if (!data.graph.UsableBounds.Contains(area)) {
                 return false;
             }
 

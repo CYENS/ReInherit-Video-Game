@@ -27,7 +27,32 @@ namespace Cyens.ReInherit.Architect
             foreach (var index in Iterate(IndexBounds.FullBounds)) {
                 m_blocks[index.x, index.y] = new Block(index);
             }
+
+            MaxWidth = 10;
+            MaxHeight = 10;
         }
+
+        private int m_maxWidth = Index.MaxSizeX;
+        private int m_maxHeight = Index.MaxSizeY;
+
+        public int MaxWidth
+        {
+            get => m_maxWidth;
+            set => m_maxWidth = Mathf.Clamp(value, 10, Index.MaxSizeX);
+        }
+
+        public int MaxHeight
+        {
+            get => m_maxHeight;
+            set => m_maxHeight = Mathf.Clamp(value, 10, Index.MaxSizeY);
+        }
+
+        public int MinX => Index.MaxSizeX / 2 - m_maxWidth / 2 - 1;
+        public int MinY => 0;
+        public int MaxX => Index.MaxSizeX / 2 + m_maxWidth / 2;
+        public int MaxY => m_maxHeight + 1;
+
+        public IndexBounds UsableBounds => new(MinX, MinY, MaxX, MaxY);
 
         public int GetRoomsAt(in IndexBounds area, List<Room> result = null)
         {

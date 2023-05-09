@@ -137,7 +137,7 @@ namespace Cyens.ReInherit.Architect
             }
         }
 
-        public static readonly IndexBounds FullBounds = new IndexBounds(Index.MinValue, Index.MaxValue);
+        public static readonly IndexBounds FullBounds = new(Index.MinValue, Index.MaxValue);
 
         public static bool operator ==(IndexBounds lhs, IndexBounds rhs) => lhs.min == rhs.min && lhs.max == rhs.max;
 
