@@ -21,7 +21,6 @@ namespace Cyens.ReInherit
         [SerializeField] private int m_id;
         [SerializeField] private bool m_inSpawnArtifact;
         private NavMeshAgent m_navAgent;
-        private NavMeshObstacle m_frontPassPrevention;
         private Animator m_animator;
         private VisitorChat m_chat;
         
@@ -92,8 +91,6 @@ namespace Cyens.ReInherit
         {
             m_animator = GetComponent<Animator>();
             m_navAgent = GetComponent<NavMeshAgent>();
-            m_frontPassPrevention = transform.Find("PreventFrontPassing").GetComponent<NavMeshObstacle>();
-            m_frontPassPrevention.enabled = false;
             visitedExhibits = new List<ExhibitVisitorHandler>();
             m_ghosties = GetComponentsInChildren<Ghostify>(true);
             m_lookDuration = UnityEngine.Random.Range(7.5f, 12f);
@@ -144,13 +141,6 @@ namespace Cyens.ReInherit
             // This will make the character walk/run based on the animator speed
             moveSpeed = velocity.magnitude / maxSpeed;
             m_animator.SetFloat(m_motionParam, moveSpeed * m_motionMult);
-            
-            // If agent is stationary to observe an exibit, enable front obstacle to prevent
-            // other agents passing in front of the agent.
-            if(moveSpeed > 0.1)
-                m_frontPassPrevention.enabled = false;
-            else
-                m_frontPassPrevention.enabled = true;
 
             // Increase priority of rvo when visitor trying to arrive at its slot.
             if (m_navAgent.remainingDistance < 3f && moveSpeed > 0)
@@ -168,29 +158,6 @@ namespace Cyens.ReInherit
             }
         }
 
-        // Sets high penalty on navmesh around visitor
-        /*public void SetCurrentStandingNodePenalty(uint penalty)
-        {
-            if (penalty > 1) {
-                foreach (var n in m_standingNodes) {
-                    n.Penalty = 0;
-                }
-                m_standingNodes.Clear();
-                GraphNode node = AstarPath.active.GetNearest(transform.position).node;
-                node.Penalty = penalty;
-                m_standingNodes.Add(node);
-                node.GetConnections(connectedTo => {
-                    connectedTo.Penalty = penalty;
-                        m_standingNodes.Add(connectedTo);
-                    });
-            }
-            else {
-                foreach (var node in m_standingNodes) {
-                    node.Penalty = penalty;
-                }
-            }
-        }*/
-        
         // Update is called once per frame
         void Update()
         {

@@ -235,6 +235,7 @@ namespace Cyens.ReInherit.Exhibition
                 case State.Display:
                     gameObject.SetActive(true);
                     m_visitorHandler.GenerateViewPoints();
+                    NavMeshManager.Bake();
                     SetGhostState(false);
                 break;
 

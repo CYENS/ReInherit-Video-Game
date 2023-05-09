@@ -41,6 +41,7 @@ namespace Cyens.ReInherit
             if( m_timer < float.Epsilon )
             {
                 m_timer = 0.0f;
+                Debug.Log("baked");
                 Instance.m_surface.BuildNavMesh();
             }
         }

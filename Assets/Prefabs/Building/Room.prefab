@@ -125,7 +125,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2122491251975615853}
   - component: {fileID: 6818191988043419923}
-  - component: {fileID: 2956241414995029786}
   m_Layer: 0
   m_Name: Room
   m_TagString: Untagged
@@ -180,36 +179,7 @@ MonoBehaviour:
   startIndex:
     x: 0
     y: 0
-  m_surface: {fileID: 2956241414995029786}
---- !u!114 &2956241414995029786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603081496926695383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 0}
+  m_surface: {fileID: 0}
 --- !u!1 &4150967342316039717
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,6 +777,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 4, z: 0.10000062}
   m_Center: {x: 0, y: 2.0000005, z: 2.4499998}
+--- !u!208 &7379874333491896563
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6158407476044108040}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.5, y: 2, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 2.45}
+  m_TimeToStationary: 0.5
 --- !u!4 &7928262159226794954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7904244517128764911, guid: f16f9d60488023f4fa4d6cb5014929b2,
@@ -1003,6 +989,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 4, z: 0.10000062}
   m_Center: {x: 0, y: 2.0000005, z: 2.4499998}
+--- !u!208 &520678651182421213
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8941597362479982847}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.5, y: 2, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 2.45}
+  m_TimeToStationary: 0.5
 --- !u!1001 &3220470473105531082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1161,6 +1163,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.000001, y: 4, z: 0.10000064}
   m_Center: {x: 0, y: 2.0000005, z: 2.4500003}
+--- !u!208 &8958181702304660015
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8822897752225972199}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.5, y: 2, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 2.45}
+  m_TimeToStationary: 0.5
 --- !u!1001 &6050826351897958233
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1269,6 +1287,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.000001, y: 4, z: 0.10000064}
   m_Center: {x: 0, y: 2.0000005, z: 2.4500003}
+--- !u!208 &2430334018100301573
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376200745409628276}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.5, y: 2, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 2.45}
+  m_TimeToStationary: 0.5
 --- !u!1 &2901613531887625825 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8916072419934056760, guid: f16f9d60488023f4fa4d6cb5014929b2,

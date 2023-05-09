@@ -39,8 +39,7 @@ namespace Cyens.ReInherit
             }
             // Check if visitor could talk to other visitor
             else if(animator.GetBool("OpenToTalk"))
-                // TO-DO: Fix interactions
-                Debug.Log("");//CheckTalkAvailability(animator);
+                CheckTalkAvailability(animator);
             // Talk ended, rotate back to artifact
             else
                 m_visitor.RotateVisitorTowardsDestination();
