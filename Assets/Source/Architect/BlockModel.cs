@@ -1,6 +1,7 @@
 using Cyens.ReInherit.Managers;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Cyens.ReInherit.Architect
 {
@@ -16,6 +17,10 @@ namespace Cyens.ReInherit.Architect
         [SerializeField] private bool moveToIndex;
         [SerializeField] private Index startIndex;
 
+
+        [SerializeField]
+        private NavMeshSurface m_surface;
+
         public void Clear()
         {
             foreach (var dir in Direction.Values) {
@@ -26,6 +31,10 @@ namespace Cyens.ReInherit.Architect
             northWestPillar.Clear();
             southEastPillar.Clear();
             southWestPillar.Clear();
+        }
+
+        private void Start() {
+            m_surface = GetComponent<NavMeshSurface>();
         }
 
         public WallModel.WallType GetModelType(Direction direction)
@@ -94,6 +103,7 @@ namespace Cyens.ReInherit.Architect
             // TODO: Fix this
             transform.Find("Floor").GetComponent<Collider>().enabled = false;
             // GetComponent<GraphUpdateScene>().Apply();
+            //m_surface.BuildNavMesh();
         }
 
         public void RecreateNavMesh()
@@ -101,6 +111,10 @@ namespace Cyens.ReInherit.Architect
             // TODO: Fix this
             transform.Find("Floor").GetComponent<Collider>().enabled = true;
             // GetComponent<GraphUpdateScene>().Apply();
+            
+            //m_surface.useGeometry =NavMeshCollectGeometry.PhysicsColliders;
+            //m_surface.BuildNavMesh();
+
         }
 
         private void OnValidate()

@@ -56,7 +56,8 @@ namespace Cyens.ReInherit
             var items = gameObject.GetComponentsInChildren<T>(true);
             return items;
         }
-    
+        
+
         /// <summary>
         /// Removes any children gameobjects that do not contain the given script.
         /// </summary>

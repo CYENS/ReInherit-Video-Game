@@ -18,14 +18,10 @@ namespace Cyens.ReInherit
         public void Place(Vector3 point) 
         {
             Debug.Log("Placing object");
+            
             MetaData metaData = m_selected.m_metaData;
-            GameObject temp = metaData.gameObject;
-            temp.transform.position = point;
-            Exhibit exhibit = temp.GetComponent<Exhibit>();
-            if( exhibit != null )
-            {
-                exhibit.m_state = Exhibit.State.Display;
-            }
+            int exhibitIndex = metaData.siblingIndex;
+            ExhibitManager.Place(exhibitIndex, point );
 
             m_selected = null;
             OnDeselect();
@@ -35,6 +31,17 @@ namespace Cyens.ReInherit
         {
             MetaData metaData = m_selected.m_metaData;
             Mesh mesh = metaData.mesh;
+
+            // Ensure that you exhibit is available to place
+            int exhibitIndex = metaData.siblingIndex;
+            var state = ExhibitManager.GetState(exhibitIndex);
+
+            if( state != Exhibit.State.Storage )
+            {
+                m_selected = null;
+                return;
+            }
+
 
             PlacementManager.PlaceExhibit( gameObject, mesh);
 

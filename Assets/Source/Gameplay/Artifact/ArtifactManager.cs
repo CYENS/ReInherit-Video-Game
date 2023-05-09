@@ -264,12 +264,12 @@ namespace Cyens.ReInherit
             if (validPlacement == false) return;
 
             mode = Mode.None;
-            targetArtifact.SetStatus(zdelArtifact.Status.Transit);
+            //targetArtifact.SetStatus(zdelArtifact.Status.Transit);
 
             // Rebake the navmesh
             //AstarPath.active.Scan();
 
-            KeeperManager.Instance.AddPlaceTask(targetArtifact);
+            //KeeperManager.Instance.AddPlaceTask(targetArtifact);
         }
 
 

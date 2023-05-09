@@ -5,6 +5,8 @@ using Cyens.ReInherit.Pooling;
 using Cyens.ReInherit.Serialization;
 using UnityEngine;
 
+using Cyens.ReInherit.Managers;
+
 namespace Cyens.ReInherit.Architect
 {
     public partial class RoomGraph : MonoBehaviour, IJsonDataObject<RoomGraphJsonData>
@@ -413,6 +415,7 @@ namespace Cyens.ReInherit.Architect
                 if (model == null) {
                     model = ArchitectLibrary.RoomPrefabs.Spawn(room.Graph.transform, index.WorldCenter);
                     model.RecreateNavMesh();
+                    NavMeshManager.Bake();
                 }
 
                 model.Clear();
@@ -595,6 +598,7 @@ namespace Cyens.ReInherit.Architect
             // Update Navmesh
             block1.model.RecreateNavMesh();
             block2.model.RecreateNavMesh();
+            NavMeshManager.Bake();
         }
 
         public void Unlink(Index from, Index to)
@@ -617,6 +621,7 @@ namespace Cyens.ReInherit.Architect
             // Update Navmesh
             block1.model.RecreateNavMesh();
             block2.model.RecreateNavMesh();
+            NavMeshManager.Bake();
         }
 
         private class InnerRoom : Room, IJsonDataObject<RoomJsonData>

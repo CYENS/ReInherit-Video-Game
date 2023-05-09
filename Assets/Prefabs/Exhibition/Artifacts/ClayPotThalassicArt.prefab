@@ -76,7 +76,8 @@ GameObject:
   - component: {fileID: 1690398153536108294}
   - component: {fileID: 1690398153536108295}
   - component: {fileID: 1690398153536108288}
-  m_Layer: 0
+  - component: {fileID: 4672750148748967033}
+  m_Layer: 3
   m_Name: LOD3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,6 +193,19 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!65 &4672750148748967033
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690398153536108290}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.21046835, y: 0.33414593, z: 0.22710155}
+  m_Center: {x: 0.00012477115, y: 0.16635959, z: 0.008524671}
 --- !u!1 &1690398155019540584
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +220,8 @@ GameObject:
   - component: {fileID: 1690398155019540588}
   - component: {fileID: 1690398155019540589}
   - component: {fileID: 1690398155019540590}
-  m_Layer: 0
+  - component: {fileID: 4012234512002031969}
+  m_Layer: 3
   m_Name: LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,6 +337,19 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!65 &4012234512002031969
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690398155019540584}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.21058539, y: 0.3342911, z: 0.22669286}
+  m_Center: {x: 0.00018329173, y: 0.166287, z: 0.008369327}
 --- !u!1 &4893804738427655314
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +364,8 @@ GameObject:
   - component: {fileID: 4739839592302669807}
   - component: {fileID: 4145604133600698194}
   - component: {fileID: 2874833368920597777}
-  m_Layer: 0
+  - component: {fileID: 7924311419618225278}
+  m_Layer: 3
   m_Name: LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,6 +481,19 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!65 &7924311419618225278
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4893804738427655314}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.21060453, y: 0.33433315, z: 0.22664684}
+  m_Center: {x: 0.00021383166, y: 0.16630803, z: 0.008497365}
 --- !u!1 &7012283354349878552
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,9 +32,9 @@ namespace Cyens.ReInherit
                     animator.SetBool("DestinationReached", true);
                 }
                 else {
-                    m_visitor.NavAgent.destination = CalculateDestination(animator);
-                    m_visitor.NavAgent.SearchPath();
-                    animator.SetBool("Walk", true);
+                    bool response = m_visitor.NavAgent.SetDestination(CalculateDestination(animator));
+                    if(response)
+                        animator.SetBool("Walk", true);
                 }
             }
             // Check if visitor could talk to other visitor
@@ -73,7 +73,6 @@ namespace Cyens.ReInherit
         override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
         }
-        
 
         private void GoToExit(Animator animator)
         {
@@ -86,12 +85,12 @@ namespace Cyens.ReInherit
         {
             VisitorManager visitorManager = VisitorManager.Instance;
             // Get artifacts and sort them based on distance
-            ArtifactVisitorHandler[] handlers = visitorManager.GetVisitorHandlers();
+            ExhibitVisitorHandler[] handlers = visitorManager.GetVisitorHandlers();
 
             handlers = handlers.OrderBy((d) => (d.transform.position - animator.transform.position).sqrMagnitude).ToArray();
 
             // If agent visited all artifacts or boredome threshold reached, move to exit
-            if (handlers.Length == m_visitor.visitedArtifacts.Count || m_visitor.Boredome >= 1) {
+            if (handlers.Length == m_visitor.visitedExhibits.Count || m_visitor.Boredome >= 1) {
                 GoToExit(animator);
                 return visitorManager.GetExitPosition();
             }
@@ -99,7 +98,7 @@ namespace Cyens.ReInherit
             Vector3 freeSlot = animator.transform.position;
             int index = 1;
             bool loop = true;
-            ArtifactVisitorHandler nextArtifact;
+            ExhibitVisitorHandler nextArtifact;
             do {
 
                 if( index >= handlers.Length )
@@ -109,7 +108,7 @@ namespace Cyens.ReInherit
                 }
 
                 nextArtifact = handlers[index];
-                if (m_visitor.visitedArtifacts.Contains(nextArtifact) == false) {
+                if (m_visitor.visitedExhibits.Contains(nextArtifact) == false) {
                     
                     if( nextArtifact.TryGetFreeSpot(out freeSlot) )
                     {
@@ -120,8 +119,8 @@ namespace Cyens.ReInherit
                 index += 1;
             } while (loop);
             
-            m_visitor.visitedArtifacts.Add(nextArtifact);
-            m_visitor.SetArtifact(nextArtifact, (int)freeSlot.y);
+            m_visitor.visitedExhibits.Add(nextArtifact);
+            m_visitor.SetExhibit(nextArtifact, (int)freeSlot.y);
             freeSlot.y = 0f;
             return freeSlot;
         }

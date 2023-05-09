@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 namespace Cyens.ReInherit
 {
+    /// <summary>
+    /// A Inventory Box item that represents a single object.
+    /// It uses a metadata object to get its icon and description.
+    /// When pressed it notifies the inventory of its selection.
+    /// </summary>
     public class InventoryItem : MonoBehaviour
     {
 
