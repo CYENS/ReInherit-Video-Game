@@ -20,6 +20,8 @@ namespace Cyens.ReInherit.Scene
 
         [SerializeField] private float orbitAngle = 0;
 
+        [SerializeField] private bool autoWarpOrbit = true;
+
         private Vector3 m_currentTarget;
         private Vector3 m_lastTarget;
 
@@ -55,8 +57,43 @@ namespace Cyens.ReInherit.Scene
         public float OrbitAngle
         {
             get => orbitAngle;
-            set => orbitAngle = SanitizeAngle(value);
+            set {
+                orbitAngle = value;
+                if (autoWarpOrbit) {
+                    SanitizeOrbitAngle();
+                }
+            }
         }
+
+        public void SanitizeOrbitAngle()
+        {
+            orbitAngle = SanitizeAngle(orbitAngle);
+        }
+
+        public float MinDistance
+        {
+            get => minDistance;
+            set {
+                minDistance = value;
+                Distance = Distance;
+            }
+        }
+
+        public float MaxDistance
+        {
+            get => maxDistance;
+            set {
+                maxDistance = value;
+                Distance = Distance;
+            }
+        }
+
+        public bool AutoWarpOrbit
+        {
+            get => autoWarpOrbit;
+            set => autoWarpOrbit = value;
+        }
+
 
         private void OnValidate()
         {
@@ -98,19 +135,18 @@ namespace Cyens.ReInherit.Scene
 
         private float SanitizeAngle(float degreesAngle)
         {
-            degreesAngle %= 360;
-            if (degreesAngle < 0) {
-                degreesAngle += 360;
-            }
-
-            return degreesAngle;
+            return (degreesAngle % 360.0f + 360.0f) % 360.0f;
         }
 
-        private float WrapTargetAngle(float currentAngle, float targetAngle)
+        private float WarpTargetAngle(float currentAngle, float targetAngle)
         {
-            // Change target angle to wrap around the shortest distance.
-            // E.g. For current angle of 0 and target angle of 359 we wrap the target angle to -1,
-            // which is equivalent to 359 but also much closer to the current angle of 0. 
+            // Change target angle to warp around the shortest distance.
+            // E.g. For current angle of 0 and target angle of 359 we warp the target angle to -1,
+            // which is equivalent to 359 but also much closer to the current angle of 0.
+
+            if (!autoWarpOrbit) {
+                return targetAngle;
+            }
 
             var diff = targetAngle - currentAngle;
             if (Mathf.Abs(diff) > 180) {
@@ -122,18 +158,21 @@ namespace Cyens.ReInherit.Scene
 
         private void Update()
         {
-            // Wrapped orbit and target may not be sanitized, which is why we don't
+            // Warped orbit and target may not be sanitized, which is why we don't
             // modify the original orbitAngle and m_lastOrbitTarget variables
-            var wrappedOrbit = WrapTargetAngle(m_currentOrbit, orbitAngle);
-            var wrappedLastTarget = WrapTargetAngle(wrappedOrbit, m_lastOrbitTarget);
+            var warpedOrbit = WarpTargetAngle(m_currentOrbit, orbitAngle);
+            var warpedLastTarget = WarpTargetAngle(warpedOrbit, m_lastOrbitTarget);
 
             // Smoothly change all properties
             m_currentAngle = MotionMath.SmoothMove(m_currentAngle, m_lastAngleTarget, angle, smoothing);
             m_currentDistance = MotionMath.SmoothMove(m_currentDistance, m_lastDistanceTarget, distance, smoothing);
             m_currentTarget = MotionMath.SmoothMove(m_currentTarget, m_lastTarget, target, smoothing);
-            m_currentOrbit = MotionMath.SmoothMove(m_currentOrbit, wrappedLastTarget, wrappedOrbit, smoothing);
+            m_currentOrbit = MotionMath.SmoothMove(m_currentOrbit, warpedLastTarget, warpedOrbit, smoothing);
 
-            m_currentOrbit = SanitizeAngle(m_currentOrbit);
+            if (autoWarpOrbit) {
+                m_currentOrbit = SanitizeAngle(m_currentOrbit);
+            }
+
 
             m_lastTarget = target;
             m_lastDistanceTarget = distance;
@@ -181,7 +220,7 @@ namespace Cyens.ReInherit.Scene
         {
             return m_camera.ScreenPointToRay(Input.mousePosition);
         }
-        
+
         public Ray Raycast(Vector3 mousePosition)
         {
             return m_camera.ScreenPointToRay(mousePosition);

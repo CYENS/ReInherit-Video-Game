@@ -9,10 +9,30 @@ namespace Cyens.ReInherit.Scene
         [SerializeField] private float panSpeed = 20f;
         [SerializeField] private float zoomSpeed = 30f;
         [SerializeField] private float rotateSpeed = 180f;
+        [SerializeField] private float minDistance = 30;
+        [SerializeField] private float maxDistance = 180;
 
         private TopdownCamera m_camera;
         private Vector3 m_lastPanPoint;
         private Vector3 m_lastPlaneHit;
+
+        private float m_storedDistance = -1;
+
+        private void OnDisable()
+        {
+            m_storedDistance = m_camera.Distance;
+        }
+
+        private void OnEnable()
+        {
+            m_camera.MinDistance = minDistance;
+            m_camera.MaxDistance = maxDistance;
+            m_camera.AutoWarpOrbit = true;
+
+            if (m_storedDistance > 0) {
+                m_camera.Distance = m_storedDistance;
+            }
+        }
 
         private void Awake()
         {
@@ -75,16 +95,16 @@ namespace Cyens.ReInherit.Scene
                     var ray1 = m_camera.Raycast(Input.mousePosition);
                     var ray2 = m_camera.Raycast(m_lastPanPoint);
                     var forward = cameraTransform.forward;
-                    
+
                     Picker.TryPlaneIntersect(ray1, forward, m_camera.Target, out p1);
                     Picker.TryPlaneIntersect(ray2, forward, m_camera.Target, out p2);
-                    
+
                     var delta = p2 - p1;
-                    
+
                     var forward2d = forward.xz();
                     var side2d = cameraTransform.right.xz();
                     var delta2d = (delta.x * side2d + delta.y * forward2d).normalized;
-                    
+
                     m_camera.Target += delta2d.x0z();
                 }
 

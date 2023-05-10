@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Cyens.ReInherit.Managers;
+using UnityEngine;
 
-namespace Cyens.ReInherit
+namespace Cyens.ReInherit.Scene
 {
     public class PreviewCamera : MonoBehaviour
     {

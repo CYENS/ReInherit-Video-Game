@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Patterns;
+using Cyens.ReInherit.Scene;
 
 namespace Cyens.ReInherit.Managers
 {
@@ -10,56 +11,33 @@ namespace Cyens.ReInherit.Managers
     /// </summary>
     public class PreviewManager : Singleton<PreviewManager>
     {
+        [SerializeField] private TopdownCamera topdownCamera;
+        [SerializeField] private CameraControl gameCamera;
+        [SerializeField] private PreviewCameraControl previewCamera;
 
-        [Header("Parameters")]
-
-        [SerializeField]
-        private int m_cameraIndex = 1;
-
-        [Header("Variables")]
-        [SerializeField]
-        private bool m_active;
-
-        public bool Active => m_active;
-
-
-        [SerializeField]
-        private Vector3 m_center;
-
-        public Vector3 Center => m_center;
-
-
-
-
-        private void SetActive(bool active)
+        private void OnValidate()
         {
-            Instance.m_active = active;
+            topdownCamera = FindObjectOfType<TopdownCamera>(true);
+            gameCamera = topdownCamera.GetComponent<CameraControl>();
+            previewCamera = topdownCamera.GetComponent<PreviewCameraControl>();
         }
-
-        private void SetCenter(Vector3 point)
-        {
-            m_center = point;
-        }
-
-
+        
         public static void Preview( Vector3 point )
         {
-            Instance.SetActive(true);
-            Instance.SetCenter(point);
-            CameraManager.SetCamera(Instance.m_cameraIndex);
+            Instance.topdownCamera.Target = point;
+            
+            // Note: The enable order matters a little:
+            //       The gameCamera stores the current distance from the target so that it can restore it later
+            Instance.gameCamera.enabled = false;
+            Instance.previewCamera.enabled = true;
         }
-
+        
+        public Vector3 Center => topdownCamera.Target;
+        
         public static void Cancel()
         {
-            Instance.SetActive(false);
-        }
-
-
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            Instance.previewCamera.enabled = false;
+            Instance.gameCamera.enabled = true;
         }
     }
 }
