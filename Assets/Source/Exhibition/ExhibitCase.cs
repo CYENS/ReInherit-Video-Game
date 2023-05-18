@@ -114,7 +114,7 @@ namespace Cyens.ReInherit.Exhibition
             #else 
             if(!asPrefab)
             {
-                var temp = Instantiate(prefab, placement );
+                var temp = Instantiate(prefab, m_placement );
                 temp.transform.localPosition = Vector3.zero;
                 artifact = temp.GetComponent<Artifact>();
             }

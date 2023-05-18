@@ -20,6 +20,8 @@ namespace Cyens.ReInherit
         public GameObject GetPrefab(string name) { return m_prefabs[name]; }
         public bool SearchPrefab(string name) { return m_prefabs.ContainsKey(name); }
 
+
+        #if UNITY_EDITOR
         private void LoadAllAssets()
         {
             string types = "";
@@ -35,6 +37,7 @@ namespace Cyens.ReInherit
             }
         }
         
+
         private void Awake()
         {
             m_prefabs = new PrefabsDictionary();
@@ -42,6 +45,7 @@ namespace Cyens.ReInherit
             m_objectFilters = new[] { "t:Prefab" };
             LoadAllAssets();
         }
+        
 
         private void OnValidate()
         {
@@ -51,5 +55,6 @@ namespace Cyens.ReInherit
                 LoadAllAssets();
             }
         }
+        #endif
     }
 }

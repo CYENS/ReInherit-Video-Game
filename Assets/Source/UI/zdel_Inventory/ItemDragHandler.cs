@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,7 +8,7 @@ using UnityEngine.UI;
  * This class is used when the left mouse is pressed when dragging from the inventory.
  * This script is attached to "Canvas-Inventory-ItemsParent-InventorySlot-ItemButton-Icon"
  ***/
-using static UnityEditor.Progress;
+//using static UnityEditor.Progress;
 
 public class ItemDragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler
 {

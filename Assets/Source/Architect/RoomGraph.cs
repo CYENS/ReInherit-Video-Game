@@ -40,18 +40,18 @@ namespace Cyens.ReInherit.Architect
         public int MaxWidth
         {
             get => m_maxWidth;
-            set => m_maxWidth = Mathf.Clamp(value, 10, Index.MaxSizeX);
+            set => m_maxWidth = Mathf.Clamp(value, 6, Index.MaxSizeX);
         }
 
         public int MaxHeight
         {
             get => m_maxHeight;
-            set => m_maxHeight = Mathf.Clamp(value, 10, Index.MaxSizeY);
+            set => m_maxHeight = Mathf.Clamp(value, 4, Index.MaxSizeY);
         }
 
-        public int MinX => Index.MaxSizeX / 2 - m_maxWidth / 2 - 1;
+        public int MinX => (Index.MaxSizeX / 2 - m_maxWidth / 2 - 1)+2;
         public int MinY => 0;
-        public int MaxX => Index.MaxSizeX / 2 + m_maxWidth / 2;
+        public int MaxX => (Index.MaxSizeX / 2 + m_maxWidth / 2)+2;
         public int MaxY => m_maxHeight + 1;
 
         public IndexBounds UsableBounds => new(MinX, MinY, MaxX, MaxY);
