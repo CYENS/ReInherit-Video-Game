@@ -19,6 +19,13 @@ namespace Cyens.ReInherit.Managers
     /// </summary>
     public class GameManager : Singleton<GameManager>
     {
+
+        [Header("References")]
+
+        [SerializeField]
+        private StageManager m_stageManager;
+
+
         [Header("Building")] public Vector2 entryRoomCoordinates = new Vector2(4.5f, 4.5f);
 
         public enum MuseumState { Close = 0, Open = 1 }
@@ -124,6 +131,14 @@ namespace Cyens.ReInherit.Managers
         {
             base.Awake();
             m_errorMessageManager = ErrorMessage.Instance;
+
+        }
+
+        public void Start() 
+        {
+            
+            m_stageManager = StageManager.Instance;
+
         }
 
 
@@ -152,6 +167,10 @@ namespace Cyens.ReInherit.Managers
             m_bufferTimer = 1.0f;
 
             EndRound();
+            
+            
+            // Increase the size of the stage
+            m_stageManager.IncreaseSize();
             
 
             Quiz.SetActive(true);

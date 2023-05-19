@@ -27,15 +27,21 @@ namespace Cyens.ReInherit.Managers
         protected Stage[] m_stages;
 
 
-        public void Select(int index) 
+        public void IncreaseSize()
         {
-            m_select = index;
+            m_select = Mathf.Clamp( m_select + 1, 0, m_stages.Length-1);
+            Refresh();
+        }
 
+        public void Refresh() 
+        {
+            // Disable all stages
             foreach(var stage in m_stages)
             {
                 stage.gameObject.SetActive(false);
             }
-            m_stages[index].gameObject.SetActive(true);
+            // Enable selected stage
+            m_stages[m_select].gameObject.SetActive(true);
         }
 
   
@@ -51,7 +57,7 @@ namespace Cyens.ReInherit.Managers
                 return;
             }
 
-            Select(m_select);
+            Refresh();
         }
         #endif
 
@@ -66,7 +72,7 @@ namespace Cyens.ReInherit.Managers
                 stage.m_roomGraph = m_roomGraph;
             }
 
-            Select(m_select);
+            Refresh();
         }
         
     }
