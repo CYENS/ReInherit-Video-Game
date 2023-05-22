@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96370e444764cb14b8b69a93cdcabb30, type: 3}
+  m_Name: Artifact
+  m_EditorClassIdentifier: 
+  comment: Ministry of Antiquities gives the museum a new artifact to display. Ordered
+    by difficulty and rarity.
+  selection: 2
+  frequency: 3
+  eventLibrary: {fileID: 11400000, guid: e228dafd6bb3e28459f669a153f08434, type: 2}
+  events:
+  - {fileID: 11400000, guid: 1ba0d8e2a41303a4e8f0a17422e95ffc, type: 2}
+  - {fileID: 11400000, guid: ba1a0d74dbe13dc43870d1cdfe8375a2, type: 2}
+  - {fileID: 11400000, guid: 6c7423b0536480c48b399a9f06efa45b, type: 2}
+  - {fileID: 11400000, guid: f057b52de5b05bb4b9cd47400432d6e7, type: 2}
+  - {fileID: 11400000, guid: 47fdd700330e3f247ac79a5febdceaa7, type: 2}
+  - {fileID: 11400000, guid: b201f6c5d52a60b42a34e5c0cff9b67e, type: 2}
+  - {fileID: 11400000, guid: 0d12618c32fe00047834a544d8c37e9c, type: 2}
+  - {fileID: 11400000, guid: cf20aac368b1bc147b385b95248326f0, type: 2}
+  - {fileID: 11400000, guid: 97003219c7c8f384ba3cb066e7ac394f, type: 2}
