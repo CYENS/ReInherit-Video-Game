@@ -16,4 +16,6 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: 14c01c61b2fb5d842b6276a29417db61, type: 3}
   m_mesh: {fileID: 713984728207129430, guid: 8760ce3b65cf6e04792dd103c6ba0c71, type: 3}
+  label: Red Ceramic Vase
+  description: Blah Blah Blah
   test: 0

@@ -16,4 +16,6 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: 68c72603885b79548b0b907e44133f38, type: 3}
   m_mesh: {fileID: -6465906271663854514, guid: e3b0dfb77f6255c4787b0de4199865d6, type: 3}
+  label: Altar Boy
+  description: Blah Blah Blah
   test: 0

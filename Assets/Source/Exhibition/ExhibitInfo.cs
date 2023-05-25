@@ -25,6 +25,13 @@ namespace Cyens.ReInherit.Exhibition
         [Tooltip("A mesh used for visualization purposes")]
         public Mesh m_mesh;
 
+
+        
+        public string label;
+
+        public string description;
+
+
         [Header("Gameplay")]
 
         public float test;

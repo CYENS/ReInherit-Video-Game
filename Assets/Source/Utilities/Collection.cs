@@ -6,6 +6,10 @@ using System.Linq;
 
 namespace Cyens.ReInherit
 {
+
+    // Delegates
+    public delegate void NoArgDelegate();
+
     /// <summary>
     /// Groups together a collection of gameobjects based on a common attribute.
     /// It can be used to group together exhibits, keepers, visitors, etc.
@@ -18,6 +22,9 @@ namespace Cyens.ReInherit
     public class Collection : MonoBehaviour
     {
         
+
+        public NoArgDelegate hasChanged;
+
         /// <summary>
         /// A helpful utility method that finds a collection with the given name.
         /// 
@@ -55,6 +62,15 @@ namespace Cyens.ReInherit
         {
             var items = gameObject.GetComponentsInChildren<T>(true);
             return items;
+        }
+
+        public void Add( GameObject go )
+        {
+            go.transform.SetParent( transform );
+            if(hasChanged != null)
+            {
+                hasChanged();
+            }
         }
         
 

@@ -165,7 +165,7 @@ namespace Cyens.ReInherit
         private void Refresh()
         {
 
-            Debug.Log("Refresh");
+            //Debug.Log("Refresh");
             events = new List<GameEvent>();
 
             GameEvent[] allEvents = eventLibrary.GetAssets<GameEvent>();

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4226124660416594700}
   - component: {fileID: 4226124660416594701}
   - component: {fileID: 2208374697953541232}
+  - component: {fileID: -2150365943106259194}
   m_Layer: 0
   m_Name: SilverBowl
   m_TagString: Untagged
@@ -70,6 +71,23 @@ MonoBehaviour:
   label: SilverBowl
   description: 
   mesh: {fileID: -6632443342139846867, guid: fa7df1aec50de0f4599d6bf8a9add008, type: 3}
+--- !u!114 &-2150365943106259194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4226124660416594703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 794305aa853a99d4f9c9f67f215a971e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_viewPoints: []
+  m_viewPointReserved: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1001 &3840282461850572389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -223,28 +241,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fcfd8fc4f8d5e2458e49f8d7b4a0133, type: 3}
---- !u!1 &475991375060583086 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8669066887183643724, guid: 0fcfd8fc4f8d5e2458e49f8d7b4a0133,
-    type: 3}
-  m_PrefabInstance: {fileID: 9139415274612356834}
-  m_PrefabAsset: {fileID: 0}
---- !u!208 &8074525127616586416
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 475991375060583086}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.45, y: 1, z: 0.45}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!4 &518131945515632889 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8783566867616874011, guid: 0fcfd8fc4f8d5e2458e49f8d7b4a0133,

@@ -16,4 +16,6 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: d20e3864ba086e541818c46979196dd6, type: 3}
   m_mesh: {fileID: 6893836204017640216, guid: fc1dd9b70c18b88478a1067f9d23ec0a, type: 3}
+  label: Clay Pot with Thalassic Art
+  description: Blah Blah Blah
   test: 0

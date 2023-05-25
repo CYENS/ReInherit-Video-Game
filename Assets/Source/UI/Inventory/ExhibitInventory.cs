@@ -10,11 +10,22 @@ namespace Cyens.ReInherit
     public class ExhibitInventory : BaseInventory
     {
 
+        [Header("References")]
+        protected GameManager m_gameManager;
+
+
         protected override void OnDeselect()
         {
             PlacementManager.Cancel();
         }
         
+        protected new void Start() 
+        {
+            base.Start();
+            m_gameManager = GameManager.Instance;
+
+        }
+
         public void Place(Vector3 point) 
         {
             Debug.Log("Placing object");

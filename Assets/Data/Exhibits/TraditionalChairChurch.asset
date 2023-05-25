@@ -16,4 +16,6 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: 5da996e7e4200404b8c250fd4077ad0f, type: 3}
   m_mesh: {fileID: 4440196125037674620, guid: 65d6818db0eed9a40b457de8805645dd, type: 3}
+  label: Traditional Church Chair
+  description: Blah Blah Blah
   test: 0

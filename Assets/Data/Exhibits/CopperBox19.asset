@@ -16,4 +16,6 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: da1a51cc33da6724d8fef13c9d4d01cb, type: 3}
   m_mesh: {fileID: 1263457257109840441, guid: d1c32f49d72a89942b5c1da269b934b5, type: 3}
+  label: Copper Box 19th Century
+  description: Blah Blah Blah
   test: 0

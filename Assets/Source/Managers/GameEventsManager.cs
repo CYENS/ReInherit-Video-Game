@@ -30,7 +30,58 @@ namespace Cyens.ReInherit.Managers
 
         [SerializeField] private List<GameEvent> m_gameEvents;
 
+        [Header("Parameters")]
+        [SerializeField] private int m_index = 0;
 
+
+        [Header("Reference")]
+
+        [SerializeField] private string m_uiGroupLabel = "GaveEventUI";
+        [SerializeField] private GameObject m_uiGroup;
+
+        private GameManager m_gameManager;
+
+
+        protected void OnRoundEnd(int round)
+        {
+            int index = round-1;
+            Debug.Log("Round End: "+index);
+            if( index < 0 || index >= m_gameEvents.Count || m_uiGroup == null )
+            {
+                return;
+            }
+
+            GameEvent next = m_gameEvents[index];
+            
+            // (TODO) Evaluate conditions
+
+
+            GameObject prefab = (GameObject)next.whenPass;
+            if( prefab != null )
+            {
+                GameObject ui = Instantiate(prefab, m_uiGroup.transform );
+            }
+            
+        }
+
+        private void OnEnable() 
+        {
+            if( m_gameManager == null )
+            {
+                m_gameManager = GameManager.Instance;
+            }
+            Debug.Log("When Round Ends");
+            m_gameManager.whenRoundEnds += OnRoundEnd;
+        }
+
+        private void OnDisable() 
+        {
+            if( m_gameManager == null )
+            {
+                m_gameManager = GameManager.Instance;
+            }
+            m_gameManager.whenRoundEnds -= OnRoundEnd;
+        }
 
         protected void Start()
         {
@@ -40,7 +91,7 @@ namespace Cyens.ReInherit.Managers
                 category.Init();
             }
 
-
+            // Create a shuffled list of game events
             m_gameEvents = new List<GameEvent>();
             for( int i=0; i<6; i++ )
             {
@@ -48,6 +99,12 @@ namespace Cyens.ReInherit.Managers
                 ShuffleGroup(ref group);
                 m_gameEvents.AddRange( group );
             }
+
+            // Get Reference to the UI component
+            m_uiGroup = Reference.Find(m_uiGroupLabel);
+
+            // Get reference to game mananger
+            m_gameManager = GameManager.Instance;
         }
 
         #if UNITY_EDITOR
@@ -93,85 +150,5 @@ namespace Cyens.ReInherit.Managers
                 array[r] = temp;
             }
         }
-
-
-        /*
-        [Header("Assets")]
-
-        [SerializeField]
-        private AssetLibrary m_assetLibrary;
-
-        #if UNITY_EDITOR
-        [Tooltip("Forces a reload of the assets in the editor")]
-        [SerializeField] private bool m_reload;
-        #endif
-
-
-        [SerializeField]
-        private RoundEndEvent[] m_allEvents;
-
-        
-        [SerializeField]
-        private List<RoundEndEvent.Types> m_typeQueue;
-
-        [SerializeField]
-        private List<RoundEndEvent> m_eventQueue;
-
-
-        //[SerializeField]
-        //private List<>
-        
-
-
-        protected void ShuffleTypesArray( ref RoundEndEvent.Types[] array)
-        {
-            // Using Knuth's shuffling algo
-            for( int i=0; i<array.Length; i++ )
-            {
-                var temp = array[i];
-                int r = Random.Range(i, array.Length);
-                array[i] = array[r];
-                array[r] = temp;
-            }
-        }
-
-        protected void GenerateTypeQueue()
-        {
-            m_typeQueue = new List<RoundEndEvent.Types>();
-
-            // Repeating the process 6 times is more than enough
-            for( int i=0; i<6; i++ )
-            {
-
-            }
-
-            // Add the items
-            
-
-            // Mix the types up
-        }
-
-        protected void Start()
-        {
-            m_allEvents = m_assetLibrary.GetAssets<RoundEndEvent>();
-
-
-
-            m_eventQueue = new List<RoundEndEvent>();
-        }
-
-        
-        #if UNITY_EDITOR
-        private void OnValidate() 
-        {
-            if( m_reload )
-            {
-                m_reload = false;
-                m_allEvents = m_assetLibrary.GetAssets<RoundEndEvent>();
-            }
-        }
-        #endif
-
-        */
     }
 }

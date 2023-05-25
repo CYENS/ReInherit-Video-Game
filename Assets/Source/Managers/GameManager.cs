@@ -17,6 +17,7 @@ namespace Cyens.ReInherit.Managers
     /// Stores the state of the game.
     /// Keeps track of various metrics.
     /// </summary>
+    [DefaultExecutionOrder(-100000)]
     public class GameManager : Singleton<GameManager>
     {
 
@@ -136,7 +137,6 @@ namespace Cyens.ReInherit.Managers
 
         public void Start() 
         {
-            
             m_stageManager = StageManager.Instance;
 
         }
@@ -146,7 +146,6 @@ namespace Cyens.ReInherit.Managers
         {
             // Advance round
             m_round++;
-
             // Notify all attached events that the round has ended
             if( whenRoundEnds != null )
             {
@@ -156,9 +155,6 @@ namespace Cyens.ReInherit.Managers
 
         public void CloseMuseum()
         {
-
-
-
             m_museumState = MuseumState.Close;
             VisitorManager.Instance.DeSpawn();
             ArtifactManager.Instance.UpdateNovelty();
@@ -167,13 +163,9 @@ namespace Cyens.ReInherit.Managers
             m_bufferTimer = 1.0f;
 
             EndRound();
-            
-            
-            // Increase the size of the stage
-            m_stageManager.IncreaseSize();
-            
 
-            Quiz.SetActive(true);
+
+            //Quiz.SetActive(true);
         }
 
         private void MuseumOpenUpdate()

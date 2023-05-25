@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: 92d895f57b33e084f89a4b3e4c286c39, type: 2}
   comment: Museum area is expanded.
-  minRating: 3
+  minRating: 0
   minFunding: 0
   minCleanliness: 0
   minTheming: 0
   minVariety: 0
   minSpacing: 0
-  whenPass: {fileID: 0}
-  whenFail: {fileID: 0}
+  whenPass: {fileID: 1310266474419511155, guid: 64a1487c276b7af409f7021738ff90b7,
+    type: 3}
+  whenFail: {fileID: 1310266474419511155, guid: 64a1487c276b7af409f7021738ff90b7,
+    type: 3}

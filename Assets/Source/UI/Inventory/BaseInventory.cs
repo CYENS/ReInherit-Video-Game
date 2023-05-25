@@ -38,9 +38,39 @@ namespace Cyens.ReInherit
         protected InventoryItem m_selected;
 
 
-        // Start is called before the first frame update
-        protected void Start()
+        private void OnEnable() 
         {
+            
+            m_collection.hasChanged += Refresh;
+        }
+
+        private void OnDisable() 
+        {
+            m_collection.hasChanged -= Refresh;
+
+            if( m_selected != null )
+            {
+                m_selected = null;
+                OnDeselect();
+            }
+
+        }
+
+        protected void Clear()
+        {
+            Debug.Log("Clear!!");
+            for(int i=0; i<m_container.transform.childCount; i++)
+            {
+                Transform child = m_container.transform.GetChild(i);
+                Debug.Log("Destroy gameobject "+child.gameObject);
+                Destroy(child.gameObject);
+            }
+        }
+
+        protected void Refresh()
+        {
+            Debug.Log("Refresh!!");
+            Clear();
             m_metaData = m_collection.Get<MetaData>();
 
             // Populate grid layout group with items
@@ -53,7 +83,12 @@ namespace Cyens.ReInherit
                 item.m_metaData = metaData;
                 m_items.Add(item);
             }
+        }
 
+        // Start is called before the first frame update
+        protected void Start()
+        {
+            Refresh();
         }
 
         protected virtual void OnDeselect() 
@@ -63,15 +98,6 @@ namespace Cyens.ReInherit
         protected virtual void OnSelect() 
         {
 
-        }
-
-        private void OnDisable() 
-        {
-            if( m_selected != null )
-            {
-                m_selected = null;
-                OnDeselect();
-            }
         }
 
         /// <summary>

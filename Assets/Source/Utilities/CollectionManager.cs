@@ -37,22 +37,26 @@ namespace Cyens.ReInherit
         protected List<T> m_items;
 
 
-        /// <summary>
-        /// Regular setup function.
-        /// Please call base.Start() if you wish to replace this function
-        /// with inheritance.
-        /// </summary>
-        protected void Start() 
+        protected void Init()
         {
+            if( m_collection != null )
+            {
+                return;
+            }
+
             // Ensures that we have a collection with the right name
             m_collection = Collection.Find(m_collectionName);
             if( m_collection == null )
             {
                 m_collection = Collection.Create(m_collectionName);
             } 
-
+        }
+        protected void Refresh()
+        {
             // Clean out anything else that shouldn't belong in the collection
             m_collection.Clean<T>();
+
+            m_items.Clear();
 
             // Grabs a list of the items
             var items = m_collection.Get<T>();
@@ -62,6 +66,28 @@ namespace Cyens.ReInherit
                 m_items = new List<T>();
             }
             m_items.AddRange( items );
+        }
+
+        private void OnEnable() 
+        {
+            Init();
+            m_collection.hasChanged += Refresh; 
+        }
+
+        private void OnDisable() 
+        {
+            m_collection.hasChanged -= Refresh; 
+        }
+
+        /// <summary>
+        /// Regular setup function.
+        /// Please call base.Start() if you wish to replace this function
+        /// with inheritance.
+        /// </summary>
+        protected void Start() 
+        {
+            Init();
+            Refresh();
         }
 
 

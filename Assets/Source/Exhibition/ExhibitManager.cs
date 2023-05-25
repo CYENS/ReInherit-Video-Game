@@ -17,12 +17,76 @@ namespace Cyens.ReInherit.Exhibition
         
         protected Exhibit[] m_exhibits;
 
+        [Header("Assets")]
+        
+        [SerializeField] protected AssetLibrary m_assetLibrary;
+        [SerializeField] protected GameObject[] m_prefabs;
+        [SerializeField] protected int m_index;
+
 
         protected new void Start() 
         {
             base.Start();
             m_exhibits = m_collection.Get<Exhibit>();
+
+            // Create 
+            m_prefabs = m_assetLibrary.GetAssets<GameObject>();
+            // TODO: Shuffle array
         }
+
+
+
+
+        public void Advance() => m_index++;
+        public GameObject Next()
+        {
+            if( m_index < 0 || m_index >= m_prefabs.Length )
+            {
+                return null;
+            }
+
+            var current = m_prefabs[m_index];
+            return current;
+        }
+
+        public ExhibitInfo NextInfo()
+        {
+            var go = Next();
+            if( go == null )
+            {
+                return null;
+            }
+
+            Exhibit exhibit = go.GetComponent<Exhibit>();
+            if( exhibit == null )
+            {
+                return null;
+            }
+
+            ExhibitInfo info = exhibit.Info;
+            if( info == null )
+            {
+                return null;
+            }
+
+            return info;
+        } 
+
+        public void AddNext()
+        {
+            GameObject prefab = Next();
+            if( prefab == null )
+            {
+                return;
+            }
+
+            GameObject go = Instantiate(prefab);
+            m_collection.Add(go);
+
+            // Update list
+            m_exhibits = m_collection.Get<Exhibit>();
+        }
+
 
         public Exhibit[] GetExhibitsByState(Exhibit.State state)
         {

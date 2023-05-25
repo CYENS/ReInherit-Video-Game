@@ -115,7 +115,7 @@ namespace Cyens.ReInherit
             {
                 // TODO: Do NOT include self!
                 var path = AssetDatabase.GUIDToAssetPath(guid);
-                Debug.Log("path: "+path);
+                //Debug.Log("path: "+path);
                 UnityEngine.Object go = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path);
                 m_assets.Add(go);
             }

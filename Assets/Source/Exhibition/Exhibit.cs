@@ -28,6 +28,8 @@ namespace Cyens.ReInherit.Exhibition
         [Tooltip("The information associated with this exhibit")]
         private ExhibitInfo m_info;
 
+        public ExhibitInfo Info => m_info;
+        
 
         [Header("Gameplay")]
 

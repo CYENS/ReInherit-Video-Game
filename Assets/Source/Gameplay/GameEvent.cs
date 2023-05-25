@@ -62,10 +62,10 @@ namespace Cyens.ReInherit
         [Header("Prefabs")]
 
         [Tooltip("This is shown to players when they passed the condition")]
-        public UnityEngine.Object whenPass;
+        public GameObject whenPass;
 
         [Tooltip("This is shown to players when the conditions are not met")]
-        public UnityEngine.Object whenFail;
+        public GameObject whenFail;
 
     }
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4144035768319063588}
   - component: {fileID: 4144035768319063589}
   - component: {fileID: 2126014007389636952}
+  - component: {fileID: -1553890423291188593}
   m_Layer: 0
   m_Name: CopperBox19
   m_TagString: Untagged
@@ -70,6 +71,23 @@ MonoBehaviour:
   label: CopperBox19
   description: 
   mesh: {fileID: 1263457257109840441, guid: d1c32f49d72a89942b5c1da269b934b5, type: 3}
+--- !u!114 &-1553890423291188593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4144035768319063591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 794305aa853a99d4f9c9f67f215a971e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_viewPoints: []
+  m_viewPointReserved: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1001 &3768049729096468461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -229,28 +247,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9075068442196935626}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &414235291867363206 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8669066887183643724, guid: 0fcfd8fc4f8d5e2458e49f8d7b4a0133,
-    type: 3}
-  m_PrefabInstance: {fileID: 9075068442196935626}
-  m_PrefabAsset: {fileID: 0}
---- !u!208 &100351692228403398
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 414235291867363206}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.45, y: 1, z: 0.45}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!114 &2008831990124826486 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7354889085797092540, guid: 0fcfd8fc4f8d5e2458e49f8d7b4a0133,
