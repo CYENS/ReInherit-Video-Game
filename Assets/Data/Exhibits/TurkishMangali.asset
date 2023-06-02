@@ -16,6 +16,17 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: c4e04e7c773789744a673a332bbb87df, type: 3}
   m_mesh: {fileID: -4231529210960068456, guid: acc89f7ec4a744f478f9284989113759, type: 3}
-  label: Turkish Mangali
-  description: Blah Blah Blah
+  label: Turkish brazier, Constantinople type
+  description: 'This object was used as a brazier and consists of 3 parts, a base,
+    an inner container and a lid. The base rests on 6 feet with decoration all around.
+    On top there is a free-standing copper container, in which the fuel was placed,
+    with two cast bronze handles for easy removal. The brazier was sealed with a
+    domed copper lid, on the top of which there is a bronze star with the crescent
+    moon. The star served both as a handle for the lid and as a decorative element
+    that indicated the Turkish origin of the brazier. Similar types of braziers are
+    available with several variations in their decoration, indicative of the importance
+    given to this object by craftsmen in their effort to satisfy their wealthy customers.
+    Copper braziers of this type were used in urban houses in Cyprus as a necessary
+    item-furniture during the period of Ottoman rule. '
+  upgradeCost: 100
   test: 0

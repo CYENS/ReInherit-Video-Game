@@ -325,12 +325,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fd099b37d201743a3be61f547991b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_mode: 2
   m_textbox: {fileID: 7104149856137655949}
   m_changebox: {fileID: 2817537471817132072}
   m_animGain: Gain
   m_animLose: Lose
   m_amount: 0
-  m_speed: 10
+  m_speed: 1000
+  pos: {x: 0, y: 0, z: 0}
+  m_scaleAnimSpeed: 0.75
 --- !u!1 &4240825308150515079
 GameObject:
   m_ObjectHideFlags: 0

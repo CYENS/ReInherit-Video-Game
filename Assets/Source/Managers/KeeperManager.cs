@@ -206,13 +206,13 @@ namespace Cyens.ReInherit.Managers
                     keeper.AddPlaceTask(task.exhibit);
                 break;
                 case KeeperTask.Type.Upgrade:
-
+                    keeper.AddPlaceTask(task.exhibit);
                 break;
                 case KeeperTask.Type.Move:
 
                 break;
                 case KeeperTask.Type.Remove:
-
+                    keeper.AddRemoveTask(task.exhibit);
                 break;
             }
 

@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Game/Menu.unity
     guid: b9fc9b4be3c3dfe498158f24c5c74440
   - enabled: 1
-    path: Assets/Scenes/Game/Alpha.unity
-    guid: a4285d9e1167b8d43a3e3ccb2a939fdf
-  - enabled: 1
     path: Assets/Scenes/MuseumRoom/MuseumRoom.unity
     guid: eb15ebb58a1746c4c87e448297b2295b
   - enabled: 1
+    path: Assets/Scenes/Game/Alpha.unity
+    guid: a4285d9e1167b8d43a3e3ccb2a939fdf
+  - enabled: 0
     path: Assets/Scenes/Game/Alpha Theodoros.unity
     guid: 3bae4995c70163648945ed41799d7bd2
   m_configObjects:

@@ -16,6 +16,11 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: 19ef4c4244c147a47bba214672b2d646, type: 3}
   m_mesh: {fileID: 7539892650380432214, guid: 882a693782997784fb4787294a442567, type: 3}
-  label: Rectangle Chain Talisman 19th Century
-  description: Blah Blah Blah
+  label: Copper alloy talisman, rectangular with chain
+  description: '19th century rectangular talisman (also known as a ''chaimali'')
+    with a chain to hang from the neck. It is made of copper alloy and has a drawer
+    opening on the top side to also work as a case. It is decorated with floral designs,
+    some of which project to the front in strong relief. Due to its non-figurative
+    decoration, it is speculated that it may have belonged to a Muslim. '
+  upgradeCost: 100
   test: 0

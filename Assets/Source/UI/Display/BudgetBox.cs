@@ -13,11 +13,6 @@ namespace Cyens.ReInherit
         private RectTransform m_cashierImage;
         private bool m_coinCollected = false;
         
-        protected override void RefreshText()
-        {
-            base.RefreshText();
-            m_textbox.text = "€" + m_actual.ToString();
-        }
 
         public void CoinCollected()
         {
@@ -27,6 +22,7 @@ namespace Cyens.ReInherit
         private void Awake()
         {
             m_cashierImage = transform.Find("CashRegister").GetComponent<RectTransform>();
+            m_mode = Mode.Currency;
         }
 
         protected new void Update() 

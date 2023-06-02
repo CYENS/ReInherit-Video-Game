@@ -23,6 +23,9 @@ namespace Cyens.ReInherit
         [Tooltip("Reference to the canvas/object containing the UI elements of the closed museum")]
         [SerializeField]
         private GameObject m_whenOpen;
+
+        [SerializeField]
+        private GameObject m_whenPreview;
         
 
         [SerializeField]
@@ -51,8 +54,11 @@ namespace Cyens.ReInherit
         void Update()
         {
             bool museumOpen = GameManager.IsMuseumOpen;
-            m_whenClosed.SetActive( !museumOpen );
-            m_whenOpen.SetActive( museumOpen );
+            bool previewMode = PreviewManager.IsActive();
+
+            m_whenClosed.SetActive( !museumOpen && !previewMode );
+            m_whenOpen.SetActive( museumOpen && !previewMode );
+            m_whenPreview.SetActive( previewMode );
 
             // Check if mouse is over a raycast blocking canvas element
             m_pointerOverUIElement = eventSys.IsPointerOverGameObject();

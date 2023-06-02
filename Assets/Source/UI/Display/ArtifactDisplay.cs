@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Cyens.ReInherit.Exhibition;
+using Cyens.ReInherit.Managers;
+
 
 namespace Cyens.ReInherit
 {
     public class ArtifactDisplay : MonoBehaviour
     {
 
-        public enum Source { Current = 0, Reference = 1 }
+        public enum Source { Current = 0, Reference = 1, Preview =2  }
 
         [SerializeField] private Source m_source;
 
@@ -27,7 +29,7 @@ namespace Cyens.ReInherit
 
 
         // Start is called before the first frame update
-        void Start()
+        void OnEnable()
         {
             m_exhibitManager = ExhibitManager.Instance;
 
@@ -35,6 +37,11 @@ namespace Cyens.ReInherit
             {
                 case Source.Current:
                     m_info = m_exhibitManager.NextInfo();
+                break;
+
+                case Source.Preview:
+                    var exhibit = PreviewManager.Instance.m_exhibit;
+                    m_info = exhibit.Info;
                 break;
             }
 

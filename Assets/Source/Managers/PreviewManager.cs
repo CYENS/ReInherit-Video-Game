@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Patterns;
 using Cyens.ReInherit.Scene;
+using Cyens.ReInherit.Exhibition;
 
 namespace Cyens.ReInherit.Managers
 {
@@ -15,6 +16,13 @@ namespace Cyens.ReInherit.Managers
         [SerializeField] private CameraControl gameCamera;
         [SerializeField] private PreviewCameraControl previewCamera;
 
+
+        public Exhibit m_exhibit;
+
+
+
+        public static bool IsActive() => Instance.previewCamera.enabled;
+
         private void OnValidate()
         {
             topdownCamera = FindObjectOfType<TopdownCamera>(true);
@@ -22,7 +30,7 @@ namespace Cyens.ReInherit.Managers
             previewCamera = topdownCamera.GetComponent<PreviewCameraControl>();
         }
         
-        public static void Preview( Vector3 point )
+        public static void Preview( Vector3 point, Exhibit exhibit )
         {
             Instance.topdownCamera.Target = point;
             
@@ -30,6 +38,10 @@ namespace Cyens.ReInherit.Managers
             //       The gameCamera stores the current distance from the target so that it can restore it later
             Instance.gameCamera.enabled = false;
             Instance.previewCamera.enabled = true;
+
+            Instance.m_exhibit = exhibit;
+
+            SelectManager.Clear();
         }
         
         public Vector3 Center => topdownCamera.Target;

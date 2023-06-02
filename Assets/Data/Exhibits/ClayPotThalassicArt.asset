@@ -16,6 +16,16 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: d20e3864ba086e541818c46979196dd6, type: 3}
   m_mesh: {fileID: 6893836204017640216, guid: fc1dd9b70c18b88478a1067f9d23ec0a, type: 3}
-  label: Clay Pot with Thalassic Art
-  description: Blah Blah Blah
+  label: 'Clay vase '
+  description: 'Clay vase with a high neck and wide opening. The vessel also had
+    a vertical handle which is not preserved. Its decoration includes subjects related
+    to marine life in black on a ceramic surface. Both the shape and the decoration
+    are an imitation of a well-known vase of the Minoan era (15th century BC), which
+    is known as the "Marseille vase" and is one of the most impressive examples of
+    maritime style from the Minoan era. The vase was made in the "Leon" pottery workshop
+    founded by Yiannis Iliadis in Kyrenia. Such imitations of vase records did not
+    faithfully follow either the shape or the decoration of the ancient vases, since
+    the potter was merely inspired by them but did not copy them. The vase is stamped
+    on the base with the lion emblem and the words LION, CYPRUS and POTTERY. '
+  upgradeCost: 100
   test: 0

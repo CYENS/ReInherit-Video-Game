@@ -118,7 +118,9 @@ namespace Cyens.ReInherit.Scene
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
                 Zoom(z);
                 Pan(x, 0);
-            } else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) {
+            } 
+            //else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ) {
+            else if ( Input.GetMouseButton(2) ) {   
                 Rotate(x, z);
             } else {
                 Pan(x, z);

@@ -29,10 +29,13 @@ namespace Cyens.ReInherit.Exhibition
         
         public string label;
 
+        [TextArea(5,8)]
         public string description;
 
 
         [Header("Gameplay")]
+
+        public int upgradeCost = 100;
 
         public float test;
 

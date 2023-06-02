@@ -47,6 +47,12 @@ namespace Cyens.ReInherit
             m_exhibitManager.AddNext();
             m_exhibitManager.Advance();
         }
+
+        public void RemoveCredibility(float rating )
+        {
+            GameManager.Rating += rating;
+        }
+
         public void ExpandMuseum()
         {
             if( m_active )

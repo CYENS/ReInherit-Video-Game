@@ -31,6 +31,9 @@ namespace Cyens.ReInherit.Exhibition
         public ExhibitInfo Info => m_info;
         
 
+
+
+
         [Header("Gameplay")]
 
         [SerializeField]
@@ -43,6 +46,7 @@ namespace Cyens.ReInherit.Exhibition
         [Range(0,5)]
         private int m_upgrade = 0;
 
+        public int GetUpgrade() => m_upgrade;
 
         [Header("References")]
         [SerializeField]
@@ -61,6 +65,9 @@ namespace Cyens.ReInherit.Exhibition
 
 
         private Ghostify[] ghostifies;
+
+        private Selectable[] m_selectables;
+
         private ExhibitVisitorHandler m_visitorHandler;
 
         public ExhibitVisitorHandler GetVisitorHandler() { return m_visitorHandler; }
@@ -95,8 +102,6 @@ namespace Cyens.ReInherit.Exhibition
             }
 
 
-
-
             m_exCases = GetComponentsInChildren<ExhibitCase>(true);
             
             // Ensure that the upgrade index does not exceed number of exhibit cases
@@ -114,10 +119,7 @@ namespace Cyens.ReInherit.Exhibition
             }
 
             // Deactivate all exhibit cases. Keep only the selected one active
-            for( int i=0; i<m_exCases.Length; i++ )
-            {
-                m_exCases[i].enabled = (i==m_upgrade);
-            }
+            Refresh();
 
             if( m_metaData == null )
             {
@@ -136,10 +138,6 @@ namespace Cyens.ReInherit.Exhibition
                 m_metaData.mesh = m_info.m_mesh;
 
             }
-
-   
-            
-
 
             m_isPrefab = PrefabUtility.IsPartOfAnyPrefab(this);
             m_instancePrefabStatus = PrefabUtility.GetPrefabInstanceStatus(gameObject);
@@ -160,15 +158,11 @@ namespace Cyens.ReInherit.Exhibition
                 return;
             }
 
-
             if( m_isAsset ) 
             {
                 // Safeguard. Don't mess with prefab assets. They are hard to edit programmatically
                 return;
             }
-
-            
-
 
             // Ensure that prefabs all have the correct artifact placed inside
             // Don't do this while the game is playing though
@@ -197,6 +191,13 @@ namespace Cyens.ReInherit.Exhibition
 
         #endif
 
+        protected void Refresh() 
+        {
+            for( int i=0; i<m_exCases.Length; i++ )
+            {
+                m_exCases[i].gameObject.SetActive(i==m_upgrade);
+            }
+        }
 
         protected void Start() 
         {
@@ -204,6 +205,7 @@ namespace Cyens.ReInherit.Exhibition
                 m_visitorHandler = evh;
             }
             ghostifies = GetComponentsInChildren<Ghostify>(true);
+            m_selectables = GetComponentsInChildren<Selectable>(true);
             SetState(m_state);
         }
         
@@ -215,9 +217,25 @@ namespace Cyens.ReInherit.Exhibition
             {
                 ghost.enabled = value;
             }
+            
+            // Also deselect
+            foreach( var selectable in m_selectables )
+            {
+                selectable.enabled = !value;
+            }
+            
         }
 
-        
+        public void Upgrade() 
+        {
+            m_upgrade++;
+            Refresh();
+        }
+
+        public void Place( Vector3 point ) 
+        {
+            transform.position = point;
+        }
 
         public Vector3 ClosestStandPoint(Vector3 point)
         {
@@ -228,6 +246,8 @@ namespace Cyens.ReInherit.Exhibition
         }
 
         public void Install() => SetState( State.Display );
+
+        public void Remove() => SetState( State.Storage );
 
         public void SetState( State state )
         {

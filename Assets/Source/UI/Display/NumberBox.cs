@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,14 @@ using TMPro;
 
 namespace Cyens.ReInherit
 {
+    /// <summary>
+    /// A UI helper that displays a number.
+    /// </summary>
     public class NumberBox : MonoBehaviour
     {
+        public enum Mode { Integer = 0, Float = 1, Currency = 2 }
+
+        [SerializeField] protected Mode m_mode;
 
         [Header("References")]
         [SerializeField] protected TMP_Text m_textbox;
@@ -29,14 +36,14 @@ namespace Cyens.ReInherit
         [Header("Parameters")]
 
         [SerializeField]
-        protected int m_amount = 0;
-        protected int m_prevAmount = 0;
+        protected float m_amount = 0;
+        protected float m_prevAmount = 0;
 
-        protected int m_changeAmount = 0;
+        protected float m_changeAmount = 0;
 
 
         // This is the actual amount displayed in the text box
-        protected int m_actual;
+        protected float m_actual;
 
 
         [SerializeField]
@@ -53,8 +60,7 @@ namespace Cyens.ReInherit
             m_animator = GetComponent<Animator>();
         }
 
-        public void SetAmount( int newAmount ) =>  m_amount = newAmount;
-        public void AddAmount( int addedAmount ) => m_amount += addedAmount;
+        public void SetAmount(  float newAmount ) => m_amount = newAmount;
 
 
         /// <summary>
@@ -62,8 +68,27 @@ namespace Cyens.ReInherit
         /// </summary>
         protected virtual void RefreshText()
         {
-            m_textbox.text = m_actual.ToString();
-            m_changebox.text = m_changeAmount.ToString();
+
+            switch( m_mode )
+            {
+
+                case Mode.Integer:
+                    m_textbox.text = Mathf.RoundToInt( m_actual ).ToString();
+                    m_changebox.text = Mathf.RoundToInt( m_changeAmount ).ToString();
+                break;
+
+                case Mode.Float:
+                    m_textbox.text = String.Format("{0:0.0}", m_actual);
+                    m_changebox.text = String.Format("{0:0.0}", m_changeAmount);
+                break;
+
+                case Mode.Currency:
+
+                    int value = Mathf.RoundToInt( m_actual );
+                    m_textbox.text = m_actual >= 0.0f ? "€ "+value.ToString() : "-€ "+value.ToString();
+                    m_changebox.text = Mathf.RoundToInt( m_changeAmount  ).ToString();
+                break;
+            }
         }
 
 
@@ -72,19 +97,17 @@ namespace Cyens.ReInherit
         /// </summary>
         protected virtual void UpdateNumber()
         {
-            if( m_actual == m_amount ) return;
-
-            m_timer += Time.deltaTime * m_speed;
-            if( m_timer > 1.0f )
+            if( Mathf.Abs(m_actual-m_amount) < float.Epsilon )
             {
-                // Add more than 1 point each time, otherwise it will be unbearably slow.
-                // Increasing the frequency won't matter either, because at some point it will be
-                // bound by the game's frame rate.
-                int remaining = m_amount - m_actual;
-                remaining = Mathf.Clamp(remaining, -10,10);
-                m_actual += remaining;
-                m_timer = 0.0f;
+                m_actual = m_amount;
+                return;
             }
+
+            float remaining = m_amount - m_actual;
+
+            float speed = Time.deltaTime * m_speed;
+            float delta = Mathf.Clamp( remaining, -speed, speed );
+            m_actual += delta;
         }
 
         protected virtual void PlayAnimation()
@@ -96,12 +119,15 @@ namespace Cyens.ReInherit
         // Update is called once per frame
         protected void Update()
         {
-            bool amountChanged = (m_amount != m_prevAmount);
+            // Detect sudden changes in the amount
+            bool amountChanged = Mathf.Abs( m_amount - m_prevAmount ) > float.Epsilon;
             if( amountChanged && m_animator != null ) PlayAnimation();
             if( amountChanged ) m_changeAmount = m_amount - m_prevAmount;
 
             UpdateNumber();
             RefreshText();
+
+            // Keep track of the change
             m_prevAmount = m_amount;
         }
     }

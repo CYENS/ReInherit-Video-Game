@@ -16,6 +16,13 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: 7f8b713271465074b9447acc035436f0, type: 3}
   m_mesh: {fileID: -8464237030699037267, guid: a6c3266c536afcb45b1819776f7ba058, type: 3}
-  label: Chain Talisman 19th Century
-  description: Blah Blah Blah
+  label: "\u2018Ambousta\u2019 (case) round silver case"
+  description: 'A small round silver case, also known as an ''abusta'', with a chain,
+    which was used as a pendant in the 19th century. This particular jewel was used
+    as a talisman, which can be seen from its decoration. In addition to the floral
+    decoration with the central eight-petalled flower on the front, the reverse has
+    an engraved six-pointed star, while the second chain ends in a hook with an engraved
+    female figure. The use of both the six-pointed star and the human face was very
+    common in folk art as symbols to ward off evil. '
+  upgradeCost: 100
   test: 0

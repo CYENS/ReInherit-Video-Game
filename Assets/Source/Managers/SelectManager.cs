@@ -97,8 +97,14 @@ namespace Cyens.ReInherit.Managers
         // Update is called once per frame
         void Update()
         {
-        
-            if( Input.GetMouseButtonDown(0) )
+            // Don't allow selection of objects while we are placing objects
+            bool allowSelection = true;
+            allowSelection &= !PlacementManager.IsActive();
+            allowSelection &= !PreviewManager.IsActive();
+
+            bool hasClicked = Input.GetMouseButtonDown(0);
+
+            if( hasClicked && allowSelection )
             {
                 OnClick();
             }

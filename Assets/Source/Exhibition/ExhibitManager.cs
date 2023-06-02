@@ -118,6 +118,7 @@ namespace Cyens.ReInherit.Exhibition
             KeeperManager.Instance.AddPlaceTask( exhibit );
         }
         
+        
         public static Exhibit.State GetState( int index )
         {
             Exhibit exhibit = Instance.GetExhibit(index);

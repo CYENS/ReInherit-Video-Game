@@ -16,6 +16,15 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: 5da996e7e4200404b8c250fd4077ad0f, type: 3}
   m_mesh: {fileID: 4440196125037674620, guid: 65d6818db0eed9a40b457de8805645dd, type: 3}
-  label: Traditional Church Chair
-  description: Blah Blah Blah
+  label: Carved wooden church chair
+  description: "This particular chair belongs to a special group of handmade seats
+    with carved wood decoration. This type of carved chairs was not common in traditional
+    Cypriot houses but rather rare. Indicative of their rarity is the fact that the
+    carved chairs used by the newlyweds on their wedding day, in many villages, were
+    usually given as a loan by the church or the community. This particular chair
+    has decoration all over the back and front legs, which is dominated by criss-crossed
+    lines along with incised circles. It also features an embossed cross within a
+    circle on the upper back. The back is also decorated with four \"pillars\" which
+    resemble the \u2018parmakia\u2019, a characteristic of the windows of folk architecture. "
+  upgradeCost: 100
   test: 0

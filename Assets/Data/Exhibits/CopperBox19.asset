@@ -16,6 +16,10 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: da1a51cc33da6724d8fef13c9d4d01cb, type: 3}
   m_mesh: {fileID: 1263457257109840441, guid: d1c32f49d72a89942b5c1da269b934b5, type: 3}
-  label: Copper Box 19th Century
-  description: Blah Blah Blah
+  label: 'Copper alloy box, rectangular with embossed and carved patterns '
+  description: 'This box is made of copper alloy and was probably used as a gunpowder
+    case in the 19th century. It is decorated with incised geometric and floral designs
+    on all sides and features a custom cap on the top side. On the underside it has
+    three fixed rings, for attaching other hanging elements. '
+  upgradeCost: 100
   test: 0

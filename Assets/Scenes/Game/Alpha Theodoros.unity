@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18248683, g: 0.22819826, b: 0.30724707, a: 1}
+  m_IndirectSpecularColor: {r: 0.4643166, g: 0.5150101, b: 0.59021676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1589,6 +1589,8 @@ MonoBehaviour:
   panSpeed: 70
   zoomSpeed: 70
   rotateSpeed: 180
+  minDistance: 30
+  maxDistance: 180
 --- !u!114 &411017492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1610,6 +1612,7 @@ MonoBehaviour:
   maxAngle: 75
   angle: 45
   orbitAngle: 180
+  autoWarpOrbit: 1
 --- !u!114 &411017493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1752,56 +1755,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 17645.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 17645.994
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 17645.994
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 7.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -141
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 31.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1360181113856211009, guid: 486e5995b4e8f7e4c8a2042a2112f3d1,
         type: 3}
@@ -2005,14 +1958,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_persistent: 0
+  m_stageManager: {fileID: 0}
   entryRoomCoordinates: {x: 4.5, y: 4.5}
   m_museumState: 0
   m_round: 0
   m_funds: 1000
   Quiz: {fileID: 0}
   m_rating: 0.35
-  time: 0
-  txtTime: {fileID: 0}
+  m_time: 0
 --- !u!1 &473502591
 GameObject:
   m_ObjectHideFlags: 0
@@ -8420,6 +8373,9 @@ MonoBehaviour:
   m_collectionName: Exhibits
   m_collection: {fileID: 0}
   m_items: []
+  m_assetLibrary: {fileID: 0}
+  m_prefabs: []
+  m_index: 0
 --- !u!1 &1175255574
 GameObject:
   m_ObjectHideFlags: 0
@@ -12379,14 +12335,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7cfc0919ef087643828e9ffa6a7d3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eastWall: {fileID: 307459075}
-  westWall: {fileID: 1636649549}
-  northWall: {fileID: 1742841753}
-  southWall: {fileID: 782379911}
+  wallModels:
+    data:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  northEastPillar: {fileID: 0}
+  northWestPillar: {fileID: 0}
+  southEastPillar: {fileID: 0}
+  southWestPillar: {fileID: 0}
   moveToIndex: 0
   startIndex:
     x: 0
     y: 0
+  m_surface: {fileID: 0}
 --- !u!4 &2073237735
 Transform:
   m_ObjectHideFlags: 0

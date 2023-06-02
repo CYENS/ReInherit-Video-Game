@@ -16,6 +16,16 @@ MonoBehaviour:
     type: 3}
   m_thumb: {fileID: 21300000, guid: 14c01c61b2fb5d842b6276a29417db61, type: 3}
   m_mesh: {fileID: 713984728207129430, guid: 8760ce3b65cf6e04792dd103c6ba0c71, type: 3}
-  label: Red Ceramic Vase
-  description: Blah Blah Blah
+  label: "Vase with \u201Ckannourka\u201D, red clay pottery"
+  description: 'This vase is representative of rural pottery centres, such as Phoini,
+    where female potters made such vases on the wheel ("gyristari"). The vase is
+    made of red clay and is hand-carved with decoration of flowers and birds. The
+    decorative elements are attached to the main body of the vase, with cylindrical
+    stems called "kannourka", on which birds and flowers can be seen alternately.
+    The vase is particularly elaborate as it consists of 2 vases, with the smaller
+    one at the top, at the mouth of which there are 2 birds facing each other. The
+    vase is engraved with the inscription PHINI CYPRUS SOFRONIA in English (that
+    is the name of the manufacturing village and of the potter), since it was intended
+    for the tourist market of the time. '
+  upgradeCost: 100
   test: 0

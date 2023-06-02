@@ -41,6 +41,12 @@ namespace Cyens.ReInherit.Managers
         private ErrorMessage m_errorMessageManager; 
 
 
+        [Header("Parameters")]
+
+        [SerializeField]
+        private int m_finalRound = 3;
+
+
         [Header("Game Data")]
 
         [SerializeField]
@@ -51,6 +57,7 @@ namespace Cyens.ReInherit.Managers
         [SerializeField]
         [Tooltip("The amount of available funds to buy items and services with")]
         private int m_funds = 1000;
+
 
         [SerializeField] GameObject Quiz;
 
@@ -65,7 +72,7 @@ namespace Cyens.ReInherit.Managers
 
 
         [SerializeField][Tooltip("The star rating of your museum")]
-        private float m_rating = 0.35f;
+        private float m_rating = 3.5f;
 
         public static float Rating
         {
@@ -189,6 +196,12 @@ namespace Cyens.ReInherit.Managers
             if (m_museumState == MuseumState.Open) 
             {
                 MuseumOpenUpdate();
+            }
+
+
+            if( Input.GetKeyDown(KeyCode.N) )
+            {
+                CloseMuseum();
             }
         }
 

@@ -77,11 +77,17 @@ namespace Cyens.ReInherit.Managers
         }
 
 
+        public static bool IsActive() => Instance.m_status != Status.Inactive;
+
+
         public static void PlaceExhibit( GameObject notifyTarget, Mesh mesh ) 
         {
             Instance.m_notifyTarget = notifyTarget;
             Instance.m_status = Status.Exhibit;
             Instance.m_meshFilter.sharedMesh = mesh;
+
+            // Deselect everything while placing
+            SelectManager.Clear();
         }
 
         public static void Cancel() 
@@ -143,8 +149,10 @@ namespace Cyens.ReInherit.Managers
         /// <returns></returns>
         protected bool IsObstacle( GameObject target )
         {
+
             // Bitwise and
-            return (target.layer & m_obstacles) != 0;
+            int mask = 1 << target.layer;
+            return ( mask & m_obstacles ) != 0;
         }
 
         /// <summary>
@@ -183,6 +191,13 @@ namespace Cyens.ReInherit.Managers
         {
             bool valid = false;
 
+            // Cancel placement with right click
+            if( Input.GetMouseButtonDown(1) )
+            {
+                Cancel();
+                return;
+            }
+
             Vector3 markerPos = m_marker.position;
             if( GetIntersection(ref markerPos) )
             {
@@ -210,6 +225,7 @@ namespace Cyens.ReInherit.Managers
                 if(m_notifyTarget != null )
                 {
                     m_notifyTarget.SendMessage("Place", m_marker.position );
+                    m_status = Status.Inactive;
                 }
             }
         }

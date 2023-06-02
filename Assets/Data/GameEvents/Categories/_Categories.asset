@@ -16,9 +16,5 @@ MonoBehaviour:
   m_filter: t:EventCategory
   m_assets:
   - {fileID: 11400000, guid: 07a1d04b8d738e34b924fa40aee5104f, type: 2}
-  - {fileID: 11400000, guid: 4ee86840bd213244b84f29e5385dac56, type: 2}
-  - {fileID: 11400000, guid: 73942bfb8646ec742a7ccee4baee5ae8, type: 2}
   - {fileID: 11400000, guid: 92d895f57b33e084f89a4b3e4c286c39, type: 2}
-  - {fileID: 11400000, guid: 606eb293e7f00404e8ff3929653fff81, type: 2}
   - {fileID: 11400000, guid: d7a0e8854d1e78741838882829de0313, type: 2}
-  - {fileID: 11400000, guid: 907ceed7d6db4a94a925becc7de49cf3, type: 2}
