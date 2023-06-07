@@ -62,6 +62,8 @@ namespace Cyens.ReInherit
 
         }
 
+
+
         private void HideAnimation()
         {
             
@@ -72,10 +74,36 @@ namespace Cyens.ReInherit
             StartCoroutine(HideAfterTime());
         }
 
-        public override void Awake()
+
+        private void Start() 
         {
-            base.Awake();
+            HideImmediately();
         }
+
+        private void HideImmediately() 
+        {
+            SetAlpha( m_panel, 0.0f );
+            SetAlpha( m_image, 0.0f );
+            SetAlpha( m_title, 0.0f );
+            SetAlpha( m_message, 0.0f );
+        }
+
+
+        private void SetAlpha( Image image, float alpha )
+        {
+            Color color = image.color;
+            color.a = alpha;
+            image.color = color;
+        }
+
+        private void SetAlpha( TextMeshProUGUI text, float alpha )
+        {
+            Color color = text.color;
+            color.a = alpha;
+            text.color = color;
+        }
+
+
 
         private IEnumerator LerpImageColorAlpha(Image imageToLerp, float start, float end)
         {

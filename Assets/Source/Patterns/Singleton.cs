@@ -35,7 +35,9 @@ namespace Cyens.ReInherit.Patterns
         
         public virtual void Awake ()
         {
+            // There's no other instance of this singleton
             if (instance == null) {
+
                 instance = this as T;
                 if(m_persistent)
                 {
@@ -43,7 +45,12 @@ namespace Cyens.ReInherit.Patterns
                     DontDestroyOnLoad (this.gameObject);
                 }
             } else {
-                Destroy (gameObject);
+
+                // There's another singleton that was instanced first
+                if( instance != this ) 
+                {
+                    Destroy (gameObject);
+                }
             }
         }
     }

@@ -20,5 +20,6 @@ MonoBehaviour:
   minTheming: 0
   minVariety: 0
   minSpacing: 0
-  whenPass: {fileID: 0}
+  whenPass: {fileID: 4696148352607103386, guid: b2ef99e01c3e9894fbe228a76d6c6759,
+    type: 3}
   whenFail: {fileID: 0}
