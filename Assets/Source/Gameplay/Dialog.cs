@@ -87,6 +87,11 @@ namespace Cyens.ReInherit
             GameManager.Rating += rating;
         }
 
+        public void AddRating(float rating)
+        {
+            GameManager.Rating += rating;
+        }
+
         public void Award( int amount ) 
         {
             GameManager.Funds += amount;
