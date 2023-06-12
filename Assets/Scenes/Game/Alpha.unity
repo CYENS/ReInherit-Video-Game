@@ -2880,6 +2880,8 @@ MonoBehaviour:
   rotateSpeed: 180
   minDistance: 30
   maxDistance: 180
+  xPadding: 10
+  zPadding: 10
 --- !u!114 &411017492
 MonoBehaviour:
   m_ObjectHideFlags: 0

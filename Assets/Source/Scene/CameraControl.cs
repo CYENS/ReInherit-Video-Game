@@ -1,4 +1,5 @@
-﻿using Cyens.ReInherit.Extensions;
+﻿using Cyens.ReInherit.Architect;
+using Cyens.ReInherit.Extensions;
 using UnityEngine;
 
 namespace Cyens.ReInherit.Scene
@@ -11,12 +12,15 @@ namespace Cyens.ReInherit.Scene
         [SerializeField] private float rotateSpeed = 180f;
         [SerializeField] private float minDistance = 30;
         [SerializeField] private float maxDistance = 180;
+        [SerializeField] private float xPadding = 0;
+        [SerializeField] private float zPadding = 0;
 
         private TopdownCamera m_camera;
         private Vector3 m_lastPanPoint;
         private Vector3 m_lastPlaneHit;
 
         private float m_storedDistance = -1;
+        private RoomGraph m_graph;
 
         private void OnDisable()
         {
@@ -37,6 +41,7 @@ namespace Cyens.ReInherit.Scene
         private void Awake()
         {
             m_camera = GetComponent<TopdownCamera>();
+            m_graph = FindObjectOfType<RoomGraph>();
         }
 
         private void Pan(float x, float z)
@@ -54,7 +59,16 @@ namespace Cyens.ReInherit.Scene
             right.Normalize();
 
             var direction = (x * right + z * forward).normalized;
-            m_camera.Target += direction * distance;
+            SetTargetClamped(m_camera.Target + direction * distance);
+        }
+
+        public void SetTargetClamped(Vector3 target)
+        {
+            var min = new Vector2(m_graph.MinWorldX, m_graph.MinWorldY);
+            var max = new Vector2(m_graph.MaxWorldX, m_graph.MaxWorldX);
+            target.x = Mathf.Clamp(target.x, min.x - xPadding, max.x + xPadding);
+            target.z = Mathf.Clamp(target.z, min.y - zPadding, max.y + zPadding);
+            m_camera.Target = target;
         }
 
         private void Zoom(float z)
@@ -87,8 +101,8 @@ namespace Cyens.ReInherit.Scene
                 Vector3 p2;
 
                 if (m_camera.GroundCast(Input.mousePosition, out p1) && m_camera.GroundCast(m_lastPanPoint, out p2)) {
-                    // Natural "grab" panning mode in regards to the ground 
-                    m_camera.Target += p2 - p1;
+                    // Natural "grab" panning mode in regards to the ground
+                    SetTargetClamped(m_camera.Target + (p2 - p1));
                 } else {
                     // Less natural but failsafe panning mode for when the user doesn't drag along the ground.
 
@@ -105,7 +119,7 @@ namespace Cyens.ReInherit.Scene
                     var side2d = cameraTransform.right.xz();
                     var delta2d = (delta.x * side2d + delta.y * forward2d).normalized;
 
-                    m_camera.Target += delta2d.x0z();
+                    SetTargetClamped(m_camera.Target + delta2d.x0z());
                 }
 
                 m_lastPanPoint = Input.mousePosition;
@@ -118,9 +132,7 @@ namespace Cyens.ReInherit.Scene
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
                 Zoom(z);
                 Pan(x, 0);
-            } 
-            //else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ) {
-            else if ( Input.GetMouseButton(2) ) {   
+            } else if (Input.GetMouseButton(2)) {
                 Rotate(x, z);
             } else {
                 Pan(x, z);

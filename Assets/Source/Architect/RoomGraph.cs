@@ -54,6 +54,11 @@ namespace Cyens.ReInherit.Architect
         public int MaxX => (Index.MaxSizeX / 2 + m_maxWidth / 2)+2;
         public int MaxY => m_maxHeight + 1;
 
+        public float MinWorldX => Index.TransformX(MinX);
+        public float MinWorldY => Index.TransformY(MinY);
+        public float MaxWorldX => Index.TransformX(MaxX);
+        public float MaxWorldY => Index.TransformY(MaxY);
+
         public IndexBounds UsableBounds => new(MinX, MinY, MaxX, MaxY);
 
         public int GetRoomsAt(in IndexBounds area, List<Room> result = null)

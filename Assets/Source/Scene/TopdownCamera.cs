@@ -93,8 +93,7 @@ namespace Cyens.ReInherit.Scene
             get => autoWarpOrbit;
             set => autoWarpOrbit = value;
         }
-
-
+        
         private void OnValidate()
         {
             Angle = Angle;
