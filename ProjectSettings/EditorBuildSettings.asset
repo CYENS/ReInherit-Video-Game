@@ -20,6 +20,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Game/Alpha Theodoros.unity
     guid: 3bae4995c70163648945ed41799d7bd2
+  - enabled: 1
+    path: Assets/Scenes/LoadScenes/TestLoadScene1.unity
+    guid: 2c8f132b0dddb9d4e8d6d6937ed89bad
+  - enabled: 1
+    path: Assets/Scenes/LoadScenes/TestLoadScene2.unity
+    guid: 1f23114bc87ca284abc2d4849bcf1444
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 5e6123401c8f92a48a541eab3fe5b44c,
       type: 2}

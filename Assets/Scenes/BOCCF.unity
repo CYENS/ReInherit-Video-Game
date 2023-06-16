@@ -373,6 +373,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4818031705295277032, guid: 668c6e3fe7914aa4e865e7e234d62b21,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e03a6a9902da054b9710264ba9c6cba, type: 2}
+    - target: {fileID: 4818031706173415002, guid: 668c6e3fe7914aa4e865e7e234d62b21,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e03a6a9902da054b9710264ba9c6cba, type: 2}
     - target: {fileID: 4818031706488771920, guid: 668c6e3fe7914aa4e865e7e234d62b21,
         type: 3}
       propertyPath: m_RootOrder
@@ -433,5 +443,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BOCCF Room
       objectReference: {fileID: 0}
+    - target: {fileID: 4818031706572850779, guid: 668c6e3fe7914aa4e865e7e234d62b21,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e03a6a9902da054b9710264ba9c6cba, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 668c6e3fe7914aa4e865e7e234d62b21, type: 3}
