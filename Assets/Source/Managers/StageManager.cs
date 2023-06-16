@@ -35,13 +35,15 @@ namespace Cyens.ReInherit.Managers
 
         public void Refresh() 
         {
-            // Disable all stages
-            foreach(var stage in m_stages)
-            {
-                stage.gameObject.SetActive(false);
+            if (m_stages != null) {
+                // Disable all stages
+                foreach (var stage in m_stages) {
+                    stage.gameObject.SetActive(false);
+                }
+
+                // Enable selected stage
+                m_stages[m_select].gameObject.SetActive(true);
             }
-            // Enable selected stage
-            m_stages[m_select].gameObject.SetActive(true);
         }
 
   
