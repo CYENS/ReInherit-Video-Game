@@ -265,7 +265,5 @@ namespace Cyens.ReInherit
         {
             UpdateTasks();
         }
-
-
     }
 }

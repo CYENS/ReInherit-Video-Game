@@ -1,4 +1,8 @@
-﻿namespace Cyens.ReInherit.Architect
+﻿using Cyens.ReInherit.Managers;
+using Unity.VisualScripting;
+using UnityEngine;
+
+namespace Cyens.ReInherit.Architect
 {
     public class DeleteRoomTool : RoomTool
     {
@@ -20,8 +24,14 @@
         {
             roomData.indicator.IsDrawing = false;
             var bounds = roomData.indicator.InclusiveBounds;
-            
-            roomData.graph.RemoveArea(bounds);
+            Debug.Log(roomData.indicator);
+            if (KeeperManager.Instance.GetActiveKeepers() > 0) {
+                ErrorMessage.Instance.CreateErrorMessage("Cannot delete room",
+                    "Cannot delete rooms while keepers moving.");
+            }
+            else {
+                roomData.graph.RemoveArea(bounds);
+            }
         }
         
         

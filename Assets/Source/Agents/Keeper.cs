@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Cyens.ReInherit.Managers;
 using UnityEngine;
-using UnityEngine.AI;
 
 using Pathfinding;
 using UnityEngine.Animations.Rigging;
@@ -120,9 +119,6 @@ namespace Cyens.ReInherit
         protected override void Update()
         {
             base.Update();
-
-            
-            
         }
 
 
@@ -190,6 +186,5 @@ namespace Cyens.ReInherit
             m_keeperManager.DoneWorking( this );
             gameObject.SetActive(false);
         }
-
     }
 }

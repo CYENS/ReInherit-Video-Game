@@ -235,6 +235,7 @@ namespace Cyens.ReInherit.Exhibition
         public void Place( Vector3 point ) 
         {
             transform.position = point;
+            this.GetVisitorHandler().GenerateViewPoints();
         }
 
         public Vector3 ClosestStandPoint(Vector3 point)

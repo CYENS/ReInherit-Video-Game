@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Cyens.ReInherit.Exhibition;
 using Cyens.ReInherit.Managers;
 using Pathfinding;
 using UnityEngine;
@@ -17,9 +19,15 @@ namespace Cyens.ReInherit.Architect
         [SerializeField] private bool moveToIndex;
         [SerializeField] private Index startIndex;
 
-
-        [SerializeField]
-        private NavMeshSurface m_surface;
+        public bool ContainsArtifact()
+        {
+            Exhibit[] exhibits = GameObject.FindObjectsOfType<Exhibit>();
+            foreach (Exhibit e in exhibits) {
+                if (Vector3.Distance(transform.position, e.transform.position) < 2f)
+                    return true;
+            }
+            return false;
+        }
 
         public void Clear()
         {
@@ -34,7 +42,6 @@ namespace Cyens.ReInherit.Architect
         }
 
         private void Start() {
-            m_surface = GetComponent<NavMeshSurface>();
         }
 
         public WallModel.WallType GetModelType(Direction direction)
@@ -102,19 +109,12 @@ namespace Cyens.ReInherit.Architect
         {
             // TODO: Fix this
             transform.Find("Floor").GetComponent<Collider>().enabled = false;
-            // GetComponent<GraphUpdateScene>().Apply();
-            //m_surface.BuildNavMesh();
         }
 
         public void RecreateNavMesh()
         {
             // TODO: Fix this
             transform.Find("Floor").GetComponent<Collider>().enabled = true;
-            // GetComponent<GraphUpdateScene>().Apply();
-            
-            //m_surface.useGeometry =NavMeshCollectGeometry.PhysicsColliders;
-            //m_surface.BuildNavMesh();
-
         }
 
         private void OnValidate()

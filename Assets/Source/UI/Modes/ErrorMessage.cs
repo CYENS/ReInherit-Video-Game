@@ -18,7 +18,7 @@ namespace Cyens.ReInherit
         [SerializeField] private bool m_panelShowing = false;
         [SerializeField] private float m_dissapearDelay = 4f;
         private IEnumerator m_coroutine;
-        private float time = 0.5f;
+        private float time = 0.25f;
 
         // Creates a new error message. If panel already showing, hide it and reshow the new one.
         public void CreateErrorMessage(string title, string text)
@@ -27,7 +27,6 @@ namespace Cyens.ReInherit
             if (m_panelShowing)
             {
                 StopCoroutine(m_coroutine);
-                HideAnimation();
             }
 
             m_title.text = title;
@@ -52,8 +51,7 @@ namespace Cyens.ReInherit
 
         private void ShowAnimation()
         {
-
-            StartCoroutine(LerpImageColorAlpha(m_panel, 0.0f, 1f));
+            StartCoroutine(LerpImageColorAlpha(m_panel, 0.0f, 0.3f));
             StartCoroutine(LerpImageColorAlpha(m_image, 0.0f, 1f));
             StartCoroutine(LerpTextColorAlpha(m_title, 0.0f, 1f));
             StartCoroutine(LerpTextColorAlpha(m_message, 0.0f, 1f));
@@ -66,8 +64,7 @@ namespace Cyens.ReInherit
 
         private void HideAnimation()
         {
-            
-            StartCoroutine(LerpImageColorAlpha(m_panel, 1.0f, 0f));
+            StartCoroutine(LerpImageColorAlpha(m_panel, 0.3f, 0f));
             StartCoroutine(LerpImageColorAlpha(m_image, 1.0f, 0f));
             StartCoroutine(LerpTextColorAlpha(m_title, 1.0f, 0f));
             StartCoroutine(LerpTextColorAlpha(m_message, 1.0f, 0f));

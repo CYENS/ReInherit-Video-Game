@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Cyens.ReInherit.Patterns;
 using Cyens.ReInherit.Exhibition;
 using UnityEngine;
-
+using UnityEngine.AI;
 
 namespace Cyens.ReInherit.Managers
 {
@@ -72,6 +72,17 @@ namespace Cyens.ReInherit.Managers
         {
             base.Start();
             m_keepers = m_collection.Get<Keeper>();
+        }
+
+        public int GetActiveKeepers()
+        {
+            int count = 0;
+            foreach (Keeper k in m_keepers) {
+                if (k.gameObject.activeInHierarchy)
+                    count += 1;
+            }
+
+            return count;
         }
 
 
@@ -219,6 +230,27 @@ namespace Cyens.ReInherit.Managers
 
         }
 
+        public bool CheckPathValidity(Vector3 source, Vector3 destination)
+        {
+            NavMeshPath path = new NavMeshPath();
+            NavMesh.CalculatePath(source, destination, NavMesh.AllAreas, path);
+
+            if (path.status == NavMeshPathStatus.PathComplete)
+            {
+                Debug.Log("Path is reachable");
+                return true;
+            }
+            else if (path.status == NavMeshPathStatus.PathPartial)
+            {
+                Debug.Log("Path is partially reachable");
+                return false;
+            }
+            else
+            {
+                Debug.Log("Path is not reachable");
+                return false;
+            }
+        }
     
         void OnDrawGizmos()
         {

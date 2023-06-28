@@ -4,7 +4,7 @@ using UnityEngine;
 using Cyens.ReInherit.Exhibition;
 using Cyens.ReInherit.Managers;
 using UnityEngine.UI;
-
+using UnityEngine.AI;
 
 namespace Cyens.ReInherit
 {
@@ -28,6 +28,8 @@ namespace Cyens.ReInherit
 
         public void Press() 
         {
+            Vector3 entrancePoint = new Vector3(5f, 0f, -5f);
+            Vector3 destPoint = m_exhibit.ClosestStandPoint(entrancePoint);
             switch(m_mode)
             {
                 case Mode.Preview:
@@ -39,38 +41,45 @@ namespace Cyens.ReInherit
                 break;
 
                 case Mode.Remove:
-                    m_exhibit.SetState(Exhibit.State.Transit);
-                    m_keeperManager.AddRemoveTask(m_exhibit);
-                break;
+                    if (m_keeperManager.CheckPathValidity(entrancePoint, destPoint) == false) {
+                        ErrorMessage.Instance.CreateErrorMessage("Cannot remove artifact",
+                            "Artifact destination cannot be reached by keeper.");
+                    }
+                    else {
+                        m_exhibit.SetState(Exhibit.State.Transit);
+                        m_keeperManager.AddRemoveTask(m_exhibit);   
+                    }
+                    break;
 
                 case Mode.Move:
-
                     var metaData = m_exhibit.GetComponent<MetaData>();
                     PlacementManager.PlaceExhibit( m_exhibit.gameObject, metaData.mesh );
-                break;
+                    break;
 
                 case Mode.Upgrade:
-
                     bool canUpgrade = m_exhibit.GetUpgrade() == 0;
                     int cost = m_exhibit.Info.upgradeCost;
-                    bool hasBudget = GameManager.Funds > cost; 
+                    bool hasBudget = GameManager.Funds > cost;
                     if( canUpgrade == false )
                     {
                         return;
                     }
                     if( hasBudget == false )
                     {
-                        Debug.Log("TODO: Show no money message!");
+                        ErrorMessage.Instance.CreateErrorMessage("Cannot upgrade artifact", "Not enough funds to afford it.");
                         return;
                     }
-                    
-                    GameManager.Funds -= cost;
-                    m_exhibit.SetState(Exhibit.State.Transit);
-                    m_exhibit.Upgrade();
-                    m_keeperManager.AddUpgradeTask(m_exhibit);
-                    
-                    
-                break;
+                    if (m_keeperManager.CheckPathValidity(entrancePoint, destPoint) == false) {
+                        ErrorMessage.Instance.CreateErrorMessage("Cannot upgrade artifact",
+                            "Artifact destination cannot be reached by keeper.");
+                    }
+                    else {
+                        GameManager.Funds -= cost;
+                        m_exhibit.SetState(Exhibit.State.Transit);
+                        m_exhibit.Upgrade();
+                        m_keeperManager.AddUpgradeTask(m_exhibit);
+                    }
+                    break;
 
                 case Mode.Repair:
 
@@ -101,7 +110,9 @@ namespace Cyens.ReInherit
             m_keeperManager = KeeperManager.Instance;
 
             m_placeManager = PlacementManager.Instance;
-            m_exhibit = m_case.GetComponentInParent<Exhibit>();
+            
+            if(m_case != null)
+                m_exhibit = m_case.GetComponentInParent<Exhibit>();
 
             m_button = GetComponent<Button>();
         }
@@ -115,6 +126,5 @@ namespace Cyens.ReInherit
                 m_button.interactable = canUpgrade;
             }
         }
-
     }
 }

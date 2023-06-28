@@ -112,6 +112,12 @@ namespace Cyens.ReInherit.Exhibition
 
         public static void Place( int index, Vector3 point )
         {
+            Vector3 entrancePoint = new Vector3(5f, 0f, -5f);
+            if (KeeperManager.Instance.CheckPathValidity(entrancePoint, point) == false) {
+                ErrorMessage.Instance.CreateErrorMessage("Cannot place artifact",
+                    "Artifact destination cannot be reached by keeper.");
+                return;
+            }
             Exhibit exhibit = Instance.GetExhibit(index);
             exhibit.transform.position = point;
             exhibit.SetState( Exhibit.State.Transit );
