@@ -1,0 +1,11 @@
+Model Information:
+* title:	Harvester cleaner draft
+* source:	https://sketchfab.com/3d-models/harvester-cleaner-draft-ca74517b3f53476db668957182fd699a
+* author:	mishdanil (https://sketchfab.com/mishdanil)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Harvester cleaner draft" (https://sketchfab.com/3d-models/harvester-cleaner-draft-ca74517b3f53476db668957182fd699a) by mishdanil (https://sketchfab.com/mishdanil) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
