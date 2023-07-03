@@ -17,5 +17,6 @@ MonoBehaviour:
   m_thumb: {fileID: 21300000, guid: 8a80502f3409d894f84375831b61915b, type: 3}
   m_mesh: {fileID: -6632443342139846867, guid: fa7df1aec50de0f4599d6bf8a9add008, type: 3}
   label: Silver Bowl
-  description: Blah Blah Blah
+  description: Description Unavailable
+  upgradeCost: 100
   test: 0

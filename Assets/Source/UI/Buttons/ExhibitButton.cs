@@ -28,8 +28,6 @@ namespace Cyens.ReInherit
 
         public void Press() 
         {
-            Vector3 entrancePoint = new Vector3(5f, 0f, -5f);
-            Vector3 destPoint = m_exhibit.ClosestStandPoint(entrancePoint);
             switch(m_mode)
             {
                 case Mode.Preview:
@@ -41,6 +39,8 @@ namespace Cyens.ReInherit
                 break;
 
                 case Mode.Remove:
+                    Vector3 entrancePoint = new Vector3(5f, 0f, -5f);
+                    Vector3 destPoint = m_exhibit.ClosestStandPoint(entrancePoint);
                     if (m_keeperManager.CheckPathValidity(entrancePoint, destPoint) == false) {
                         ErrorMessage.Instance.CreateErrorMessage("Cannot remove artifact",
                             "Artifact destination cannot be reached by keeper.");
@@ -69,6 +69,8 @@ namespace Cyens.ReInherit
                         ErrorMessage.Instance.CreateErrorMessage("Cannot upgrade artifact", "Not enough funds to afford it.");
                         return;
                     }
+                    entrancePoint = new Vector3(5f, 0f, -5f);
+                    destPoint = m_exhibit.ClosestStandPoint(entrancePoint);
                     if (m_keeperManager.CheckPathValidity(entrancePoint, destPoint) == false) {
                         ErrorMessage.Instance.CreateErrorMessage("Cannot upgrade artifact",
                             "Artifact destination cannot be reached by keeper.");
