@@ -17,5 +17,21 @@ MonoBehaviour:
   m_thumb: {fileID: 21300000, guid: 68c72603885b79548b0b907e44133f38, type: 3}
   m_mesh: {fileID: -6465906271663854514, guid: e3b0dfb77f6255c4787b0de4199865d6, type: 3}
   label: Altar Boy
-  description: Blah Blah Blah
+  description: "He wears a short-sleeved garment, the lower border of which is schematically
+    rolled up to uncover the genitals and both legs below the knees. The garment
+    is grooved vertically. The right arm is stretched downwards and holds a loop-shaped
+    object in the right hand, which may probably be a special sort of bread (koullouri).
+    Nothing in left hand. Such objects are held by male and female terracotta figurines
+    found in the favissa at Kamelarga, Kition. We identified these as special bread,
+    koullouri offered perhaps on special religious festivals, as today with the koullouri
+    made for Easter and Christmas. Bracelets round both wrists and anklets. A string
+    round the neck with a horizontal \u2018toggle\u2019 pendant, from which hangs
+    a vertically grooved rectangular pendant. Flat back. Round face, large almond-shaped
+    eyes with ridged eyelids, disc-shaped ear-ring at lobe. Fringe of hair above
+    forehead. Red paint for plinth, lips, ear-rings, rectangular pendant and neck
+    border of garment. The pendants worn by the temple-boy are of interest. The \u2018toggle\u2019
+    pendant is quite common on temple-boys and has been referred to as a spindle.
+    It was identified as a pendant, based on ivory objects of a similar shape found
+    at Salamis which are certainly \u2018toggles\u2019 for suspension by fastening."
+  upgradeCost: 100
   test: 0

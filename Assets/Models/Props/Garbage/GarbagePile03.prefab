@@ -79,5 +79,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GarbagePile03
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3275637187859110716, guid: 9bff18168b19b9f43a8aba8b8b79181a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9bff18168b19b9f43a8aba8b8b79181a, type: 3}
