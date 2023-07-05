@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Managers;
+using Unity.VisualScripting;
 
 namespace Cyens.ReInherit
 {
@@ -14,7 +15,7 @@ namespace Cyens.ReInherit
     public class Selectable : MonoBehaviour
     {
         private LayerMask m_layerMask;
-
+        [SerializeField] private bool m_isGarbage = false;
         [SerializeField]
         [Tooltip("Whether this object is selected or not")]
         private bool m_selected;
@@ -31,15 +32,11 @@ namespace Cyens.ReInherit
         [Header("References")]
         [SerializeField]
         private GameObject uiContent;
-        
-
 
         private void OnDisable() => DeSelect();
         
         private void OnDestroy() => DeSelect();
-        
 
-    
         void Awake()
         {
             m_layerMask = SelectManager.Layers;
@@ -55,8 +52,12 @@ namespace Cyens.ReInherit
         /// <summary>
         /// Forces the object to be de-selected
         /// </summary>
-        private void DeSelect() 
+        private void DeSelect()
         {
+            // Garbage cannot be deselected
+            if (m_isGarbage)
+                return;
+            
             if(SelectManager.Selected == gameObject)
             {
                 SelectManager.Clear();

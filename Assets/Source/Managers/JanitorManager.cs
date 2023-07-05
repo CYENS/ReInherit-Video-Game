@@ -93,7 +93,7 @@ namespace Cyens.ReInherit.Managers
         {
             foreach( var janitor in m_janitors )
             {
-                if( janitor.isIdle )
+                if( janitor.isIdle || janitor.returningToBase)
                 {
                     return janitor;
                 }
@@ -104,15 +104,24 @@ namespace Cyens.ReInherit.Managers
         protected new void Update()
         {
             base.Update();
-
+            Janitor janitor;
+            
             // No new tasks
             if( IsNewTaskAvailable() == false )
             {
+                // Check if 
+                janitor = GetIdleJanitor();
+                if( janitor == null )
+                {
+                    return;
+                }
+                if(janitor.InBase() == false && janitor.returningToBase == false)
+                    janitor.AddReturnTask();
                 return;
             }
 
-            // Get a keeper that isn't currently busy
-            var janitor = GetIdleJanitor();
+            // Get a janitor that isn't currently busy
+            janitor = GetIdleJanitor();
             if( janitor == null )
             {
                 return;
@@ -122,7 +131,7 @@ namespace Cyens.ReInherit.Managers
             Debug.Log("Assigning new task to janitor " + janitor);
             janitor.gameObject.SetActive(true);
             var task = GetNextTask( janitor );
-            janitor.AddCleanTask(task.garbage.position);
+            janitor.AddCleanTask(task.garbage);
         }
     }
 }

@@ -177,7 +177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5776262f2547c844097f4f50a18829ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGarbage: 1
+  m_isGarbage: 1
+  m_garbage: {fileID: 5159319121658140282}
 --- !u!114 &3056811815060226732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,7 +206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6859060395811665999}
-  - component: {fileID: 5174567949002218341}
+  - component: {fileID: 343119315680975675}
   - component: {fileID: 8184641346632225142}
   m_Layer: 3
   m_Name: Selectable
@@ -230,7 +231,7 @@ Transform:
   m_Father: {fileID: 4207567364102023662}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5174567949002218341
+--- !u!114 &343119315680975675
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,6 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84497e7cb07de5a44acf80bdde483875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isGarbage: 1
   m_selected: 0
   uiContent: {fileID: 0}
 --- !u!65 &8184641346632225142

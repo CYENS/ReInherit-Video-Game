@@ -13,12 +13,15 @@ namespace Cyens.ReInherit
     {
         private bool m_selected = false;
         private Outline outlineScript;
-        [SerializeField] private bool isGarbage;
+        [SerializeField] private bool m_isGarbage;
+        [SerializeField] private Garbage m_garbage;
 
         public void Select()
         {
             if (m_selected) return;
             m_selected = true;
+            if(m_isGarbage)
+                m_garbage.GarbageSelected();
             outlineScript.enabled = true;
         }
 
@@ -28,7 +31,7 @@ namespace Cyens.ReInherit
             
             // If the selectable object is a garbage, and already selected,
             // deselect is not allowed.
-            if(isGarbage)
+            if(m_isGarbage)
                 return;
                 
             m_selected = false;

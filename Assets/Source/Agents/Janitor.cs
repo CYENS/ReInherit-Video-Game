@@ -6,15 +6,16 @@ using UnityEngine;
 
 using UnityEngine.Animations.Rigging;
 using Cyens.ReInherit.Exhibition;
+using Unity.VisualScripting;
+using UnityEngine.ProBuilder.MeshOperations;
 
 namespace Cyens.ReInherit
 {
     public class Janitor : BaseAgent
     {
-
         private JanitorManager m_janitorManager;
         private Renderer[] m_renderers;
-        [SerializeField] private Task currentTask;
+        public bool returningToBase = false;
         
         [SerializeField] private GameObject m_RigHands;
         private GameObject m_BoxDissolve;
@@ -23,6 +24,7 @@ namespace Cyens.ReInherit
         private float valueDissolve = 0f; // the value to change
         private float changeTimeOpacity = 0.5f;
         private float valueOpacity = 1;
+        private Garbage m_currentGarbage;
 
         // Start is called before the first frame update
         protected new void Start()
@@ -70,33 +72,55 @@ namespace Cyens.ReInherit
             base.Update();
         }
         
-        public void AddCleanTask( Vector3 garbagePoint )
+        public void AddCleanTask( Garbage garbage )
         {
-            Vector3 standPoint = Vector3.zero; // TO-DO: Get garbage position
-            Vector3 basePoint = m_janitorManager.GetBasePosition();
-
+            m_currentGarbage = garbage;
+            if (returningToBase)
+                interruptMoveTask = true;
             // Go to the GARBAGE
-            AddMoveTask( standPoint, 1.0f, 0.1f );
-
-            // Look at the exhibit
-            //AddLookTask( exhibit.transform, 10.0f, 1.0f );
-
-            //AddMessageTask( exhibit.gameObject , "Remove" );
-
+            AddMoveTask( garbage.position, 1.0f, 0.1f );
+            returningToBase = false;
             AddWaitTask(1.0f);
-
-            AddMoveTask( basePoint, 0.8f, 0.5f );
             AddMessageTask( gameObject, "Done" );
+        }
+
+        public bool InBase()
+        {
+            Vector3 basePoint = m_janitorManager.GetBasePosition();
+            if (Vector3.Distance(transform.position, basePoint) <= 2f)
+                return true;
+            return false;
+        }
+
+        public void AddReturnTask()
+        {
+            returningToBase = true;
+            Vector3 basePoint = m_janitorManager.GetBasePosition();
+            AddMoveTask( basePoint, 0.8f, 0.5f );
+            AddMessageTask( gameObject, "DoneBase" );
         }
 
         /// <summary>
         /// Done with all tasks.
-        /// Notify keeper manager and deactivate.
+        /// Notify janitor manager and deactivate.
         /// </summary>
         public void Done() 
         {
+            if(m_currentGarbage != null)
+                m_currentGarbage.CleanAndDestroy();
             m_janitorManager.DoneWorking( this );
-            gameObject.SetActive(false);
+        }
+        
+        /// <summary>
+        /// Done with all tasks.
+        /// Notify janitor manager and deactivate.
+        /// </summary>
+        public void DoneBase()
+        {
+            returningToBase = false;
+            m_janitorManager.DoneWorking( this );
+            if(InBase())
+                gameObject.SetActive(false);
         }
     }
 }

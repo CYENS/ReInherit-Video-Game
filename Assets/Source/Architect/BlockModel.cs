@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Cyens.ReInherit.Exhibition;
 using Cyens.ReInherit.Managers;
 using Pathfinding;
@@ -18,6 +19,8 @@ namespace Cyens.ReInherit.Architect
 
         [SerializeField] private bool moveToIndex;
         [SerializeField] private Index startIndex;
+        private List<Vector3> m_garbagePositions;
+        private List<bool> m_garbageSpawned;
 
         public bool ContainsArtifact()
         {
@@ -41,7 +44,33 @@ namespace Cyens.ReInherit.Architect
             southWestPillar.Clear();
         }
 
-        private void Start() {
+        private void Start()
+        {
+            Transform garbageParent = transform.Find("GarbagePositions");
+            m_garbagePositions = new List<Vector3>(4);
+            m_garbageSpawned = new List<bool>(4);
+            foreach (Transform p in garbageParent) {
+                m_garbagePositions.Add(p.position);
+                m_garbageSpawned.Add(false);
+            }
+        }
+
+        public Vector3 GetGarbageSpawnPosition()
+        {
+            for (int i = 0; i < m_garbagePositions.Count; i++) {
+                if (!m_garbageSpawned[i]) {
+                    m_garbageSpawned[i] = true;
+                    return m_garbagePositions[i];
+                }
+            }
+            return Vector3.zero;
+        }
+        
+        public void ResetGarbagePositions()
+        {
+            for (int i = 0; i < m_garbagePositions.Count; i++) {
+                m_garbageSpawned[i] = false;
+            }
         }
 
         public WallModel.WallType GetModelType(Direction direction)

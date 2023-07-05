@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using Cyens.ReInherit.Architect;
 using Cyens.ReInherit.Patterns;
 using UnityEngine;
 using TMPro;
@@ -20,14 +23,8 @@ namespace Cyens.ReInherit.Managers
     [DefaultExecutionOrder(-100000)]
     public class GameManager : Singleton<GameManager>
     {
-
         [Header("References")]
-
-        [SerializeField]
-        private StageManager m_stageManager;
-
-
-        [Header("Building")] public Vector2 entryRoomCoordinates = new Vector2(4.5f, 4.5f);
+        private GarbageManager m_garbageManager;
 
         public enum MuseumState { Close = 0, Open = 1 }
 
@@ -130,6 +127,13 @@ namespace Cyens.ReInherit.Managers
             
             // TODO: Decide the amount of time for the museum to be open
             m_time = 30.0f;
+            
+            // Reset all possible garbage spawn positions
+            BlockModel[] rooms = GameObject.FindObjectsOfType<BlockModel>();
+            foreach (var room in rooms) {
+                room.ResetGarbagePositions();
+            }
+            m_garbageManager.PlanGarbageSpawning(rooms, m_time);
 
             // Spawn visitors
             VisitorManager.Instance.Spawn();
@@ -142,10 +146,9 @@ namespace Cyens.ReInherit.Managers
 
         }
 
-        public void Start() 
+        public void Start()
         {
-            m_stageManager = StageManager.Instance;
-
+            m_garbageManager = GarbageManager.Instance;
         }
 
 
@@ -168,7 +171,7 @@ namespace Cyens.ReInherit.Managers
             ArtifactManager.Instance.ApplyDamage();
             ArtifactManager.Instance.FixArtifacts();
             m_bufferTimer = 1.0f;
-
+            m_garbageManager.RemoveAllGarbageFromScene();
             EndRound();
 
 
@@ -199,10 +202,10 @@ namespace Cyens.ReInherit.Managers
             }
 
 
-            if( Input.GetKeyDown(KeyCode.N) )
+            /*if( Input.GetKeyDown(KeyCode.N) )
             {
                 CloseMuseum();
-            }
+            }*/
         }
 
        

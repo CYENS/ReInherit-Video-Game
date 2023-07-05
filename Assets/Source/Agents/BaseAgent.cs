@@ -13,7 +13,7 @@ namespace Cyens.ReInherit
     {
 
         private NavMeshAgent m_navAgent;
-
+        public bool interruptMoveTask = false;
 
         [System.Serializable]
         public struct Task 
@@ -135,6 +135,11 @@ namespace Cyens.ReInherit
 
         protected bool ExecuteMoveTask( Task task )
         {
+            if (interruptMoveTask) {
+                interruptMoveTask = false;
+                return true;
+            }
+
             m_navAgent.isStopped = false;
 
             // Code to ensure we don't call set destination too many times

@@ -45,10 +45,10 @@ namespace Cyens.ReInherit
             // Ground plane to help with ray intersection calculations
             groundPlane = new Plane(Vector3.up, Vector3.zero);
 
-
-            foreach ( var info in starterArtifacts)
-                AddArtifact(info);
-            
+            if (starterArtifacts != null) {
+                foreach (var info in starterArtifacts)
+                    AddArtifact(info);
+            }
         }
 
         private void OnEnable()

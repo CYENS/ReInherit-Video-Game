@@ -189,10 +189,12 @@ namespace Cyens.ReInherit.Architect
             foreach (var index in Iterate(area)) {
                 var block = m_blocks[index];
                 // If a block contains artifact, stop deletion process and return
-                if (block.model.ContainsArtifact()) {
-                    ErrorMessage.Instance.CreateErrorMessage("Cannot delete room",
-                        "Cannot delete rooms that contains artifacts.");
-                    return;
+                if (block.model != null) {
+                    if (block.model.ContainsArtifact()) {
+                        ErrorMessage.Instance.CreateErrorMessage("Cannot delete room",
+                            "Cannot delete rooms that contains artifacts.");
+                        return;
+                    }
                 }
 
                 if (block.room != null) {
