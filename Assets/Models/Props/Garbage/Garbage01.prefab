@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   timeInScene: 0
+  m_garbageRenderer: {fileID: 5036931223832305711}
 --- !u!1 &4818547676997140668
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,8 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 0.9372549, b: 0, a: 1}
-  outlineWidth: 4
+  outlineColor: {r: 1, g: 0.86508846, b: 0, a: 1}
+  outlineWidth: 3
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -353,6 +354,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2652266536816372868, guid: 9bff18168b19b9f43a8aba8b8b79181a,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6883313655187127661, guid: 9bff18168b19b9f43a8aba8b8b79181a,
         type: 3}
       propertyPath: m_Name
@@ -363,6 +369,12 @@ PrefabInstance:
 --- !u!4 &4985409453680973194 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1233664809960301509, guid: 9bff18168b19b9f43a8aba8b8b79181a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6066736689224758863}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5036931223832305711 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1285679437002249824, guid: 9bff18168b19b9f43a8aba8b8b79181a,
     type: 3}
   m_PrefabInstance: {fileID: 6066736689224758863}
   m_PrefabAsset: {fileID: 0}

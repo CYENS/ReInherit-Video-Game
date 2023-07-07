@@ -77,10 +77,12 @@ namespace Cyens.ReInherit
             m_currentGarbage = garbage;
             if (returningToBase)
                 interruptMoveTask = true;
+            returningToBase = true;
             // Go to the GARBAGE
             AddMoveTask( garbage.position, 1.0f, 0.1f );
             returningToBase = false;
-            AddWaitTask(1.0f);
+            AddMessageTask( gameObject, "CleanGarbage" );
+            AddWaitTask(1f);
             AddMessageTask( gameObject, "Done" );
         }
 
@@ -106,9 +108,13 @@ namespace Cyens.ReInherit
         /// </summary>
         public void Done() 
         {
-            if(m_currentGarbage != null)
-                m_currentGarbage.CleanAndDestroy();
             m_janitorManager.DoneWorking( this );
+        }
+
+        public void CleanGarbage()
+        {
+            if(m_currentGarbage != null)
+                m_currentGarbage.Clean();
         }
         
         /// <summary>
