@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Cyens.ReInherit.Managers;
 using UnityEngine;
-
-using Pathfinding;
 using UnityEngine.Animations.Rigging;
 using Cyens.ReInherit.Exhibition;
 
@@ -16,14 +14,7 @@ namespace Cyens.ReInherit
         private KeeperManager m_keeperManager;
         //private List<Renderer> m_renderers;
         private Renderer[] m_renderers;
-
-        private AIPath m_aiPath;
         [SerializeField] private Task currentTask;
-
-
-
- 
-
         [SerializeField] private GameObject m_showcasePrefab;
         [SerializeField] private GameObject m_RigHands;
         private GameObject m_BoxDissolve;

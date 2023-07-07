@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cyens.ReInherit.Managers;
-using Pathfinding;
-using Pathfinding.RVO;
 using Random = UnityEngine.Random;
 
 namespace Cyens.ReInherit
@@ -266,7 +264,7 @@ namespace Cyens.ReInherit
             // Wait some time before expand cut to allow keeper to leave
             yield return new WaitForSeconds(waitTime);
             
-            NavmeshCut navCut = GetExhibit().GetComponent<NavmeshCut>();
+            /*NavmeshCut navCut = GetExhibit().GetComponent<NavmeshCut>();
             float lastRadiusNav = navCut.circleRadius;
             navCut.circleRadius = newRadiusNav;
             if (Mathf.Approximately(newRadiusNav, lastRadiusNav) == false)
@@ -274,9 +272,8 @@ namespace Cyens.ReInherit
             
             RVOCircleObstacle rvoObstacle = GetExhibit().GetComponent<RVOCircleObstacle>();
             rvoObstacle.size.x = newRadiusRVO;
-            rvoObstacle.size.y = newRadiusRVO;
+            rvoObstacle.size.y = newRadiusRVO;*/
         }
-
 
         public void FinalizeUpgrade()
         {

@@ -8,8 +8,6 @@ using UnityEngine.InputSystem;
 using Cyens.ReInherit.Patterns;
 using Cyens.ReInherit.Managers;
 
-using Pathfinding;
-
 namespace Cyens.ReInherit
 {
     [DefaultExecutionOrder(-1000)]

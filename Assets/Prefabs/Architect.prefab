@@ -69,7 +69,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1021566118379950227
 Transform:
   m_ObjectHideFlags: 0
@@ -108,6 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1021566118684102199}
   - component: {fileID: 1021566118684102193}
+  - component: {fileID: 4967536710258051875}
   m_Layer: 0
   m_Name: Architect
   m_TagString: Untagged
@@ -145,7 +146,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indicator: {fileID: 1021566117124885567}
-  graph: {fileID: 0}
+  graph: {fileID: 4967536710258051875}
   indicatorEnabledColor: {r: 0, g: 1, b: 0, a: 0.15}
   indicatorBlueColor: {r: 0, g: 0, b: 1, a: 0.15}
   indicatorDisabledColor: {r: 1, g: 0, b: 0, a: 0.15}
+--- !u!114 &4967536710258051875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021566118684102197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8189ab733d7447f898827bb4b0e6d55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rooms: []

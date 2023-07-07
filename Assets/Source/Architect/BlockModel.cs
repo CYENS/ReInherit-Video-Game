@@ -2,9 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cyens.ReInherit.Exhibition;
 using Cyens.ReInherit.Managers;
-using Pathfinding;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Cyens.ReInherit.Architect
 {
